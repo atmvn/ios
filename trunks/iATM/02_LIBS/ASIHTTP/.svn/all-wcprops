@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP
+END
+ASIHTTPRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIHTTPRequest.m
+END
+ASINetworkQueue.h
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASINetworkQueue.h
+END
+ASICacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASICacheDelegate.h
+END
+ASIDataDecompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDataDecompressor.h
+END
+ASIAuthenticationDialog.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIAuthenticationDialog.h
+END
+ASIProgressDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIProgressDelegate.h
+END
+ASIDownloadCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDownloadCache.m
+END
+ASINetworkQueue.m
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASINetworkQueue.m
+END
+Reachability.h
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/Reachability.h
+END
+ASIAuthenticationDialog.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIAuthenticationDialog.m
+END
+ASIDataDecompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDataDecompressor.m
+END
+ASIFormDataRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIFormDataRequest.h
+END
+Reachability.m
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/Reachability.m
+END
+ASIFormDataRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIFormDataRequest.m
+END
+ASIInputStream.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIInputStream.h
+END
+ASIHTTPRequestConfig.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIHTTPRequestConfig.h
+END
+ASIInputStream.m
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIInputStream.m
+END
+ASIHTTPRequestDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIHTTPRequestDelegate.h
+END
+ASIDataCompressor.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDataCompressor.h
+END
+ASIHTTPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIHTTPRequest.h
+END
+ASIDownloadCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDownloadCache.h
+END
+ASIDataCompressor.m
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/ASIHTTP/ASIDataCompressor.m
+END

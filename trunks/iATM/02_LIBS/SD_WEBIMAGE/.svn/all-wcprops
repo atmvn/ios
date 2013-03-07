@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE
+END
+SDWebImageDownloader.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageDownloader.m
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/LICENSE
+END
+SDWebImageManagerDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageManagerDelegate.h
+END
+SDImageCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDImageCache.h
+END
+SDImageCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDImageCache.m
+END
+SDWebImageManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageManager.h
+END
+README.md
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/README.md
+END
+UIButton+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/UIButton+WebCache.h
+END
+SDWebImageManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageManager.m
+END
+UIImageView+WebCache.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/UIImageView+WebCache.h
+END
+SDWebImageCompat.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageCompat.h
+END
+UIButton+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/UIButton+WebCache.m
+END
+UIImageView+WebCache.m
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/UIImageView+WebCache.m
+END
+SDWebImageDownloaderDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageDownloaderDelegate.h
+END
+SDWebImageDownloader.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDWebImageDownloader.h
+END
+SDImageCacheDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/SD_WEBIMAGE/SDImageCacheDelegate.h
+END

@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/93/trunk/ios/aigo/04_SUPPORT
+END
+APIRequester.h
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/92/trunk/ios/aigo/04_SUPPORT/APIRequester.h
+END
+Define.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/90/trunk/ios/aigo/04_SUPPORT/Define.h
+END
+Utilities.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/Utilities.h
+END
+UIImageExtension.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/UIImageExtension.h
+END
+APIRequester.m
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/93/trunk/ios/aigo/04_SUPPORT/APIRequester.m
+END
+Utilities.m
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/Utilities.m
+END
+SupportFunction.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/93/trunk/ios/aigo/04_SUPPORT/SupportFunction.h
+END
+TouchedGestureRecognizer.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/TouchedGestureRecognizer.h
+END
+UIImageExtension.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/UIImageExtension.m
+END
+TTTAttributedLabel.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/TTTAttributedLabel.h
+END
+SupportFunction.m
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/93/trunk/ios/aigo/04_SUPPORT/SupportFunction.m
+END
+TouchedGestureRecognizer.m
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/TouchedGestureRecognizer.m
+END
+TTTAttributedLabel.m
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/ios/aigo/04_SUPPORT/TTTAttributedLabel.m
+END

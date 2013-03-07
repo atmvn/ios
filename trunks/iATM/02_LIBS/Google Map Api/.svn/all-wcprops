@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api
+END
+UICGRoutes.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGRoutes.h
+END
+UICGDirectionsOptions.m
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGDirectionsOptions.m
+END
+UICGoogleMapsAPI.m
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGoogleMapsAPI.m
+END
+UICGRoutes.m
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGRoutes.m
+END
+UICGCheckPoint.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGCheckPoint.h
+END
+UICGPolyline.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGPolyline.h
+END
+UICGCheckPoint.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGCheckPoint.m
+END
+UICGRoute.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGRoute.h
+END
+UICGPolyline.m
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGPolyline.m
+END
+UICGDirections.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGDirections.h
+END
+UICGRoute.m
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGRoute.m
+END
+UICGDirections.m
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGDirections.m
+END
+JSONKit.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/JSONKit.h
+END
+JSONKit.m
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/JSONKit.m
+END
+UICGDirectionsOptions.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGDirectionsOptions.h
+END
+UICGoogleMapsAPI.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/Google%20Map%20Api/UICGoogleMapsAPI.h
+END

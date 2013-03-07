@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts
+END
+NSString+URLEncoding.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/NSString+URLEncoding.h
+END
+OAuth.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/OAuth.h
+END
+NSString+URLEncoding.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/NSString+URLEncoding.m
+END
+OAuth+UserDefaults.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/OAuth+UserDefaults.h
+END
+OAuth.m
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/OAuth.m
+END
+OAuth+UserDefaults.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/OAuth+UserDefaults.m
+END

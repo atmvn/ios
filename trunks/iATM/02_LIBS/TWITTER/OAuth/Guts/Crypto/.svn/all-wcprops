@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto
+END
+Base64Transcoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/Base64Transcoder.h
+END
+sha1.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/sha1.h
+END
+OAHMAC_SHA1SignatureProvider.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/OAHMAC_SHA1SignatureProvider.h
+END
+hmac.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/hmac.c
+END
+OASignatureProviding.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/OASignatureProviding.h
+END
+Base64Transcoder.c
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/Base64Transcoder.c
+END
+OAHMAC_SHA1SignatureProvider.m
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/OAHMAC_SHA1SignatureProvider.m
+END
+sha1.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/sha1.c
+END
+hmac.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/OAuth/Guts/Crypto/hmac.h
+END

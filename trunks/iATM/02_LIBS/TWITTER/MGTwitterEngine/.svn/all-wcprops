@@ -1,0 +1,197 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine
+END
+MGTwitterHTTPURLConnection.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterHTTPURLConnection.h
+END
+MGTwitterXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterXMLParser.m
+END
+NSData+Base64.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/NSData+Base64.h
+END
+MGTwitterMessagesParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMessagesParser.h
+END
+MGTwitterMiscLibXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMiscLibXMLParser.m
+END
+MGTwitterUsersLibXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterUsersLibXMLParser.h
+END
+MGTwitterParserDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterParserDelegate.h
+END
+MGTwitterHTTPURLConnection.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterHTTPURLConnection.m
+END
+NSData+Base64.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/NSData+Base64.m
+END
+MGTwitterMessagesParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMessagesParser.m
+END
+MGTwitterUsersLibXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterUsersLibXMLParser.m
+END
+MGTwitterEngineGlobalHeader.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterEngineGlobalHeader.h
+END
+MGTwitterEngineDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterEngineDelegate.h
+END
+MGTwitterStatusesLibXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterStatusesLibXMLParser.h
+END
+MGTwitterEngine.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterEngine.h
+END
+MGTwitterStatusesLibXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterStatusesLibXMLParser.m
+END
+MGTwitterMiscParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMiscParser.h
+END
+MGTwitterEngine.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterEngine.m
+END
+MGTwitterMiscParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMiscParser.m
+END
+MGTwitterUsersParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterUsersParser.h
+END
+MGTwitterUsersParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterUsersParser.m
+END
+MGTwitterStatusesParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterStatusesParser.h
+END
+MGTwitterMessagesLibXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMessagesLibXMLParser.h
+END
+MGTwitterStatusesParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterStatusesParser.m
+END
+MGTwitterMessagesLibXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMessagesLibXMLParser.m
+END
+NSString+UUID.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/NSString+UUID.h
+END
+MGTwitterLibXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterLibXMLParser.h
+END
+NSString+UUID.m
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/NSString+UUID.m
+END
+MGTwitterLibXMLParser.m
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterLibXMLParser.m
+END
+MGTwitterXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterXMLParser.h
+END
+MGTwitterRequestTypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterRequestTypes.h
+END
+MGTwitterMiscLibXMLParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/2/trunk/ios/aigo/02_LIBS/TWITTER/MGTwitterEngine/MGTwitterMiscLibXMLParser.h
+END
