@@ -41,16 +41,16 @@ static char UIB_PROPERTY_KEY;
      [manager cancelForDelegate:self];
      
     // MinhPB 03/07/2012
-    if (self.scaleOption == enumWebImageScaleOption_FullFill) {
+    if ([self.scaleOption isEqual: enumWebImageScaleOption_FullFill]) {
         [self setImage:placeholder];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToFill) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToFill]) {
         [self setImage:[placeholder imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Center_ScaleSize]];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoToSize) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSize]) {
         //[self setImage:[self scaleImageToGivenSize:placeholder]];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoToSizeLarger) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSizeLarger]) {
         //     // added by seng
         UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
         activityView.frame = CGRectMake((CGRectGetWidth(self.frame) / 2 - 11.0f),CGRectGetHeight(self.frame) / 2, 22.0f, 22.0f);
@@ -92,32 +92,32 @@ static char UIB_PROPERTY_KEY;
 - (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image
 {
     // MinhPB 03/07/2012
-    if (self.scaleOption == enumWebImageScaleOption_FullFill) {
+    if ([self.scaleOption isEqual: enumWebImageScaleOption_FullFill]) {
         [self setImage:image];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToFill) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToFill]) {
         
        [self setImage:[image imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Center_ScaleSize]];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToWidth_Top) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToWidth_Top]) {
         [self setImage:[image imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Top]];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoToSize) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSize]) {
         
         UIImage *thumbnailPhoto = [self cropCenterAndScaleImageToSize:CGSizeMake(85.0,85.0) selectedImage:image];
         
         [self setImage:thumbnailPhoto];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoToSizeLarger) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoToSizeLarger]) {
         //UIImage *thumbnailPhoto = [self cropCenterAndScaleImageToSize:CGSizeMake(240.0,195.0) selectedImage:image];
         UIImage *thumbnailPhoto = [self cropCenterAndScaleImageToSize:CGSizeMake(240.0,220.0) selectedImage:image];
         [self setImage:thumbnailPhoto];
     }
     
-    else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoFullSize) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoFullSize]) {
         UIImage *thumbnailPhoto = [self cropCenterAndScaleImageToSize:CGSizeMake(320.0,220.0) selectedImage:image];
         [self setImage:thumbnailPhoto];
-    } else if (self.scaleOption == enumWebImageScaleOption_ScalePhotoCenterFullSize) {
+    } else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScalePhotoCenterFullSize]) {
         UIImage *thumbnailPhoto = [image imageByScalingToSize:CGSizeMake(self.frame.size.width,self.frame.size.height) withOption:enumImageScalingType_Center_FullSize];
         [self setImage:thumbnailPhoto];
     }

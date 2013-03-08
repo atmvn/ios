@@ -906,7 +906,7 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 // http://developer.apple.com/library/mac/#qa/qa1490/_index.html
 // http://blog.binaryfinery.com/universal-static-library-problem-in-iphone-sd
 // http://snipplr.com/view/50425/iphone-make-categories-defined-inside-libraries-actually-work/
-@interface FontLabelStringDrawing_FIX_CATEGORY_BUG 
+@interface FontLabelStringDrawing_FIX_CATEGORY_BUG : NSObject  
 @end
 @implementation FontLabelStringDrawing_FIX_CATEGORY_BUG
 @end

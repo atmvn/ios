@@ -130,8 +130,9 @@
 		1859A17B16E641C6001EB8CF /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17A16E641C6001EB8CF /* CoreText.framework */; };
 		1859A17D16E641E2001EB8CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */; };
 		1859A17F16E641FB001EB8CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */; };
-		2CDB13B516E83AC1005D4598 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDB13AE16E83AC1005D4598 /* AppDelegate.m */; };
-		2CDB13B616E83AC1005D4598 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDB13B016E83AC1005D4598 /* ViewController.m */; };
+		2C87029016E98F3700302E17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028B16E98F3700302E17 /* AppDelegate.m */; };
+		2C87029116E98F3700302E17 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028D16E98F3700302E17 /* AppViewController.m */; };
+		2C87029216E98F3700302E17 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028F16E98F3700302E17 /* ViewController.m */; };
 		2CDB13B716E83AC1005D4598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */; };
 		2CDB13B816E83AC1005D4598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B316E83AC1005D4598 /* Default.png */; };
 		2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B416E83AC1005D4598 /* Default@2x.png */; };
@@ -384,10 +385,12 @@
 		1859A17A16E641C6001EB8CF /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		2CDB13AD16E83AC1005D4598 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2CDB13AE16E83AC1005D4598 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2CDB13AF16E83AC1005D4598 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2CDB13B016E83AC1005D4598 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2C87028A16E98F3700302E17 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		2C87028B16E98F3700302E17 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2C87028C16E98F3700302E17 /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
+		2C87028D16E98F3700302E17 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
+		2C87028E16E98F3700302E17 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2C87028F16E98F3700302E17 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2CDB13B316E83AC1005D4598 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2CDB13B416E83AC1005D4598 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -928,13 +931,23 @@
 			path = 04_SUPPORT;
 			sourceTree = "<group>";
 		};
+		2C87028916E98F3700302E17 /* 01_MAIN */ = {
+			isa = PBXGroup;
+			children = (
+				2C87028A16E98F3700302E17 /* AppDelegate.h */,
+				2C87028B16E98F3700302E17 /* AppDelegate.m */,
+				2C87028C16E98F3700302E17 /* AppViewController.h */,
+				2C87028D16E98F3700302E17 /* AppViewController.m */,
+				2C87028E16E98F3700302E17 /* ViewController.h */,
+				2C87028F16E98F3700302E17 /* ViewController.m */,
+			);
+			path = 01_MAIN;
+			sourceTree = "<group>";
+		};
 		2CDB13AC16E83AC1005D4598 /* 01_SOURCES */ = {
 			isa = PBXGroup;
 			children = (
-				2CDB13AD16E83AC1005D4598 /* AppDelegate.h */,
-				2CDB13AE16E83AC1005D4598 /* AppDelegate.m */,
-				2CDB13AF16E83AC1005D4598 /* ViewController.h */,
-				2CDB13B016E83AC1005D4598 /* ViewController.m */,
+				2C87028916E98F3700302E17 /* 01_MAIN */,
 			);
 			path = 01_SOURCES;
 			sourceTree = "<group>";
@@ -1122,8 +1135,9 @@
 				1859A16E16E63EB6001EB8CF /* TTTAttributedLabel.m in Sources */,
 				1859A16F16E63EB6001EB8CF /* UIImageExtension.m in Sources */,
 				1859A17016E63EB6001EB8CF /* Utilities.m in Sources */,
-				2CDB13B516E83AC1005D4598 /* AppDelegate.m in Sources */,
-				2CDB13B616E83AC1005D4598 /* ViewController.m in Sources */,
+				2C87029016E98F3700302E17 /* AppDelegate.m in Sources */,
+				2C87029116E98F3700302E17 /* AppViewController.m in Sources */,
+				2C87029216E98F3700302E17 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1218,11 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iATM/iATM-Prefix.pch";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"DEBUG=1",
+					"$(inherited)",
+					_DEBUG_DEV,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(SDKROOT)/usr/include/libxml2",
 					"${SDK_DIR}/usr/include/libxml2",
@@ -1225,6 +1244,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iATM/iATM-Prefix.pch";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = _RELEASE_DEV;
 				HEADER_SEARCH_PATHS = (
 					/usr/include/libxml2,
 					"${SDK_DIR}/usr/include/libxml2",

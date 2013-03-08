@@ -12,6 +12,7 @@
 #import "APIRequester.h"
 
 #define METERS_PER_MILE 1609.344
+#define NUMBER_OF_REQUEST_ATM 10
 
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;

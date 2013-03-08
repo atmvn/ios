@@ -39,10 +39,10 @@ static char UIB_PROPERTY_KEY;
 
 //    [self setImage:placeholder forState:UIControlStateNormal];
     // MinhPB 03/07/2012
-    if (self.scaleOption == enumWebImageScaleOption_FullFill) {
+    if ([self.scaleOption isEqual: enumWebImageScaleOption_FullFill]) {
         [self setImage:[placeholder imageByScalingToSize:self.frame.size withOption:enumImageScalingType_TargetSize] forState:UIControlStateNormal];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToFill) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToFill]) {
         [self setImage:[placeholder imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Center_ScaleSize] forState:UIControlStateNormal];
     }
     else {
@@ -82,13 +82,13 @@ static char UIB_PROPERTY_KEY;
 - (void)webImageManager:(SDWebImageManager *)imageManager didFinishWithImage:(UIImage *)image
 {
     // MinhPB 03/07/2012
-    if (self.scaleOption == enumWebImageScaleOption_FullFill) {
+    if ([self.scaleOption isEqual: enumWebImageScaleOption_FullFill]) {
         [self setImage:[image imageByScalingToSize:self.frame.size withOption:enumImageScalingType_TargetSize] forState:UIControlStateNormal];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToFill) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToFill]) {
         [self setImage:[image imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Center_ScaleSize] forState:UIControlStateNormal];
     }
-    else if (self.scaleOption == enumWebImageScaleOption_ScaleToWidth_Top) {
+    else if ([self.scaleOption isEqual: enumWebImageScaleOption_ScaleToWidth_Top]) {
         [self setImage:[image imageByScalingToSize:self.frame.size withOption:enumImageScalingType_Top] forState:UIControlStateNormal];
     }
     else {

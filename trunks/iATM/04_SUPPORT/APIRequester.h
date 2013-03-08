@@ -11,41 +11,9 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 
-#ifdef __DEV1__
-#define STRING_REQUEST_ROOT                                                 @"http://taxivnapi.rs.af.cm"
-//#define STRING_REQUEST_ROOT                                                    @"http://192.168.2.72:3001"
-//#define STRING_REQUEST_ROOT                                                 @"http://aws-aigo-api.ap01.aws.af.cm"
-#endif
-#ifdef __DEV2__
-#define STRING_REQUEST_ROOT                                                 @"http://aigo-api.herokuapp.com"
-#endif
-
-#ifdef __DRIVER__
-#define STRING_REQUEST_USERTYPE                                             @"driver"
-#endif
-
-#ifdef __CLIENT__
-#define STRING_REQUEST_USERTYPE                                             @"client"
-#endif
-
-
-//#define STRING_REQUEST_ROOT                                                 @"http://dev.visikard.com:6868/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://dev1.visikard.com:6868/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://192.168.2.83:8080/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://khanh-pc:8080/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://192.168.2.150:8080/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://lcalserver.visikard.vn/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://staging1.visikard.com:6868/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://216.119.157.11:6868/vk4"
-//#define STRING_REQUEST_ROOT                                                 @"http://216.119.158.150:6868/vk4"
-
-#ifndef STRING_REQUEST_ROOT
-#define STRING_REQUEST_ROOT                                                 @"http://taxivnapi.rs.af.cm"
-#endif
+#define STRING_REQUEST_ROOT                                                 @"http://atm.rs.af.cm"
 
 #define TIMER_REQUEST_TIMEOUT                                               60
-
-//http://dev1.visikard.com:6868/vk4/serversetupinfo/2
 
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
@@ -56,120 +24,7 @@
 
 
 // USER
-#define STRING_REQUEST_URL_USER_LOGIN                                   [NSString stringWithFormat:@"%@/accounts/%@/login", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_USER_LOGOUT                                  [NSString stringWithFormat:@"%@/accounts/%@/logout", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_REGISTRY_ACCOUNT                             [NSString stringWithFormat: @"%@/accounts/%@/signup", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-
-#define STRING_REQUEST_URL_USER_LOGIN_USERNAME_EMAIL                    [NSString stringWithFormat:@"%@/accounts/login/email/username", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_USER_UPDATE_LOCATION_AND_GPS                 [NSString stringWithFormat:@"%@/accounts/%@/location", STRING_REQUEST_ROOT, STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_USER_CHANGE_PASSWORD                         [NSString stringWithFormat:@"%@/accounts/change/password", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_USER_RECOVERY_PASSWORD                       [NSString stringWithFormat:@"%@/accounts/forget/password/user", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_USER_FORGET_PASSWORD                         [NSString stringWithFormat:@"%@/accounts/recovery/forget/password", STRING_REQUEST_ROOT]
-
-// Push notification
-#define STRING_REQUEST_URL_USER_UPDATE_DEVICE_TOKEN_DRIVER              [NSString stringWithFormat:@"%@/accounts/driver/updatedevicetoken", STRING_REQUEST_ROOT]
-// CLIENT
-#define STRING_REQUEST_URL_CLIENT_CLOSEST_DRIVER                        [NSString stringWithFormat:@"%@/locations/%@/distance", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_CLIENT_REQUEST_CLOSEST_DRIVER                [NSString stringWithFormat:@"%@/transactions/%@/request", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_CLIENT_REQUEST_THIS_DRIVER                   [NSString stringWithFormat:@"%@/transactions/%@/requestthisdriver", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_CLIENT_CANCEL_THE_REQUEST                    [NSString stringWithFormat:@"%@/transactions/%@/cancelrequest", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_CLIENT_CANCEL_THIS_TRANSACTION               [NSString stringWithFormat:@"%@/transactions/%@/canceltransaction", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-#define STRING_REQUEST_URL_CLIENT_CHARGE_BILL                           [NSString stringWithFormat:@"%@/transactions/%@/confirmbill", STRING_REQUEST_ROOT,STRING_REQUEST_USERTYPE]
-
-// DRIVER
-#define STRING_REQUEST_URL_DRIVER_ACCEPT_THIS_TRANSACTION               [NSString stringWithFormat:@"%@/transactions/driver/accept", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_DRIVER_CANCEL_THIS_TRANSACTION               [NSString stringWithFormat:@"%@/transactions/driver/cancel", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_DRIVER_NOTIFY_YOUR_ARRIVAL                   [NSString stringWithFormat:@"%@/transactions/driver/arrival", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_DRIVER_BEGIN_TRIP                            [NSString stringWithFormat:@"%@/transactions/driver/begintrip", STRING_REQUEST_ROOT]
-#define STRING_REQUEST_URL_DRIVER_FINISH_TRIP                           [NSString stringWithFormat:@"%@/transactions/driver/finishtrip", STRING_REQUEST_ROOT]
-
-// LOGIN, REQUEST
-#define STRING_REQUEST_KEY_USER_NAME                                    @"username"
-#define STRING_REQUEST_KEY_PASSWORD                                     @"password"
-#define STRING_REQUEST_KEY_FK_USER                                      @"fkUser"
-#define STRING_REQUEST_KEY_LATITUDE                                     @"latitude"
-#define STRING_REQUEST_KEY_LONGITUDE                                    @"longitude"
-#define STRING_REQUEST_KEY_SESSION_ID                                   @"sessionID"
-#define STRING_REQUEST_KEY_SESSION                                      @"session"
-#define STRING_REQUEST_KEY_GPS                                          @"gps"
-#define STRING_REQUEST_KEY_F_NAME										@"fname"
-#define STRING_REQUEST_KEY_L_NAME										@"lname"
-#define STRING_REQUEST_KEY_EMAIL										@"email"
-#define STRING_REQUEST_KEY_FULL_NAME                                    @"fullName"
-#define STRING_REQUEST_KEY_PROFILE_NAME                                 @"profilename"
-#define STRING_REQUEST_KEY_GENDER										@"gender"
-#define STRING_REQUEST_KEY_ABOUT										@"about"
-#define STRING_REQUEST_KEY_FK_KARD										@"fkKard"
-#define STRING_REQUEST_KEY_USER_NAME_EMAIL                              @"usernameemail"
-#define STRING_REQUEST_KEY_AGE                                          @"age"
-#define STRING_REQUEST_KEY_LOC                                          @"loc"
-
-#define STRING_REQUEST_KEY_NAME                                         @"name"
-#define STRING_REQUEST_KEY_EMAIL                                        @"email"
-#define STRING_REQUEST_KEY_USER                                         @"user"
-#define STRING_REQUEST_KEY_PASS                                         @"pass"
-#define STRING_REQUEST_KEY_DEVICE_TOKEN                                 @"devicetoken"
-#define STRING_REQUEST_KEY_OLD_DEVICE_TOKEN                             @"olddevicetoken"
-#define STRING_REQUEST_KEY_NEW_DEVICE_TOKEN                             @"newdevicetoken"
-#define STRING_REQUEST_KEY_COUNTRY                                      @"country"
-#define STRING_REQUEST_KEY_USER_TYPE                                    @"usertype"
-#define STRING_REQUEST_KEY_MESSAGE                                      @"messages"
-#define STRING_REQUEST_KEY_NUMBER                                       @"number"
-#define STRING_REQUEST_KEY_SEAT                                         @"seat"
-
-#define STRING_REQUEST_KEY_CLIENT                                       @"Client"
-#define STRING_REQUEST_KEY_DRIVER                                       @"Driver"
-
-// CLIENT, REQUEST
-#define STRING_REQUEST_KEY_ALERT                                        @"alert"
-#define STRING_REQUEST_KEY_BADGE                                        @"badge"
-#define STRING_REQUEST_KEY_SOUND                                        @"sound"
-#define STRING_REQUEST_KEY_DRIVER_ID                                    @"driverid"
-
-// UPDATE LOCATION, REQUEST
-#define STRING_REQUEST_KEY_CURRENT_LOCATION                             @"loc"
-#define STRING_REQUEST_KEY_CLIENT_ID                                    @"clientid"
-#define STRING_REQUEST_KEY_PRICE                                        @"price"
-
-// LOGIN, RESPONSE
-#define STRING_RESPONSE_KEY_STATUS                                      @"status"
-#define STRING_RESPONSE_KEY_RESULT                                      @"result"
-#define STRING_RESPONSE_KEY_SESSION_ID                                  @"sessionID"
-#define STRING_RESPONSE_KEY__ID                                         @"_id"
-#define STRING_RESPONSE_KEY_USER_ID                                     @"idUsers"
-#define STRING_RESPONSE_KEY_USER                                        @"user"
-#define STRING_RESPONSE_KEY_USER_NAME                                   @"username"
-#define STRING_RESPONSE_KEY_MESSAGE_LOGIN                               @"messageLogin"
-#define STRING_RESPONSE_KEY_F_NAME_LOGIN                                @"fname"
-#define STRING_RESPONSE_KEY_L_NAME_LOGIN                                @"lname"
-#define STRING_RESPONSE_KEY_FULL_NAME_LOGIN                             @"fullName"
-#define STRING_RESPONSE_KEY_SORT_MY_KARD                                @"sortMyKard"
-#define STRING_RESPONSE_KEY_SHOW_UNREAD                                 @"showUnread"
-#define STRING_RESPONSE_KEY_USER_VISIBLE                                @"userVisible"
-#define STRING_RESPONSE_KEY_PASSWORD                                    @"password"
-#define STRING_RESPONSE_KEY_POINT_USER                                  @"pointUser"
-#define STRING_RESPONSE_KEY_MSG                                         @"msg"
-#define STRING_RESPONSE_KEY_OK                                          @"ok"
-
-// COUNTRY
-#define STRING_RESPONSE_KEY_ID                                          @"id"
-#define STRING_RESPONSE_KEY_CODE                                        @"code"
-
-// BANNER ADS
-#define STRING_RESPONSE_KEY_BANNER_IMAGE_URL                            @"adsUrl"
-#define STRING_RESPONSE_KEY_BANNER_ADS_ID                               @"adsId"
-
-// CLIENT, RESPONSE
-#define STRING_RESPONSE_KEY_RESULTS                                     @"results"
-#define STRING_RESPONSE_KEY_NAME                                        @"name"
-#define STRING_RESPONSE_KEY_OBJ                                         @"obj"
-#define STRING_RESPONSE_KEY_LOC                                         @"loc"
-#define STRING_RESPONSE_KEY_EMAIL                                       @"email"
-#define STRING_RESPONSE_KEY_DRIVER_ID                                   @"driverid"
-#define STRING_RESPONSE_KEY_PRICE                                       @"price"
-
-// DRIVER, RESPONSE
-#define STRING_RESPONSE_KEY_CLIENT_ID                                   @"clientid"
+#define STRING_REQUEST_URL_GET_NEAREST_ATM                                   [NSString stringWithFormat:@"%@/atm/distance", STRING_REQUEST_ROOT]
 
 // FB
 #define STRING_RESPONSE_KEY_FB_NAME                                     @"name"
@@ -217,6 +72,13 @@
 #define STRING_RESPONSE_KEY_FAILURE                                     @"FAILURE"
 #define STRING_RESPONSE_KEY_EMPTY                                       @"EMPTY"
 
+#define STRING_REQUEST_KEY_LONGTITUDE                                  @"longtitude"
+#define STRING_REQUEST_KEY_LATTITUDE                                   @"lattitude"
+#define STRING_REQUEST_KEY_NUMBER                                      @"number"
+
+#define STRING_RESPONSE_KEY_MSG                                         @"msg"
+#define STRING_RESPONSE_KEY_OK                                          @"ok"
+#define STRING_RESPONSE_KEY_RESULTS                                     @"results"
 
 #define kSqliteFileName @"VisiKard"
 
