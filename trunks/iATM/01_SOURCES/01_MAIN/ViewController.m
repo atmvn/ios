@@ -8,12 +8,14 @@
 
 #import "ViewController.h"
 #import "AppViewController.h"
+#import "BankItem.h"
 
 @interface ViewController ()
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
     APIRequester                            *_APIRequester;
+    NSMutableArray      *_listBankItems;
 }
 
 @end
@@ -25,6 +27,7 @@
     [super viewDidLoad];
     _APIRequester = [APIRequester new];
     currentLocation = nil;
+    _listBankItems = [[NSMutableArray alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillResignActive)
@@ -35,6 +38,7 @@
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     
     _locationManager = [[CLLocationManager alloc] init];
@@ -54,10 +58,23 @@
     [super viewDidUnload];
 }
 
+-(void)loadInterface
+{
+    for (id<MKAnnotation> annotation in _mapView.annotations) {
+        [_mapView removeAnnotation:annotation];
+    }
+
+//    [_mapView addAnnotations:_listBankItems];
+    for (BankItem *item in _listBankItems)
+    {
+        [self.mapView addAnnotation:item];
+    }
+}
+
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    if(newLocation != currentLocation) {
+    if(currentLocation == nil) {
         currentLocation = newLocation;
         // TODO: call API for update location
         [self requestListNearestATM];
@@ -102,7 +119,7 @@
         //        if (![ASIHTTPRequest isNetworkReachable]) {
         //            ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_SERVER_ERROR);
         //        }
-        ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, [[sbJSON objectWithString:[request responseString] error:&error] objectForKey:STRING_RESPONSE_KEY_MSG]);
+//        ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, [[sbJSON objectWithString:[request responseString] error:&error] objectForKey:STRING_RESPONSE_KEY_MSG]);
         return;
     }
     
@@ -110,6 +127,12 @@
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
         NSLog(@"%@", atmList);
+        [_listBankItems removeAllObjects];
+        for (NSDictionary *dataDic in atmList) {
+            BankItem *bankItem = [[BankItem alloc] initWithData:dataDic];
+            [_listBankItems addObject:bankItem];
+        }
+        [self loadInterface];
     }
     
 }
@@ -122,5 +145,29 @@
     if (![ASIHTTPRequest isNetworkReachable]) {
         ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_CONNECTION_ERROR);
     }
+}
+
+#pragma mark - MKMapViewDelegate
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    static NSString *identifier = @"BankItemID";
+    if ([annotation isKindOfClass:[BankItem class]]) {
+        
+        MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (annotationView == nil) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            annotationView.enabled = YES;
+            annotationView.canShowCallout = YES;
+//            annotationView.image = [UIImage imageNamed:@"arrest.png"];//here we use a nice image instead of the default pins
+        } else {
+            annotationView.annotation = annotation;
+        }
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
+- (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender {
+    [self requestListNearestATM];
 }
 @end

@@ -16,5 +16,6 @@
 
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+- (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender;
 
 @end
