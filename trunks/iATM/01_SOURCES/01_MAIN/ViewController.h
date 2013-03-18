@@ -12,10 +12,20 @@
 #import "APIRequester.h"
 
 #define METERS_PER_MILE 1609.344
-#define NUMBER_OF_REQUEST_ATM 10
+#define NUMBER_OF_REQUEST_ATM 100
 
-@interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol>
+@interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UIPickerViewDataSource, UIPickerViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *bankBtn;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *bankTypeBtn;
+@property (weak, nonatomic) IBOutlet UIView *pickerContainerView;
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender;
+- (IBAction)pickerCancelTouchUpInside:(id)sender;
+- (IBAction)pickerDoneTouchUpInside:(id)sender;
+- (IBAction)bankBtnTouchUpInside:(id)sender;
+
+- (IBAction)bankTypeBtnTouchUpInside:(id)sender;
+
 
 @end

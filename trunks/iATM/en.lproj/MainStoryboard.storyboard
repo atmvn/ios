@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -21,18 +21,64 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="mkK-T5-Nob">
                                 <rect key="frame" x="0.0" y="504" width="320" height="44"/>
                                 <items>
-                                    <barButtonItem title="Refresh" id="E1c-GH-14N">
+                                    <barButtonItem title="Refresh" width="81" id="E1c-GH-14N">
                                         <connections>
                                             <action selector="refreshTouchUpInside:" destination="2" id="dJV-fG-zqR"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Tất Cả Ngân Hàng" width="126" id="zTH-kD-WyP">
+                                        <connections>
+                                            <action selector="bankBtnTouchUpInside:" destination="2" id="Za3-Xj-hD4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Mọi Loại" width="81" id="ygW-8b-jLQ">
+                                        <connections>
+                                            <action selector="bankTypeBtnTouchUpInside:" destination="2" id="dJG-V4-5IW"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" id="cNO-SU-4dv">
+                                <rect key="frame" x="0.0" y="548" width="320" height="260"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <pickerView contentMode="scaleToFill" id="nr7-cW-inC">
+                                        <rect key="frame" x="0.0" y="44" width="320" height="216"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="2" id="OtV-bh-Sy0"/>
+                                            <outlet property="delegate" destination="2" id="PJu-sO-gld"/>
+                                        </connections>
+                                    </pickerView>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="TXp-fd-JZL">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                        <items>
+                                            <barButtonItem title="Huỷ" width="50" id="hfb-7s-5gs">
+                                                <connections>
+                                                    <action selector="pickerCancelTouchUpInside:" destination="2" id="44z-FH-EfW"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="L9D-ZE-lGL"/>
+                                            <barButtonItem title="Xong" width="50" style="done" id="ROp-8m-7SE">
+                                                <connections>
+                                                    <action selector="pickerDoneTouchUpInside:" destination="2" id="2SP-Gy-wH8"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </items>
+                                    </toolbar>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="bankBtn" destination="zTH-kD-WyP" id="rat-wa-j4K"/>
+                        <outlet property="bankTypeBtn" destination="ygW-8b-jLQ" id="6b7-LM-Vud"/>
                         <outlet property="mapView" destination="76H-vt-VJo" id="cco-Rm-cg5"/>
+                        <outlet property="pickerContainerView" destination="cNO-SU-4dv" id="1Tm-5R-ODA"/>
+                        <outlet property="pickerView" destination="nr7-cW-inC" id="SGF-EP-qAL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -43,8 +89,16 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="action" name="bankBtnTouchUpInside:"/>
+                <relationship kind="action" name="bankTypeBtnTouchUpInside:"/>
+                <relationship kind="action" name="pickerCancelTouchUpInside:"/>
+                <relationship kind="action" name="pickerDoneTouchUpInside:"/>
                 <relationship kind="action" name="refreshTouchUpInside:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="bankBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="bankTypeBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="pickerContainerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
             </relationships>
         </class>
     </classes>

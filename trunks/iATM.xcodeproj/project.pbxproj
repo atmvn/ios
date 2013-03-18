@@ -130,6 +130,7 @@
 		1859A17B16E641C6001EB8CF /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17A16E641C6001EB8CF /* CoreText.framework */; };
 		1859A17D16E641E2001EB8CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */; };
 		1859A17F16E641FB001EB8CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */; };
+		18653C9816F76B1000849ACA /* arrest.png in Resources */ = {isa = PBXBuildFile; fileRef = 18653C9716F76B1000849ACA /* arrest.png */; };
 		2C638B3216ED9661009CE242 /* BankItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C638B3116ED9661009CE242 /* BankItem.m */; };
 		2C87029016E98F3700302E17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028B16E98F3700302E17 /* AppDelegate.m */; };
 		2C87029116E98F3700302E17 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028D16E98F3700302E17 /* AppViewController.m */; };
@@ -386,6 +387,7 @@
 		1859A17A16E641C6001EB8CF /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		18653C9716F76B1000849ACA /* arrest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrest.png; sourceTree = "<group>"; };
 		2C638B3016ED9661009CE242 /* BankItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankItem.h; sourceTree = "<group>"; };
 		2C638B3116ED9661009CE242 /* BankItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankItem.m; sourceTree = "<group>"; };
 		2C87028A16E98F3700302E17 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -968,6 +970,7 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				18653C9716F76B1000849ACA /* arrest.png */,
 				2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */,
 				2CDB13B316E83AC1005D4598 /* Default.png */,
 				2CDB13B416E83AC1005D4598 /* Default@2x.png */,
@@ -1053,6 +1056,7 @@
 				2CDB13B716E83AC1005D4598 /* Default-568h@2x.png in Resources */,
 				2CDB13B816E83AC1005D4598 /* Default.png in Resources */,
 				2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */,
+				18653C9816F76B1000849ACA /* arrest.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
