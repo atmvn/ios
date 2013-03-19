@@ -213,8 +213,8 @@
         kardsItem.locationname = [obj objectForKey:@"locationname"];
         kardsItem.phoneNumber = [obj objectForKey:@"phones"];
         kardsItem.workingtime = [obj objectForKey:@"workingtime"];
-        kardsItem.latitude = [[obj objectForKey:@"loc"] objectAtIndex:0];
-        kardsItem.longtitude = [[obj objectForKey:@"loc"] objectAtIndex:1];
+        kardsItem.latitude = [[obj objectForKey:@"loc"] objectAtIndex:1];
+        kardsItem.longtitude = [[obj objectForKey:@"loc"] objectAtIndex:0];
     }
     
     [[AppViewController Shared] saveContext];
