@@ -9,13 +9,13 @@
 #import "ViewController.h"
 #import "AppViewController.h"
 #import "BankItem.h"
+#import "BankInfosModule.h"
 
-@interface ViewController ()
+@interface ViewController () <NSFetchedResultsControllerDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
     APIRequester                            *_APIRequester;
-    NSMutableArray      *_listBankItems;
     
     NSMutableArray      *_listBank; // list available bank in current area (city, provice)
     NSMutableArray      *_listBankType; // ATM, Tradding place
@@ -23,7 +23,13 @@
     NSInteger           _selectedRow;
     NSString            *_selectedBank;
     enumBankType        _selectedType;
+    
+    // search string
+    NSString *_searchStr;
+    NSString *_searchType;
 }
+
+@property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
 
 @end
 
@@ -34,9 +40,12 @@
     [super viewDidLoad];
     _APIRequester = [APIRequester new];
     currentLocation = nil;
-    _listBankItems = [[NSMutableArray alloc] init];
     _selectedBank = nil;
     _selectedType = enumBankType_Num;
+    _searchStr = @"";
+    _searchType = @"";
+    
+    
     // init bank list, and bank type
     _listBank = [[NSMutableArray alloc] initWithObjects:
                  @"Tất Cả Ngân Hàng",
@@ -60,11 +69,16 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+//    [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(_lattitude, _longtitude)];
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
     _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     [_locationManager startUpdatingLocation];
+    
+    // for testing
+//    currentLocation = [[CLLocation alloc] initWithLatitude:_lattitude longitude:_longtitude];
+//    [self requestListNearestATM];
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,16 +102,126 @@
         [_mapView removeAnnotation:annotation];
     }
 
-//    [_mapView addAnnotations:_listBankItems];
-    for (BankItem *item in _listBankItems)
-    {
-        if(_selectedBank && ![_selectedBank isEqualToString:item.bankName])
-            continue;
-        if (_selectedType != enumBankType_Num && _selectedType != item.type) {
-            continue;
+    for (BankInfosModule *info in self.fetchedResultsController.fetchedObjects) {
+        BankItem *item = [[BankItem alloc] init];
+        item.itemID = info.itemID;
+        item.address = info.address;
+        item.bankName = info.bankNameEN;
+        if([info.banktype isEqualToString:@"ATM"])
+        {
+            item.type = enumBankType_ATM;
         }
+        item.city = info.city;
+        item.locationName = info.locationname;
+        item.phoneNumber = info.phoneNumber;
+        item.workingTime = info.workingtime;
+        item.distance = [info.distance floatValue];
+        CGFloat latitude = [info.latitude floatValue];
+        CGFloat longtitude = [info.longtitude floatValue];
+        item.location = CLLocationCoordinate2DMake(latitude, longtitude);
         
         [self.mapView addAnnotation:item];
+    }
+}
+
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"BankInfosModule" inManagedObjectContext:[[AppViewController Shared] managedObjectContext]];
+    [fetchRequest setEntity:entity];
+    
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"bankID"  ascending:YES selector:@selector(caseInsensitiveCompare:)];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    //    [fetchRequest setFetchBatchSize:20];
+    
+    if (![_searchStr isEqualToString:@""] && ![_searchType isEqualToString:@""])
+    {
+        // init predicate to search
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(bankNameEN like %@) AND (banktype like %@)", _searchStr, _searchType];
+        [fetchRequest setPredicate:pred];
+    }
+    else if (![_searchStr isEqualToString:@""])
+    {
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"bankNameEN like %@", _searchStr];
+        [fetchRequest setPredicate:pred];
+    }
+    else if (![_searchType isEqualToString:@""])
+    {
+        // init predicate to search
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"banktype like %@", _searchType];
+        [fetchRequest setPredicate:pred];
+    }
+    
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[AppViewController Shared] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
+    _fetchedResultsController.delegate = self;
+    
+    return _fetchedResultsController;
+}
+
+- (void)performSearchKardForBankName:(NSString*)name withType:(enumBankType)type
+{
+    _searchStr = name ? name : @"";
+    _searchType = type == enumBankType_ATM ? @"ATM" : @"";
+    _fetchedResultsController = nil;
+    
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		exit(-1);
+    }
+    
+    // reload table
+//    [self reloadInterface];
+}
+
+#pragma mark - Database Methods
+- (void)deleteAllBankData
+{
+    ////VKLog(@"deleteAllKard-0");
+    int n = [[self.fetchedResultsController fetchedObjects] count];
+    for (int i = 0; i < n; i++)
+    {
+        BankInfosModule *info = [[self.fetchedResultsController fetchedObjects] objectAtIndex:i];
+        [[[AppViewController Shared] managedObjectContext] deleteObject:info];
+    }
+    [[AppViewController Shared] saveContext];
+}
+
+- (void)insertKardDataFromServer:(NSMutableArray *)dataList
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    for (NSMutableDictionary *dict in dataList) {
+        
+        NSMutableDictionary *dicJson = [SupportFunction normalizeDictionary:dict];
+        
+        BankInfosModule *kardsItem = [NSEntityDescription insertNewObjectForEntityForName:@"BankInfosModule" inManagedObjectContext:[[AppViewController Shared] managedObjectContext]];
+        kardsItem.distance = [dicJson objectForKey:@"dis"];
+        NSDictionary *obj = [dicJson objectForKey:@"obj"];
+        kardsItem.itemID = [obj objectForKey:@"_id"];
+        kardsItem.address = [obj objectForKey:@"address"];
+        kardsItem.bankID = [obj objectForKey:@"bankID"];
+        kardsItem.bankNameEN = [obj objectForKey:@"bankNameEN"];
+        kardsItem.bankNameVN = [obj objectForKey:@"bankNameVN"];
+        kardsItem.banktype = [obj objectForKey:@"banktype"];
+        kardsItem.city = [obj objectForKey:@"city"];
+        kardsItem.locationname = [obj objectForKey:@"locationname"];
+        kardsItem.phoneNumber = [obj objectForKey:@"phones"];
+        kardsItem.workingtime = [obj objectForKey:@"workingtime"];
+        kardsItem.latitude = [[obj objectForKey:@"loc"] objectAtIndex:0];
+        kardsItem.longtitude = [[obj objectForKey:@"loc"] objectAtIndex:1];
+    }
+    
+    [[AppViewController Shared] saveContext];
+    
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error]) {
+		exit(-1);
     }
 }
 
@@ -127,8 +251,6 @@
 - (void)requestListNearestATM
 {
     if(!currentLocation) return;
-//    CGFloat longtitude = 106.63896;
-//    CGFloat lattitude = 10.827257;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:3];
     [params setValue:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] forKey:STRING_REQUEST_KEY_LONGTITUDE];
     [params setValue:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude] forKey:STRING_REQUEST_KEY_LATTITUDE];
@@ -158,11 +280,13 @@
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
         NSLog(@"%@", atmList);
-        [_listBankItems removeAllObjects];
-        for (NSDictionary *dataDic in atmList) {
-            BankItem *bankItem = [[BankItem alloc] initWithData:dataDic];
-            [_listBankItems addObject:bankItem];
-        }
+        // delete all bank in database first
+        [self deleteAllBankData];
+        // add new bank data
+        [self insertKardDataFromServer:atmList];
+        // fetch data
+        [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+        // reload interface
         [self loadInterface];
     }
     

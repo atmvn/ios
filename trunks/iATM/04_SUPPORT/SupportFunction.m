@@ -395,6 +395,22 @@ void ALERT_2(NSString* title, NSString* message, id delegate, NSString* other_bu
     return [muDictionary autorelease];
 }
 
++(NSMutableDictionary *)normalizeDictionary:(NSMutableDictionary*)dictionary
+{
+    NSArray *allKeys = [dictionary allKeys];
+    for (id key in allKeys) {
+        id object = [dictionary objectForKey:key];
+        if ([object isKindOfClass:[NSMutableDictionary class]]) {
+            [self normalizeDictionary:object];
+            [dictionary setObject:object forKey:key];
+        }
+        else if ((NSNull *)[dictionary objectForKey:key] == [NSNull null]) {
+            [dictionary setObject:@"" forKey:key];
+        }
+    }
+    return dictionary;
+}
+
 + (void)scalePickerView:(UIPickerView *)picker toSize:(CGSize)size {
     picker.frame = FRAME(0, 0, picker.frame.size.height * size.width / size.height, picker.frame.size.height);
     float widthScale = size.width / picker.bounds.size.width;

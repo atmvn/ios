@@ -16,7 +16,7 @@
     if (self) {
         self.distance = [[dataDic objectForKey:@"dis"] floatValue];
         NSDictionary *obj = [dataDic objectForKey:@"obj"];
-        self.itemID = [[obj objectForKey:@"_id"] integerValue];
+        self.itemID = [obj objectForKey:@"_id"];
         self.address = [obj objectForKey:@"address"];
         self.bankName = [obj objectForKey:@"bankname"];
         if([[obj objectForKey:@"banktype"] isEqualToString:@"ATM"])

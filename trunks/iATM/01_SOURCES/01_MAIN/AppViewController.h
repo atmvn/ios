@@ -21,6 +21,10 @@
     NSTimer                                         *_timerCountDown;
 }
 
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
 @property (nonatomic) NSTimeInterval                backgroundTimeInterval;
 @property (nonatomic) int                           remainingTime;
 
@@ -33,6 +37,8 @@
 - (void)update;
 
 #pragma mark - Model
+- (void)saveContext;
+- (BOOL)validateLocalDatabase;
 -(void)requestUpdateDeviceToken:(NSString*)oldToken;
 #pragma mark - UIImage Picker View Controller
 - (void)changeToPickerControllerWithSourceType:(UIImagePickerControllerSourceType)type andDelegate:(id<UINavigationControllerDelegate, UIImagePickerControllerDelegate>)delegate;

@@ -140,6 +140,7 @@ NSString *NSStringFromResolution(UIDeviceResolution resolution);
 + (NSString *)stringFromDate:(NSDate *)date;
 + (NSString *)stringFromDateUseForName:(NSDate *)date;
 + (NSMutableDictionary *)repairingDictionaryWith:(NSDictionary *)dictionary;
++(NSMutableDictionary *)normalizeDictionary:(NSMutableDictionary*)dictionary;
 
 void ALERT(NSString* title, NSString* message);
 void ALERT_2(NSString* title, NSString* message, id delegate, NSString* other_button, NSString* cancel_button);

@@ -80,7 +80,7 @@
 #define STRING_RESPONSE_KEY_OK                                          @"ok"
 #define STRING_RESPONSE_KEY_RESULTS                                     @"results"
 
-#define kSqliteFileName @"VisiKard"
+#define kSqliteFileName @"iATM_DB"
 
 @protocol APIRequesterProtocol <NSObject>
 
