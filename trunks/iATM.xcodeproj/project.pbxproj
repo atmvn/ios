@@ -141,6 +141,7 @@
 		2CDB13B716E83AC1005D4598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */; };
 		2CDB13B816E83AC1005D4598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B316E83AC1005D4598 /* Default.png */; };
 		2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B416E83AC1005D4598 /* Default@2x.png */; };
+		AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = AABDA1F916FDFA3600A52F5D /* fakeLoc.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -406,6 +407,7 @@
 		2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2CDB13B316E83AC1005D4598 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2CDB13B416E83AC1005D4598 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		AABDA1F916FDFA3600A52F5D /* fakeLoc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fakeLoc.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +439,7 @@
 		18202B8416E630090042F0C1 = {
 			isa = PBXGroup;
 			children = (
+				AABDA1F916FDFA3600A52F5D /* fakeLoc.gpx */,
 				18202B9916E6300A0042F0C1 /* iATM */,
 				18202B9216E6300A0042F0C1 /* Frameworks */,
 				18202B9016E6300A0042F0C1 /* Products */,
@@ -1077,6 +1080,7 @@
 				2CDB13B816E83AC1005D4598 /* Default.png in Resources */,
 				2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */,
 				18653C9816F76B1000849ACA /* arrest.png in Resources */,
+				AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
