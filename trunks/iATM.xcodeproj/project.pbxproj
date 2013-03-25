@@ -1273,7 +1273,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "iATM/iATM-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iATM/02_LIBS/TWITTER/Libraries & Headers\"",
@@ -1295,7 +1295,7 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "iATM/iATM-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/iATM/02_LIBS/TWITTER/Libraries & Headers\"",

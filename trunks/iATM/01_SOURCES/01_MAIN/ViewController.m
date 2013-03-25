@@ -75,10 +75,6 @@
     _locationManager.delegate = self;
     _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     [_locationManager startUpdatingLocation];
-    
-    // for testing
-//    currentLocation = [[CLLocation alloc] initWithLatitude:_lattitude longitude:_longtitude];
-//    [self requestListNearestATM];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +90,22 @@
     [self setBankBtn:nil];
     [self setBankTypeBtn:nil];
     [super viewDidUnload];
+}
+
+-(void)updateListBank
+{
+    [_listBank removeAllObjects];
+    [self performSearchKardForBankName:@"" withType:@""];
+    for (BankInfosModule *info in self.fetchedResultsController.fetchedObjects)
+    {
+        NSLog(@"name = %@", info.bankNameEN);
+        if (![_listBank containsObject:info.bankNameEN]) {
+            [_listBank addObject:info.bankNameEN];
+        }
+    }
+    _listBank = [NSMutableArray arrayWithArray:[_listBank sortedArrayUsingSelector:@selector(compare:)]];
+    NSLog(@"%@", _listBank);
+    
 }
 
 -(void)loadInterface
@@ -142,18 +154,18 @@
     if (![_searchStr isEqualToString:@""] && ![_searchType isEqualToString:@""])
     {
         // init predicate to search
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(bankNameEN like %@) AND (banktype like %@)", _searchStr, _searchType];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(bankNameEN ==[c] %@) AND (banktype ==[c] %@)", _searchStr, _searchType];
         [fetchRequest setPredicate:pred];
     }
     else if (![_searchStr isEqualToString:@""])
     {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"bankNameEN like %@", _searchStr];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"bankNameEN ==[c] %@", _searchStr];
         [fetchRequest setPredicate:pred];
     }
     else if (![_searchType isEqualToString:@""])
     {
         // init predicate to search
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"banktype like %@", _searchType];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"banktype ==[c] %@", _searchType];
         [fetchRequest setPredicate:pred];
     }
     
@@ -284,6 +296,9 @@
         [self deleteAllBankData];
         // add new bank data
         [self insertKardDataFromServer:atmList];
+        
+        // update list bank name
+        [self updateListBank];
         // fetch data
         [self performSearchKardForBankName:_selectedBank withType:_selectedType];
         // reload interface
@@ -323,7 +338,7 @@
     return nil;
 }
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender {
-    [self requestListNearestATM];
+    currentLocation = nil;
 }
 
 - (IBAction)pickerCancelTouchUpInside:(id)sender {
@@ -345,6 +360,7 @@
         [tempBtn setTitle:selectedStr];
     } completion:nil];
     
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
     // reload list ATM on map
     [self loadInterface];
 }
