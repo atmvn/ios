@@ -904,7 +904,7 @@
 		18202BB416E6300A0042F0C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Vu Trong";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iATM/iATM-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
@@ -924,7 +924,7 @@
 					"\"$(SRCROOT)/iATM/02_LIBS/TWITTER/Libraries & Headers\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D4FA3A9-7BEA-4B45-8D8E-EABB83C20393";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

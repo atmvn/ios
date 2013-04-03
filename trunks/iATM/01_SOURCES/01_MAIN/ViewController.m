@@ -218,6 +218,7 @@
         coordinates[index] = coordinate;
     }
     
+    [_mapView removeOverlay:_polyLine];
     _polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
     [_mapView addOverlay:_polyLine];
     
