@@ -20,12 +20,14 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bankTypeBtn;
 @property (weak, nonatomic) IBOutlet UIView *pickerContainerView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender;
 - (IBAction)pickerCancelTouchUpInside:(id)sender;
 - (IBAction)pickerDoneTouchUpInside:(id)sender;
 - (IBAction)bankBtnTouchUpInside:(id)sender;
 
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender;
+- (IBAction)directionBtnTouchUpInside:(UIButton *)sender;
 
 
 @end

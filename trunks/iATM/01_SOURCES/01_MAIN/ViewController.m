@@ -11,10 +11,13 @@
 #import "BankItem.h"
 #import "BankInfosModule.h"
 
+#define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
+
 @interface ViewController () <NSFetchedResultsControllerDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
+    MKPolyline *_polyLine;
     APIRequester                            *_APIRequester;
     
     NSMutableArray      *_listBank; // list available bank in current area (city, provice)
@@ -27,6 +30,8 @@
     // search string
     NSString *_searchStr;
     NSString *_searchType;
+    
+    BankItem *_selectedBankItem;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -89,6 +94,7 @@
     [self setPickerView:nil];
     [self setBankBtn:nil];
     [self setBankTypeBtn:nil];
+    [self setDirectionBtn:nil];
     [super viewDidUnload];
 }
 
@@ -189,6 +195,81 @@
     
     // reload table
 //    [self reloadInterface];
+}
+
+-(void)getDirectionFrom:(CLLocationCoordinate2D)source to:(CLLocationCoordinate2D)destination
+{
+    NSString *url = [NSString stringWithFormat:@"%@?origin=%f,%f&destination=%f,%f&sensor=true",REQUEST_URL_GOOGLE_DIRECTION_API, source.latitude, source.longitude, destination.latitude, destination.longitude];
+    [[AppViewController Shared] isRequesting:YES andRequestType:ENUM_API_REQUEST_TYPE_GET_DIRECTION andFrame:FRAME(0, 0, WIDTH_IPHONE, HEIGHT_IPHONE)];
+    [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_DIRECTION andRootURL:url andPostMethodKind:NO andParams:nil andDelegate:self];
+}
+
+-(void)updateDirectionWithData:(NSDictionary*)data
+{
+    NSDictionary *route = [[data objectForKey:@"routes"] objectAtIndex:0];
+    NSString *allPolylines = [[route objectForKey:@"overview_polyline"] objectForKey:@"points"];
+    NSMutableArray *_path = [self decodePolyLine:allPolylines];
+    NSInteger numberOfSteps = _path.count;
+    CLLocationCoordinate2D coordinates[numberOfSteps];
+    for (NSInteger index = 0; index < numberOfSteps; index++) {
+        CLLocation *location = [_path objectAtIndex:index];
+        CLLocationCoordinate2D coordinate = location.coordinate;
+        
+        coordinates[index] = coordinate;
+    }
+    
+    _polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
+    [_mapView addOverlay:_polyLine];
+}
+
+- (NSMutableArray *)decodePolyLine:(NSString *)encodedStr
+{
+    NSMutableString *encoded = [[NSMutableString alloc] initWithCapacity:[encodedStr length]];
+    [encoded appendString:encodedStr];
+    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, [encoded length])];
+    NSInteger len = [encoded length];
+    NSInteger index = 0;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger lat=0;
+    NSInteger lng=0;
+    
+    while (index < len)
+    {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        
+        do
+        {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        
+        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        
+        do
+        {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        
+        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:location];
+    }
+    
+    return array;
 }
 
 #pragma mark - Database Methods
@@ -304,7 +385,11 @@
         // reload interface
         [self loadInterface];
     }
-    
+    else if (type == ENUM_API_REQUEST_TYPE_GET_DIRECTION)
+    {
+        NSLog(@"Direction = %@", dicJson);
+        [self updateDirectionWithData:dicJson];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
@@ -337,6 +422,34 @@
     
     return nil;
 }
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"didSelectAnnotationView");
+    if ([view.annotation isKindOfClass:[BankItem class]]) {
+        self.directionBtn.hidden = NO;
+        _selectedBankItem = (BankItem*)view.annotation;
+    }
+}
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"didDeselectAnnotationView");
+    if ([view.annotation isKindOfClass:[BankItem class]]) {
+        self.directionBtn.hidden = YES;
+        _selectedBankItem = nil;
+    }
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView
+            viewForOverlay:(id<MKOverlay>)overlay {
+    MKPolylineView *overlayView = [[MKPolylineView alloc] initWithOverlay:overlay];
+    overlayView.lineWidth = 5;
+    overlayView.strokeColor = [UIColor redColor];
+    overlayView.fillColor = [[UIColor purpleColor] colorWithAlphaComponent:0.5f];
+    return overlayView;
+}
+#pragma mark - Utilities
+
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender {
     currentLocation = nil;
 }
@@ -371,6 +484,12 @@
 }
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender {
     [self showPickerWithData:_listBankType];
+}
+
+- (IBAction)directionBtnTouchUpInside:(UIButton *)sender {
+    if (_selectedBankItem) {
+        [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
+    }
 }
 
 -(void)showPickerWithData:(NSArray*)data
