@@ -220,6 +220,9 @@
     
     _polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
     [_mapView addOverlay:_polyLine];
+    
+    // hide button request direction
+    self.directionBtn.hidden = YES;
 }
 
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedStr
