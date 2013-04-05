@@ -13,7 +13,7 @@
 typedef enum
 {
     enumBankType_ATM = 0,
-    enumBankType_Branch,
+    enumBankType_TraddingPlace,
     enumBankType_Num
 }enumBankType;
 
