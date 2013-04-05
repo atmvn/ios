@@ -10,11 +10,18 @@
 #import "AppViewController.h"
 #import "BankItem.h"
 #import "BankInfosModule.h"
+#import "BBCell.h"
+#import <QuartzCore/QuartzCore.h>
 
-@interface ViewController () <NSFetchedResultsControllerDelegate>
+#define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
+#define KEY_TITLE @"bankTitle"
+#define KEY_IMAGE @"image"
+
+@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
+    MKPolyline *_polyLine;
     APIRequester                            *_APIRequester;
     
     NSMutableArray      *_listBank; // list available bank in current area (city, provice)
@@ -27,6 +34,9 @@
     // search string
     NSString *_searchStr;
     NSString *_searchType;
+    
+    BankItem *_selectedBankItem;
+    NSMutableArray *mDataSource;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -89,6 +99,8 @@
     [self setPickerView:nil];
     [self setBankBtn:nil];
     [self setBankTypeBtn:nil];
+    [self setDirectionBtn:nil];
+    [self setBankTableView:nil];
     [super viewDidUnload];
 }
 
@@ -105,7 +117,8 @@
     }
     _listBank = [NSMutableArray arrayWithArray:[_listBank sortedArrayUsingSelector:@selector(compare:)]];
     NSLog(@"%@", _listBank);
-    
+    // reload bank table
+    [self loadDataSource:_listBank];
 }
 
 -(void)loadInterface
@@ -189,6 +202,85 @@
     
     // reload table
 //    [self reloadInterface];
+}
+
+-(void)getDirectionFrom:(CLLocationCoordinate2D)source to:(CLLocationCoordinate2D)destination
+{
+    NSString *url = [NSString stringWithFormat:@"%@?origin=%f,%f&destination=%f,%f&sensor=true",REQUEST_URL_GOOGLE_DIRECTION_API, source.latitude, source.longitude, destination.latitude, destination.longitude];
+    [[AppViewController Shared] isRequesting:YES andRequestType:ENUM_API_REQUEST_TYPE_GET_DIRECTION andFrame:FRAME(0, 0, WIDTH_IPHONE, HEIGHT_IPHONE)];
+    [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_DIRECTION andRootURL:url andPostMethodKind:NO andParams:nil andDelegate:self];
+}
+
+-(void)updateDirectionWithData:(NSDictionary*)data
+{
+    NSDictionary *route = [[data objectForKey:@"routes"] objectAtIndex:0];
+    NSString *allPolylines = [[route objectForKey:@"overview_polyline"] objectForKey:@"points"];
+    NSMutableArray *_path = [self decodePolyLine:allPolylines];
+    NSInteger numberOfSteps = _path.count;
+    CLLocationCoordinate2D coordinates[numberOfSteps];
+    for (NSInteger index = 0; index < numberOfSteps; index++) {
+        CLLocation *location = [_path objectAtIndex:index];
+        CLLocationCoordinate2D coordinate = location.coordinate;
+        
+        coordinates[index] = coordinate;
+    }
+    
+    [_mapView removeOverlay:_polyLine];
+    _polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
+    [_mapView addOverlay:_polyLine];
+    
+    // hide button request direction
+    self.directionBtn.hidden = YES;
+}
+
+- (NSMutableArray *)decodePolyLine:(NSString *)encodedStr
+{
+    NSMutableString *encoded = [[NSMutableString alloc] initWithCapacity:[encodedStr length]];
+    [encoded appendString:encodedStr];
+    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, [encoded length])];
+    NSInteger len = [encoded length];
+    NSInteger index = 0;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger lat=0;
+    NSInteger lng=0;
+    
+    while (index < len)
+    {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        
+        do
+        {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        
+        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        
+        do
+        {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        
+        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:location];
+    }
+    
+    return array;
 }
 
 #pragma mark - Database Methods
@@ -304,7 +396,11 @@
         // reload interface
         [self loadInterface];
     }
-    
+    else if (type == ENUM_API_REQUEST_TYPE_GET_DIRECTION)
+    {
+        NSLog(@"Direction = %@", dicJson);
+        [self updateDirectionWithData:dicJson];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
@@ -337,6 +433,34 @@
     
     return nil;
 }
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"didSelectAnnotationView");
+    if ([view.annotation isKindOfClass:[BankItem class]]) {
+        self.directionBtn.hidden = NO;
+        _selectedBankItem = (BankItem*)view.annotation;
+    }
+}
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    NSLog(@"didDeselectAnnotationView");
+    if ([view.annotation isKindOfClass:[BankItem class]]) {
+        self.directionBtn.hidden = YES;
+        _selectedBankItem = nil;
+    }
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView
+            viewForOverlay:(id<MKOverlay>)overlay {
+    MKPolylineView *overlayView = [[MKPolylineView alloc] initWithOverlay:overlay];
+    overlayView.lineWidth = 5;
+    overlayView.strokeColor = [UIColor redColor];
+    overlayView.fillColor = [[UIColor purpleColor] colorWithAlphaComponent:0.5f];
+    return overlayView;
+}
+#pragma mark - Utilities
+
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender {
     currentLocation = nil;
 }
@@ -366,11 +490,26 @@
 }
 
 - (IBAction)bankBtnTouchUpInside:(id)sender {
-    // show bank picker
-    [self showPickerWithData:_listBank];
+
+    _activeList = _listBank;
+    // show bank list
+    CGRect r = self.bankTableView.frame;
+    r.origin.y = HEIGHT_IPHONE;
+    self.bankTableView.frame = r;
+    self.bankTableView.hidden = NO;
+    r.origin.y = 0;
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.bankTableView.frame = r;
+    } completion:nil];
 }
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender {
     [self showPickerWithData:_listBankType];
+}
+
+- (IBAction)directionBtnTouchUpInside:(UIButton *)sender {
+    if (_selectedBankItem) {
+        [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
+    }
 }
 
 -(void)showPickerWithData:(NSArray*)data
@@ -393,6 +532,37 @@
     [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationCurveEaseOut animations:^{
         self.pickerContainerView.frame = r;
     } completion:nil];
+}
+
+-(void)doubleTapOnCell:(UITapGestureRecognizer*)recognizer
+{
+    // close table view
+    CGRect r = self.bankTableView.frame;
+    r.origin.y = HEIGHT_IPHONE;
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.bankTableView.frame = r;
+    } completion:^(BOOL finished) {
+        self.bankTableView.hidden = YES;
+    }];
+    
+    _selectedRow = recognizer.view.tag;
+    
+    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
+    UIBarButtonItem *tempBtn = self.bankBtn;
+    if (_activeList == _listBankType) {
+        tempBtn = self.bankTypeBtn;
+        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
+    }
+    else {
+        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
+    }
+    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [tempBtn setTitle:selectedStr];
+    } completion:nil];
+    
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+    // reload list ATM on map
+    [self loadInterface];
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -427,6 +597,87 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _selectedRow = row;
+}
+
+
+
+#pragma mark UITableViewDelegate Methods
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return  [_listBank count];
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *test = @"table";
+    BBCell *cell = (BBCell*)[tableView dequeueReusableCellWithIdentifier:test];
+    if( !cell )
+    {
+        cell = [[BBCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:test];
+        UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnCell:)];
+        tapgesture.numberOfTapsRequired = 2;
+        [cell addGestureRecognizer:tapgesture];
+    }
+    cell.tag = indexPath.row;
+    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row ];
+    [cell setCellTitle:[info objectForKey:KEY_TITLE]];
+    [cell setIcon:[info objectForKey:KEY_IMAGE]];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"did select = %d", indexPath.row);
+}
+
+//read the data from the plist and alos the image will be masked to form a circular shape
+- (void)loadDataSource:(NSMutableArray*)listBanks
+{
+    mDataSource = [[NSMutableArray alloc] init];
+    
+    NSString *imageName = @"vietcombank.png";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //generate image clipped in a circle
+        for( NSString * bankName in listBanks )
+        {
+            NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
+            [info setValue:bankName forKey:KEY_TITLE];
+            UIImage *image = [UIImage imageNamed:imageName];
+            UIImage *finalImage = nil;
+            UIGraphicsBeginImageContext(image.size);
+            {
+                CGContextRef ctx = UIGraphicsGetCurrentContext();
+                CGAffineTransform trnsfrm = CGAffineTransformConcat(CGAffineTransformIdentity, CGAffineTransformMakeScale(1.0, -1.0));
+                trnsfrm = CGAffineTransformConcat(trnsfrm, CGAffineTransformMakeTranslation(0.0, image.size.height));
+                CGContextConcatCTM(ctx, trnsfrm);
+                CGContextBeginPath(ctx);
+                CGContextAddEllipseInRect(ctx, CGRectMake(0.0, 0.0, image.size.width, image.size.height));
+                CGContextClip(ctx);
+                CGContextDrawImage(ctx, CGRectMake(0.0, 0.0, image.size.width, image.size.height), image.CGImage);
+                finalImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
+            [info setObject:finalImage forKey:KEY_IMAGE];
+            
+            [mDataSource addObject:info];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.bankTableView reloadData];
+            // [self setupShapeFormationInVisibleCells];
+        });
+    });
 }
 
 @end

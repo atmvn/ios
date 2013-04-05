@@ -96,6 +96,10 @@
 		2C87029016E98F3700302E17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028B16E98F3700302E17 /* AppDelegate.m */; };
 		2C87029116E98F3700302E17 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028D16E98F3700302E17 /* AppViewController.m */; };
 		2C87029216E98F3700302E17 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028F16E98F3700302E17 /* ViewController.m */; };
+		2CDAC56A170E82D10096A939 /* BBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAC564170E82D10096A939 /* BBCell.m */; };
+		2CDAC56B170E82D10096A939 /* BBTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAC566170E82D10096A939 /* BBTableView.m */; };
+		2CDAC56C170E82D10096A939 /* BBTableViewInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDAC569170E82D10096A939 /* BBTableViewInterceptor.m */; };
+		2CDAC56F170E8BE20096A939 /* vietcombank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDAC56E170E8BE20096A939 /* vietcombank.png */; };
 		2CDB13B716E83AC1005D4598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */; };
 		2CDB13B816E83AC1005D4598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B316E83AC1005D4598 /* Default.png */; };
 		2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B416E83AC1005D4598 /* Default@2x.png */; };
@@ -270,6 +274,13 @@
 		2C87028D16E98F3700302E17 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
 		2C87028E16E98F3700302E17 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2C87028F16E98F3700302E17 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2CDAC563170E82D10096A939 /* BBCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBCell.h; sourceTree = "<group>"; };
+		2CDAC564170E82D10096A939 /* BBCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBCell.m; sourceTree = "<group>"; };
+		2CDAC565170E82D10096A939 /* BBTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTableView.h; sourceTree = "<group>"; };
+		2CDAC566170E82D10096A939 /* BBTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTableView.m; sourceTree = "<group>"; };
+		2CDAC568170E82D10096A939 /* BBTableViewInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBTableViewInterceptor.h; sourceTree = "<group>"; };
+		2CDAC569170E82D10096A939 /* BBTableViewInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBTableViewInterceptor.m; sourceTree = "<group>"; };
+		2CDAC56E170E8BE20096A939 /* vietcombank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vietcombank.png; sourceTree = "<group>"; };
 		2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2CDB13B316E83AC1005D4598 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2CDB13B416E83AC1005D4598 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -367,6 +378,7 @@
 		1859A00616E63E22001EB8CF /* 02_LIBS */ = {
 			isa = PBXGroup;
 			children = (
+				2CDAC561170E82D10096A939 /* BBTableView */,
 				1859A00716E63E22001EB8CF /* ASIHTTP */,
 				1859A01E16E63E22001EB8CF /* FACEBOOK */,
 				1859A03316E63E22001EB8CF /* FontLabel */,
@@ -666,6 +678,43 @@
 			path = 01_MAIN;
 			sourceTree = "<group>";
 		};
+		2CDAC561170E82D10096A939 /* BBTableView */ = {
+			isa = PBXGroup;
+			children = (
+				2CDAC562170E82D10096A939 /* BBCell */,
+				2CDAC565170E82D10096A939 /* BBTableView.h */,
+				2CDAC566170E82D10096A939 /* BBTableView.m */,
+				2CDAC567170E82D10096A939 /* Interceptor */,
+			);
+			path = BBTableView;
+			sourceTree = "<group>";
+		};
+		2CDAC562170E82D10096A939 /* BBCell */ = {
+			isa = PBXGroup;
+			children = (
+				2CDAC563170E82D10096A939 /* BBCell.h */,
+				2CDAC564170E82D10096A939 /* BBCell.m */,
+			);
+			path = BBCell;
+			sourceTree = "<group>";
+		};
+		2CDAC567170E82D10096A939 /* Interceptor */ = {
+			isa = PBXGroup;
+			children = (
+				2CDAC568170E82D10096A939 /* BBTableViewInterceptor.h */,
+				2CDAC569170E82D10096A939 /* BBTableViewInterceptor.m */,
+			);
+			path = Interceptor;
+			sourceTree = "<group>";
+		};
+		2CDAC56D170E8BE20096A939 /* bank_icons */ = {
+			isa = PBXGroup;
+			children = (
+				2CDAC56E170E8BE20096A939 /* vietcombank.png */,
+			);
+			path = bank_icons;
+			sourceTree = "<group>";
+		};
 		2CDB13AC16E83AC1005D4598 /* 01_SOURCES */ = {
 			isa = PBXGroup;
 			children = (
@@ -678,6 +727,7 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				2CDAC56D170E8BE20096A939 /* bank_icons */,
 				18653C9716F76B1000849ACA /* arrest.png */,
 				2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */,
 				2CDB13B316E83AC1005D4598 /* Default.png */,
@@ -751,6 +801,7 @@
 				2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */,
 				18653C9816F76B1000849ACA /* arrest.png in Resources */,
 				AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */,
+				2CDAC56F170E8BE20096A939 /* vietcombank.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +877,9 @@
 				2C638B3216ED9661009CE242 /* BankItem.m in Sources */,
 				18BFB1D516F8B299009ED31E /* iATM_DB.xcdatamodeld in Sources */,
 				18BFB1E316F8C717009ED31E /* BankInfosModule.m in Sources */,
+				2CDAC56A170E82D10096A939 /* BBCell.m in Sources */,
+				2CDAC56B170E82D10096A939 /* BBTableView.m in Sources */,
+				2CDAC56C170E82D10096A939 /* BBTableViewInterceptor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -904,7 +958,7 @@
 		18202BB416E6300A0042F0C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Vu Trong";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "iATM/iATM-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
@@ -924,7 +978,7 @@
 					"\"$(SRCROOT)/iATM/02_LIBS/TWITTER/Libraries & Headers\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6D4FA3A9-7BEA-4B45-8D8E-EABB83C20393";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

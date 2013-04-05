@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -70,12 +70,38 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eE0-lC-IL3">
+                                <rect key="frame" x="20" y="10" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Direction to here">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="directionBtnTouchUpInside:" destination="2" eventType="touchUpInside" id="1wF-8y-AZd"/>
+                                </connections>
+                            </button>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Eb3-9d-qjC" customClass="BBTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2" id="8he-C8-wAc"/>
+                                    <outlet property="delegate" destination="2" id="11D-ZO-K4g"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="bankBtn" destination="zTH-kD-WyP" id="rat-wa-j4K"/>
+                        <outlet property="bankTableView" destination="Eb3-9d-qjC" id="6Nc-xa-SrI"/>
                         <outlet property="bankTypeBtn" destination="ygW-8b-jLQ" id="6b7-LM-Vud"/>
+                        <outlet property="directionBtn" destination="eE0-lC-IL3" id="edI-Ex-W9t"/>
                         <outlet property="mapView" destination="76H-vt-VJo" id="cco-Rm-cg5"/>
                         <outlet property="pickerContainerView" destination="cNO-SU-4dv" id="1Tm-5R-ODA"/>
                         <outlet property="pickerView" destination="nr7-cW-inC" id="SGF-EP-qAL"/>
@@ -86,16 +112,22 @@
         </scene>
     </scenes>
     <classes>
+        <class className="BBTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BBTableView.h"/>
+        </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
                 <relationship kind="action" name="bankBtnTouchUpInside:"/>
                 <relationship kind="action" name="bankTypeBtnTouchUpInside:"/>
+                <relationship kind="action" name="directionBtnTouchUpInside:" candidateClass="UIButton"/>
                 <relationship kind="action" name="pickerCancelTouchUpInside:"/>
                 <relationship kind="action" name="pickerDoneTouchUpInside:"/>
                 <relationship kind="action" name="refreshTouchUpInside:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bankBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="bankTableView" candidateClass="BBTableView"/>
                 <relationship kind="outlet" name="bankTypeBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="directionBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="pickerContainerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
