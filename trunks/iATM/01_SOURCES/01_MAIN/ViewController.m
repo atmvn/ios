@@ -107,7 +107,7 @@
 -(void)updateListBank
 {
     [_listBank removeAllObjects];
-    [self performSearchKardForBankName:@"" withType:@""];
+    [self performSearchKardForBankName:@"" withType:enumBankType_Num];
     for (BankInfosModule *info in self.fetchedResultsController.fetchedObjects)
     {
         NSLog(@"name = %@", info.bankNameEN);
