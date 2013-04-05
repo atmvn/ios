@@ -73,7 +73,7 @@
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     [_locationManager startUpdatingLocation];
 }
 
@@ -121,7 +121,11 @@
         item.bankName = info.bankNameEN;
         if([info.banktype isEqualToString:@"ATM"])
         {
+            NSLog(@"0 name = %@, type = %@, coor = (%@, %@)", info.bankNameEN, info.banktype, info.latitude, info.longtitude);
             item.type = enumBankType_ATM;
+        }
+        else {
+            NSLog(@"1 name = %@, type = %@, coor = (%@, %@)", info.bankNameEN, info.banktype, info.latitude, info.longtitude);
         }
         item.city = info.city;
         item.locationName = info.locationname;
@@ -178,7 +182,16 @@
 - (void)performSearchKardForBankName:(NSString*)name withType:(enumBankType)type
 {
     _searchStr = name ? name : @"";
-    _searchType = type == enumBankType_ATM ? @"ATM" : @"";
+    if (type == enumBankType_ATM) {
+        _searchType = @"ATM";
+    }
+    else if (type == enumBankType_Branch)
+    {
+        _searchType = @"BRANCH";
+    }
+    else {
+        _searchType = @"";
+    } 
     _fetchedResultsController = nil;
     
     NSError *error;
@@ -245,6 +258,13 @@
         // TODO: call API for update location
         [self requestListNearestATM];
     }
+    else {
+        CLLocationDistance distance = [newLocation distanceFromLocation:currentLocation];
+        if (distance >= 100.0) {
+            currentLocation = newLocation;
+            [self requestListNearestATM];
+        }
+    }
 }
 
 - (void)applicationWillResignActive
@@ -290,7 +310,7 @@
     
     NSMutableDictionary *dicJson = [sbJSON objectWithString:[request responseString] error:&error];
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
-        NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
+        NSMutableArray *atmList = [self removeDuplicatePlace:[dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS]];
         NSLog(@"%@", atmList);
         // delete all bank in database first
         [self deleteAllBankData];
@@ -429,4 +449,28 @@
     _selectedRow = row;
 }
 
+#pragma mark - Utilities
+-(NSMutableArray*)removeDuplicatePlace:(NSArray*)arrItems
+{
+    NSLog(@"11 count = %d , %@", arrItems.count, arrItems);
+    NSMutableArray *result = [[NSMutableArray alloc ]initWithCapacity:arrItems.count];
+    NSMutableDictionary *hashTable = [[NSMutableDictionary alloc] initWithCapacity:arrItems.count];
+    for (__strong NSMutableDictionary * dic in arrItems)
+    {
+        dic = [SupportFunction normalizeDictionary:dic];
+        NSDictionary *obj = [dic objectForKey:@"obj"];
+        NSString *latitude = [[obj objectForKey:@"loc"] objectAtIndex:1];
+        NSString *longtitude = [[obj objectForKey:@"loc"] objectAtIndex:0];
+        NSString *banktype = [obj objectForKey:@"banktype"];
+        NSString *key = [NSString stringWithFormat:@"%@;%@;%@", longtitude, latitude, banktype];
+        if (![hashTable valueForKey:key]) {
+            // add object to result array
+            [result addObject:obj];
+             // add key to hash table
+            [hashTable setValue:@"1" forKey:key];
+        }
+    }
+    NSLog(@"22 count = %d , %@", result.count, result);
+    return result;
+}
 @end
