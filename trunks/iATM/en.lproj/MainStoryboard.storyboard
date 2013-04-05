@@ -85,11 +85,21 @@
                                     <action selector="directionBtnTouchUpInside:" destination="2" eventType="touchUpInside" id="1wF-8y-AZd"/>
                                 </connections>
                             </button>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Eb3-9d-qjC" customClass="BBTableView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="2" id="8he-C8-wAc"/>
+                                    <outlet property="delegate" destination="2" id="11D-ZO-K4g"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="bankBtn" destination="zTH-kD-WyP" id="rat-wa-j4K"/>
+                        <outlet property="bankTableView" destination="Eb3-9d-qjC" id="6Nc-xa-SrI"/>
                         <outlet property="bankTypeBtn" destination="ygW-8b-jLQ" id="6b7-LM-Vud"/>
                         <outlet property="directionBtn" destination="eE0-lC-IL3" id="edI-Ex-W9t"/>
                         <outlet property="mapView" destination="76H-vt-VJo" id="cco-Rm-cg5"/>
@@ -102,6 +112,9 @@
         </scene>
     </scenes>
     <classes>
+        <class className="BBTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BBTableView.h"/>
+        </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
@@ -112,6 +125,7 @@
                 <relationship kind="action" name="pickerDoneTouchUpInside:"/>
                 <relationship kind="action" name="refreshTouchUpInside:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bankBtn" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="bankTableView" candidateClass="BBTableView"/>
                 <relationship kind="outlet" name="bankTypeBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="directionBtn" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>

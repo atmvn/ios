@@ -10,10 +10,14 @@
 #import "AppViewController.h"
 #import "BankItem.h"
 #import "BankInfosModule.h"
+#import "BBCell.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
+#define KEY_TITLE @"bankTitle"
+#define KEY_IMAGE @"image"
 
-@interface ViewController () <NSFetchedResultsControllerDelegate>
+@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
@@ -32,6 +36,7 @@
     NSString *_searchType;
     
     BankItem *_selectedBankItem;
+    NSMutableArray *mDataSource;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -95,6 +100,7 @@
     [self setBankBtn:nil];
     [self setBankTypeBtn:nil];
     [self setDirectionBtn:nil];
+    [self setBankTableView:nil];
     [super viewDidUnload];
 }
 
@@ -111,7 +117,8 @@
     }
     _listBank = [NSMutableArray arrayWithArray:[_listBank sortedArrayUsingSelector:@selector(compare:)]];
     NSLog(@"%@", _listBank);
-    
+    // reload bank table
+    [self loadDataSource:_listBank];
 }
 
 -(void)loadInterface
@@ -483,8 +490,17 @@
 }
 
 - (IBAction)bankBtnTouchUpInside:(id)sender {
-    // show bank picker
-    [self showPickerWithData:_listBank];
+
+    _activeList = _listBank;
+    // show bank list
+    CGRect r = self.bankTableView.frame;
+    r.origin.y = HEIGHT_IPHONE;
+    self.bankTableView.frame = r;
+    self.bankTableView.hidden = NO;
+    r.origin.y = 0;
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.bankTableView.frame = r;
+    } completion:nil];
 }
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender {
     [self showPickerWithData:_listBankType];
@@ -516,6 +532,37 @@
     [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationCurveEaseOut animations:^{
         self.pickerContainerView.frame = r;
     } completion:nil];
+}
+
+-(void)doubleTapOnCell:(UITapGestureRecognizer*)recognizer
+{
+    // close table view
+    CGRect r = self.bankTableView.frame;
+    r.origin.y = HEIGHT_IPHONE;
+    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.bankTableView.frame = r;
+    } completion:^(BOOL finished) {
+        self.bankTableView.hidden = YES;
+    }];
+    
+    _selectedRow = recognizer.view.tag;
+    
+    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
+    UIBarButtonItem *tempBtn = self.bankBtn;
+    if (_activeList == _listBankType) {
+        tempBtn = self.bankTypeBtn;
+        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
+    }
+    else {
+        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
+    }
+    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [tempBtn setTitle:selectedStr];
+    } completion:nil];
+    
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+    // reload list ATM on map
+    [self loadInterface];
 }
 
 #pragma mark - UIPickerViewDelegate
@@ -550,6 +597,87 @@
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _selectedRow = row;
+}
+
+
+
+#pragma mark UITableViewDelegate Methods
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return  [_listBank count];
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *test = @"table";
+    BBCell *cell = (BBCell*)[tableView dequeueReusableCellWithIdentifier:test];
+    if( !cell )
+    {
+        cell = [[BBCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:test];
+        UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnCell:)];
+        tapgesture.numberOfTapsRequired = 2;
+        [cell addGestureRecognizer:tapgesture];
+    }
+    cell.tag = indexPath.row;
+    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row ];
+    [cell setCellTitle:[info objectForKey:KEY_TITLE]];
+    [cell setIcon:[info objectForKey:KEY_IMAGE]];
+    
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"did select = %d", indexPath.row);
+}
+
+//read the data from the plist and alos the image will be masked to form a circular shape
+- (void)loadDataSource:(NSMutableArray*)listBanks
+{
+    mDataSource = [[NSMutableArray alloc] init];
+    
+    NSString *imageName = @"vietcombank.png";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //generate image clipped in a circle
+        for( NSString * bankName in listBanks )
+        {
+            NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
+            [info setValue:bankName forKey:KEY_TITLE];
+            UIImage *image = [UIImage imageNamed:imageName];
+            UIImage *finalImage = nil;
+            UIGraphicsBeginImageContext(image.size);
+            {
+                CGContextRef ctx = UIGraphicsGetCurrentContext();
+                CGAffineTransform trnsfrm = CGAffineTransformConcat(CGAffineTransformIdentity, CGAffineTransformMakeScale(1.0, -1.0));
+                trnsfrm = CGAffineTransformConcat(trnsfrm, CGAffineTransformMakeTranslation(0.0, image.size.height));
+                CGContextConcatCTM(ctx, trnsfrm);
+                CGContextBeginPath(ctx);
+                CGContextAddEllipseInRect(ctx, CGRectMake(0.0, 0.0, image.size.width, image.size.height));
+                CGContextClip(ctx);
+                CGContextDrawImage(ctx, CGRectMake(0.0, 0.0, image.size.width, image.size.height), image.CGImage);
+                finalImage = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+            }
+            [info setObject:finalImage forKey:KEY_IMAGE];
+            
+            [mDataSource addObject:info];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.bankTableView reloadData];
+            // [self setupShapeFormationInVisibleCells];
+        });
+    });
 }
 
 @end
