@@ -630,7 +630,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  [_listBank count];
+    return  [_listBank count] + 1;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -648,9 +648,15 @@
         [cell addGestureRecognizer:tapgesture];
     }
     cell.tag = indexPath.row;
-    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row ];
-    [cell setCellTitle:[info objectForKey:KEY_TITLE]];
-    [cell setIcon:[info objectForKey:KEY_IMAGE]];
+    
+    if (indexPath.row == 0) {
+        [cell setCellTitle:@"Tất Cả Ngân Hàng"];
+        [cell setIcon:[UIImage imageNamed:@"allATM.png"]];
+    } else {
+        NSDictionary *info = [mDataSource objectAtIndex:(indexPath.row - 1)];
+        [cell setCellTitle:[info objectForKey:KEY_TITLE]];
+        [cell setIcon:[info objectForKey:KEY_IMAGE]];
+    }
     
     return cell;
 }

@@ -89,6 +89,7 @@
 		1859A17D16E641E2001EB8CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */; };
 		1859A17F16E641FB001EB8CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */; };
 		18653C9816F76B1000849ACA /* arrest.png in Resources */ = {isa = PBXBuildFile; fileRef = 18653C9716F76B1000849ACA /* arrest.png */; };
+		18AED95F171AA78600B85679 /* allATM.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AED95E171AA78600B85679 /* allATM.png */; };
 		18BFB1D516F8B299009ED31E /* iATM_DB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB1D316F8B299009ED31E /* iATM_DB.xcdatamodeld */; };
 		18BFB1DD16F8BE67009ED31E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BFB1DC16F8BE67009ED31E /* CoreData.framework */; };
 		18BFB1E316F8C717009ED31E /* BankInfosModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB1E216F8C717009ED31E /* BankInfosModule.m */; };
@@ -262,6 +263,7 @@
 		1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		18653C9716F76B1000849ACA /* arrest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrest.png; sourceTree = "<group>"; };
+		18AED95E171AA78600B85679 /* allATM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allATM.png; sourceTree = "<group>"; };
 		18BFB1D416F8B299009ED31E /* iATM_DB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iATM_DB.xcdatamodel; sourceTree = "<group>"; };
 		18BFB1DC16F8BE67009ED31E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18BFB1E116F8C717009ED31E /* BankInfosModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankInfosModule.h; sourceTree = "<group>"; };
@@ -727,6 +729,7 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				18AED95E171AA78600B85679 /* allATM.png */,
 				2CDAC56D170E8BE20096A939 /* bank_icons */,
 				18653C9716F76B1000849ACA /* arrest.png */,
 				2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */,
@@ -802,6 +805,7 @@
 				18653C9816F76B1000849ACA /* arrest.png in Resources */,
 				AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */,
 				2CDAC56F170E8BE20096A939 /* vietcombank.png in Resources */,
+				18AED95F171AA78600B85679 /* allATM.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
