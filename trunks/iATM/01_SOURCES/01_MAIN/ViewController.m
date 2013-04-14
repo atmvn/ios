@@ -17,6 +17,8 @@
 #define KEY_TITLE @"bankTitle"
 #define KEY_IMAGE @"image"
 
+#define NUMBER_OF_VISIBLE_ITEM 20
+
 @interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
 {
     CLLocationManager *_locationManager;
@@ -37,6 +39,9 @@
     
     BankItem *_selectedBankItem;
     NSMutableArray *mDataSource;
+    
+    CLLocationCoordinate2D _centralPoint;
+    CLLocationDistance _radiusMeters;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -127,6 +132,7 @@
         [_mapView removeAnnotation:annotation];
     }
 
+    NSMutableArray *listAnotation = [[NSMutableArray alloc] initWithCapacity:self.fetchedResultsController.fetchedObjects.count];
     for (BankInfosModule *info in self.fetchedResultsController.fetchedObjects) {
         BankItem *item = [[BankItem alloc] init];
         item.itemID = info.itemID;
@@ -145,8 +151,21 @@
         CGFloat longtitude = [info.longtitude floatValue];
         item.location = CLLocationCoordinate2DMake(latitude, longtitude);
         
-        [self.mapView addAnnotation:item];
+        [listAnotation addObject:item];
     }
+    
+    NSLog(@"Number Item = %d", listAnotation.count);
+    
+    // add anotation to map view
+    [self.mapView addAnnotations:listAnotation];
+    
+    // zoom to visual region
+    MKCoordinateRegion region = [self createZoomRegionFromCentralPointAndRadius :listAnotation];
+    
+    // Zoom and scale to central point
+    [_mapView setRegion:region animated:TRUE];
+    [_mapView regionThatFits:region];
+    [_mapView reloadInputViews];
 }
 
 -(NSFetchedResultsController *)fetchedResultsController
@@ -287,6 +306,7 @@
 - (void)deleteAllBankData
 {
     ////VKLog(@"deleteAllKard-0");
+    [self performSearchKardForBankName:@"" withType:enumBankType_Num];
     int n = [[self.fetchedResultsController fetchedObjects] count];
     for (int i = 0; i < n; i++)
     {
@@ -383,7 +403,7 @@
     NSMutableDictionary *dicJson = [sbJSON objectWithString:[request responseString] error:&error];
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
-        NSLog(@"%@", atmList);
+        NSLog(@"list item request = %d", atmList.count);
         // delete all bank in database first
         [self deleteAllBankData];
         // add new bank data
@@ -679,5 +699,113 @@
         });
     });
 }
+
+
+#pragma mark - Map procedures
+
+- (void)calculateCentralPointAndRadiusFromCurrentLocation:(NSMutableArray*) categoryArray {
+    
+    CLLocation *userLocation = self.mapView.userLocation.location;
+    // only zoom in 20 nearest ATM
+    if (categoryArray.count > 20) {
+        CLLocation * location;
+        BankItem *item1, *item2;
+        for (NSInteger i = 0; i < categoryArray.count; i ++) {
+            NSInteger tempIdx = i;
+            
+            // calculate distance of i item to user location
+            item1 = [categoryArray objectAtIndex:i];
+            location = [[CLLocation alloc] initWithLatitude:item1.location.latitude longitude:item1.location.longitude];
+            CLLocationDistance dis1 = [location distanceFromLocation:userLocation];
+            for (NSInteger j = i + 1; j < categoryArray.count; j ++) {
+                // calculate distance of j item to user location
+                item2 = [categoryArray objectAtIndex:j];
+                location = [[CLLocation alloc] initWithLatitude:item2.location.latitude longitude:item2.location.longitude];
+                CLLocationDistance dis2 = [location distanceFromLocation:userLocation];
+                
+                // find the nearest item to user location
+                if (dis2 < dis1) {
+                    tempIdx = j;
+                }
+            }
+            
+            // if nearest item is different than i index
+            if (tempIdx != i) {
+                // replace 2 location by another one
+                BankItem *tempItem = item2;
+                [categoryArray replaceObjectAtIndex:tempIdx withObject:item1];
+                [categoryArray replaceObjectAtIndex:i withObject:tempItem];
+            }
+        }
+    }
+    
+    // Find latitude and longtitude smallest and biggest
+    float smallLongtitute   = 0;
+    float smallLattitute    = 0;
+    float bigLongtitute     = 0;
+    float bigLattitute      = 0;
+    
+    smallLongtitute   = self.mapView.userLocation.coordinate.longitude;
+    smallLattitute    = self.mapView.userLocation.coordinate.latitude;
+    bigLongtitute     = self.mapView.userLocation.coordinate.longitude;
+    bigLattitute      = self.mapView.userLocation.coordinate.latitude;
+    
+    for (NSInteger i = 0; i < 20 && i < categoryArray.count ; i++) {
+        BankItem *item = [categoryArray objectAtIndex:i];
+        float lat = item.coordinate.latitude;
+        float lng = item.coordinate.longitude;
+        if (lat < smallLattitute || smallLattitute == 0) {
+            smallLattitute = lat;
+        }
+        if (lat> bigLattitute || bigLattitute == 0) {
+            bigLattitute = lat;
+        }
+        if (lng < smallLongtitute || smallLongtitute == 0) {
+            smallLongtitute = lng;
+        }
+        if (lng> bigLongtitute || bigLongtitute == 0) {
+            bigLongtitute = lng;
+        }
+    }
+    
+    // Update central point
+    _centralPoint.latitude    = (bigLattitute + smallLattitute)/2;
+    _centralPoint.longitude   = (bigLongtitute + smallLongtitute)/2;
+    
+    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
+    
+
+    
+    // Calculate radius
+    CLLocation *marklocation = [[CLLocation alloc] initWithLatitude:smallLattitute longitude:smallLongtitute];
+    CLLocation *centralLocation = [[CLLocation alloc] initWithLatitude:_centralPoint.latitude longitude:_centralPoint.longitude];
+    
+    _radiusMeters = ([marklocation distanceFromLocation:centralLocation]);
+    
+    if (_radiusMeters == 0) {
+        // Default for radius is 1km
+        //Too far is when you show the entire USA.  Too close is when you show only a 300 ft/100m radius.
+        //I think we can settle on something in the middle.  How about something like a 1Km radius
+        _radiusMeters = 1000;
+    }
+    NSLog(@"Distance in meters: %f", _radiusMeters);
+}
+
+- (MKCoordinateRegion)createZoomRegionFromCentralPointAndRadius:(NSMutableArray*) categoryArray {
+    
+    // have no deal zoom minimum scale to current location
+    if ([categoryArray count] == 0) {
+        _radiusMeters = MAXIMUM_SCALEABLE_RADIUS_METERS/2;
+        _centralPoint.latitude = self.mapView.userLocation.coordinate.latitude;
+        _centralPoint.longitude = self.mapView.userLocation.coordinate.longitude;
+    }
+    else {
+        [self calculateCentralPointAndRadiusFromCurrentLocation:categoryArray];
+    }
+    
+    return MKCoordinateRegionMakeWithDistance(_centralPoint, _radiusMeters * 2, _radiusMeters *2 );
+    
+}
+
 
 @end
