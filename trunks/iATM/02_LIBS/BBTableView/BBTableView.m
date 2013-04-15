@@ -58,7 +58,7 @@
 
 - (void)customIntitialization
 {
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
     contentAlignment = eBBTableViewContentAlignmentLeft;
     self.enableInfiniteScrolling = NO;
     self.horizontalRadiusCorrection=1.0;

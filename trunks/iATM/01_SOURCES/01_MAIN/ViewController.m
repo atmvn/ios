@@ -12,6 +12,7 @@
 #import "BankInfosModule.h"
 #import "BBCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIView+Transition.h"
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
 #define KEY_TITLE @"bankTitle"
@@ -121,6 +122,9 @@
         }
     }
     _listBank = [NSMutableArray arrayWithArray:[_listBank sortedArrayUsingSelector:@selector(compare:)]];
+    if (_listBank.count > 0) {
+        [_listBank insertObject:@"Tất Cả Ngân Hàng" atIndex:0];
+    }
     NSLog(@"%@", _listBank);
     // reload bank table
     [self loadDataSource:_listBank];
@@ -517,10 +521,7 @@
     r.origin.y = HEIGHT_IPHONE;
     self.bankTableView.frame = r;
     self.bankTableView.hidden = NO;
-    r.origin.y = 0;
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.bankTableView.frame = r;
-    } completion:nil];
+    [self.bankTableView fadingTransisitonShowWithMask];
 }
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender {
     [self showPickerWithData:_listBankType];
@@ -559,27 +560,14 @@
     // close table view
     CGRect r = self.bankTableView.frame;
     r.origin.y = HEIGHT_IPHONE;
-    [UIView animateWithDuration:0.5 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.bankTableView.frame = r;
-    } completion:^(BOOL finished) {
-        self.bankTableView.hidden = YES;
-    }];
+    [self.bankTableView fadingTransisitonShouldHideWithMask];
     
     _selectedRow = recognizer.view.tag;
+    NSString *selectedStr = selectedStr = [_activeList objectAtIndex:_selectedRow];
+    _selectedBank = _selectedRow == 0 ? nil : selectedStr;
     
-    NSString *selectedStr;
-    UIBarButtonItem *tempBtn = self.bankBtn;
-    if (_activeList == _listBankType) {
-        tempBtn = self.bankTypeBtn;
-        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
-        selectedStr = [_activeList objectAtIndex:_selectedRow];
-    }
-    else {
-        selectedStr = [_activeList objectAtIndex:(_selectedRow - 1)];
-        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
-    }
     [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        [tempBtn setTitle:selectedStr];
+        [self.bankBtn setTitle:selectedStr];
     } completion:nil];
     
     [self performSearchKardForBankName:_selectedBank withType:_selectedType];
@@ -632,7 +620,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  [_listBank count] + 1;
+    return  [_listBank count];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -651,14 +639,9 @@
     }
     cell.tag = indexPath.row;
     
-    if (indexPath.row == 0) {
-        [cell setCellTitle:@"Tất Cả Ngân Hàng"];
-        [cell setIcon:[UIImage imageNamed:@"allATM.png"]];
-    } else {
-        NSDictionary *info = [mDataSource objectAtIndex:(indexPath.row - 1)];
-        [cell setCellTitle:[info objectForKey:KEY_TITLE]];
-        [cell setIcon:[info objectForKey:KEY_IMAGE]];
-    }
+    NSDictionary *info = [mDataSource objectAtIndex:indexPath.row];
+    [cell setCellTitle:[info objectForKey:KEY_TITLE]];
+    [cell setIcon:[info objectForKey:KEY_IMAGE]];
     
     return cell;
 }

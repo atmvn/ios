@@ -17,7 +17,7 @@
         // Initialization code
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         //add the image layer
-        self.contentView.backgroundColor = [UIColor blackColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
         mImageLayer =[CALayer layer];
         mImageLayer.cornerRadius = 16.0;
         //mImageLayer.backgroundColor = [UIColor greenColor].CGColor;

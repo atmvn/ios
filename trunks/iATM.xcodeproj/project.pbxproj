@@ -107,6 +107,7 @@
 		2CDB13B716E83AC1005D4598 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */; };
 		2CDB13B816E83AC1005D4598 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B316E83AC1005D4598 /* Default.png */; };
 		2CDB13B916E83AC1005D4598 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDB13B416E83AC1005D4598 /* Default@2x.png */; };
+		2CDE0EBB171BE99A00643CB3 /* UIView+Transition.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CDE0EBA171BE99A00643CB3 /* UIView+Transition.m */; };
 		AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = AABDA1F916FDFA3600A52F5D /* fakeLoc.gpx */; };
 /* End PBXBuildFile section */
 
@@ -293,6 +294,8 @@
 		2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2CDB13B316E83AC1005D4598 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		2CDB13B416E83AC1005D4598 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		2CDE0EB9171BE99A00643CB3 /* UIView+Transition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Transition.h"; sourceTree = "<group>"; };
+		2CDE0EBA171BE99A00643CB3 /* UIView+Transition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Transition.m"; sourceTree = "<group>"; };
 		AABDA1F916FDFA3600A52F5D /* fakeLoc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fakeLoc.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -387,6 +390,7 @@
 		1859A00616E63E22001EB8CF /* 02_LIBS */ = {
 			isa = PBXGroup;
 			children = (
+				2CDE0EB8171BE99A00643CB3 /* UIView+Trasition */,
 				2CDAC561170E82D10096A939 /* BBTableView */,
 				1859A00716E63E22001EB8CF /* ASIHTTP */,
 				1859A01E16E63E22001EB8CF /* FACEBOOK */,
@@ -750,6 +754,15 @@
 			path = 03_RESOURCES;
 			sourceTree = "<group>";
 		};
+		2CDE0EB8171BE99A00643CB3 /* UIView+Trasition */ = {
+			isa = PBXGroup;
+			children = (
+				2CDE0EB9171BE99A00643CB3 /* UIView+Transition.h */,
+				2CDE0EBA171BE99A00643CB3 /* UIView+Transition.m */,
+			);
+			path = "UIView+Trasition";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -898,6 +911,7 @@
 				2CDAC56B170E82D10096A939 /* BBTableView.m in Sources */,
 				2CDAC56C170E82D10096A939 /* BBTableViewInterceptor.m in Sources */,
 				18AED963171AFC0700B85679 /* BankDetailView.m in Sources */,
+				2CDE0EBB171BE99A00643CB3 /* UIView+Transition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
