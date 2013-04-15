@@ -471,6 +471,7 @@
     if ([view.annotation isKindOfClass:[BankItem class]]) {
 //        self.directionBtn.hidden = NO;
         _selectedBankItem = (BankItem*)view.annotation;
+        _bankDetailView.bankName.text = _selectedBankItem.bankName;
         _bankDetailView.titleLbl.text = _selectedBankItem.locationName;
         _bankDetailView.subTitleLbl.text = _selectedBankItem.address;
         [_bankDetailView show];

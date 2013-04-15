@@ -20,6 +20,7 @@
 
 @property (weak, nonatomic) id<BankDetailViewDelegate> delegate;
 
+@property (weak, nonatomic) IBOutlet UILabel *bankName;
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLbl;
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 @property (weak, nonatomic) IBOutlet UIButton *routeBtn;
