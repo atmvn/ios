@@ -567,13 +567,15 @@
     
     _selectedRow = recognizer.view.tag;
     
-    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
+    NSString *selectedStr;
     UIBarButtonItem *tempBtn = self.bankBtn;
     if (_activeList == _listBankType) {
         tempBtn = self.bankTypeBtn;
         _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
+        selectedStr = [_activeList objectAtIndex:_selectedRow];
     }
     else {
+        selectedStr = [_activeList objectAtIndex:(_selectedRow - 1)];
         _selectedBank = _selectedRow == 0 ? nil : selectedStr;
     }
     [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
