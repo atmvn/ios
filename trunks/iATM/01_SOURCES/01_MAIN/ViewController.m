@@ -13,6 +13,7 @@
 #import "BBCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+Transition.h"
+#import "BankDetailView.h"
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
 #define KEY_TITLE @"bankTitle"
@@ -20,7 +21,7 @@
 
 #define NUMBER_OF_VISIBLE_ITEM 20
 
-@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate>
+@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, BankDetailViewDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
@@ -43,6 +44,8 @@
     
     CLLocationCoordinate2D _centralPoint;
     CLLocationDistance _radiusMeters;
+    
+    BankDetailView *_bankDetailView;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -60,7 +63,9 @@
     _selectedType = enumBankType_Num;
     _searchStr = @"";
     _searchType = @"";
-    
+    _bankDetailView = [[BankDetailView alloc] init];
+    _bankDetailView.delegate = self;
+    [self.view addSubview:_bankDetailView];
     
     // init bank list, and bank type
     _listBank = [[NSMutableArray alloc] initWithObjects:
@@ -82,6 +87,8 @@
                                              selector:@selector(applicationDidBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+    
+    [self.bankTableView setContentInset:UIEdgeInsetsMake(100, 0, 100, 0)];
 	// Do any additional setup after loading the view, typically from a nib.
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
@@ -446,7 +453,7 @@
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
             annotationView.enabled = YES;
-            annotationView.canShowCallout = YES;
+            annotationView.canShowCallout = NO;
             annotationView.image = [UIImage imageNamed:@"arrest.png"];//here we use a nice image instead of the default pins
         } else {
             annotationView.annotation = annotation;
@@ -462,16 +469,20 @@
 {
     NSLog(@"didSelectAnnotationView");
     if ([view.annotation isKindOfClass:[BankItem class]]) {
-        self.directionBtn.hidden = NO;
+//        self.directionBtn.hidden = NO;
         _selectedBankItem = (BankItem*)view.annotation;
+        _bankDetailView.titleLbl.text = _selectedBankItem.locationName;
+        _bankDetailView.subTitleLbl.text = _selectedBankItem.address;
+        [_bankDetailView show];
     }
 }
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
     NSLog(@"didDeselectAnnotationView");
     if ([view.annotation isKindOfClass:[BankItem class]]) {
-        self.directionBtn.hidden = YES;
-        _selectedBankItem = nil;
+//        self.directionBtn.hidden = YES;
+//        _selectedBankItem = nil;
+        [_bankDetailView hide];
     }
 }
 
@@ -516,6 +527,7 @@
 - (IBAction)bankBtnTouchUpInside:(id)sender {
 
     _activeList = _listBank;
+    self.bankTableView.contentOffset = CGPointMake(0, 0);
     // show bank list
     CGRect r = self.bankTableView.frame;
     r.origin.y = HEIGHT_IPHONE;
@@ -798,5 +810,13 @@
     
 }
 
+
+#pragma mark - BankDetailViewDelegate
+-(void)bankDetailViewRouteTouchUpInside:(BankDetailView *)view
+{
+    if (_selectedBankItem) {
+        [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
+    }
+}
 
 @end
