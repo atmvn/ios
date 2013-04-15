@@ -7,13 +7,14 @@
 //
 
 #import "UIView+Transition.h"
+#import "Define.h"
 
 
 @implementation UIView (FadingTransisiton)
 
 -(void)fadingTransisitonShowWithMask
 {
-    UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 548)];
+    UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, HEIGHT_IPHONE)];
     mask.backgroundColor = [UIColor blackColor];
     mask.alpha = 0.0f;
     mask.tag = 10033;
@@ -23,9 +24,9 @@
     [self.superview addSubview:mask];
     [self.superview bringSubviewToFront:self];
     CGRect r = self.frame;
-    r.origin.y = 548;
+    r.origin.y = HEIGHT_IPHONE;
     self.frame = r;
-    r.origin.y = 548 - r.size.height;
+    r.origin.y = HEIGHT_IPHONE - r.size.height;
     [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.frame = r;
         mask.alpha = 0.6f;
@@ -40,7 +41,7 @@
 -(void)fadingTransisitonShouldHideWithMask
 {
     CGRect r = self.frame;
-    r.origin.y = 548;
+    r.origin.y = HEIGHT_IPHONE;
     UIView *mask = [self.superview viewWithTag:10033];
     [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.frame = r;
