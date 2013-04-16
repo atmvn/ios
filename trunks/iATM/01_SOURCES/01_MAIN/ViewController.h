@@ -24,8 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 @property (weak, nonatomic) IBOutlet BBTableView *bankTableView;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationBtn;
+@property (weak, nonatomic) IBOutlet UIButton *refreshBtn;
 
-- (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender;
+- (IBAction)refreshTouchUpInside:(id)sender;
 - (IBAction)pickerCancelTouchUpInside:(id)sender;
 - (IBAction)pickerDoneTouchUpInside:(id)sender;
 - (IBAction)bankBtnTouchUpInside:(id)sender;

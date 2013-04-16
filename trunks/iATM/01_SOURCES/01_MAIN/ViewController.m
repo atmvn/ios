@@ -47,6 +47,8 @@
     CLLocationDistance _radiusMeters;
     
     BankDetailView *_bankDetailView;
+    
+    BOOL _isRefreshing;
 }
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
@@ -116,6 +118,7 @@
     [self setDirectionBtn:nil];
     [self setBankTableView:nil];
     [self setCurrentLocationBtn:nil];
+    [self setRefreshBtn:nil];
     [super viewDidUnload];
 }
 
@@ -402,6 +405,12 @@
     
     [[AppViewController Shared] isRequesting:NO andRequestType:type andFrame:CGRectZero];
     
+    if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM && _isRefreshing) {
+        // stop refresh animation
+        [self.refreshBtn.layer removeAllAnimations];
+        _isRefreshing = NO;
+    }
+    
     NSError *error;
     SBJSON *sbJSON = [SBJSON new];
     
@@ -415,6 +424,7 @@
     
     NSMutableDictionary *dicJson = [sbJSON objectWithString:[request responseString] error:&error];
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
+        
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
         NSLog(@"list item request = %d", atmList.count);
         // delete all bank in database first
@@ -443,6 +453,12 @@
     
     if (![ASIHTTPRequest isNetworkReachable]) {
         ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_CONNECTION_ERROR);
+    }
+    
+    if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM && _isRefreshing) {
+        // stop refresh animation
+        [self.refreshBtn.layer removeAllAnimations];
+        _isRefreshing = NO;
     }
 }
 
@@ -499,8 +515,17 @@
 }
 #pragma mark - Utilities
 
-- (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender {
+- (IBAction)refreshTouchUpInside:(id)sender {
     currentLocation = nil;
+    
+    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    animation.fromValue = [NSNumber numberWithFloat:0.0f];
+    animation.toValue = [NSNumber numberWithFloat: 2*M_PI];
+    animation.duration = 3.0f;
+    animation.repeatCount = HUGE_VAL;
+    [self.refreshBtn.layer addAnimation:animation forKey:@"refresh_button_animation"];
+    
+    _isRefreshing = YES;
 }
 
 - (IBAction)pickerCancelTouchUpInside:(id)sender {
