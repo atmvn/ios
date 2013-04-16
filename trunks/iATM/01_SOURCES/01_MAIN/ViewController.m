@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+Transition.h"
 #import "BankDetailView.h"
+#import "GradientPolylineView.h"
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
 #define KEY_TITLE @"bankTitle"
@@ -65,6 +66,7 @@
     _searchType = @"";
     _bankDetailView = [[BankDetailView alloc] init];
     _bankDetailView.delegate = self;
+    _bankDetailView.movingView = self.currentLocationBtn;
     [self.view addSubview:_bankDetailView];
     
     // init bank list, and bank type
@@ -92,7 +94,6 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
-//    [self.mapView setCenterCoordinate:CLLocationCoordinate2DMake(_lattitude, _longtitude)];
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
@@ -114,6 +115,7 @@
     [self setBankTypeBtn:nil];
     [self setDirectionBtn:nil];
     [self setBankTableView:nil];
+    [self setCurrentLocationBtn:nil];
     [super viewDidUnload];
 }
 
@@ -489,10 +491,10 @@
 
 - (MKOverlayView *)mapView:(MKMapView *)mapView
             viewForOverlay:(id<MKOverlay>)overlay {
-    MKPolylineView *overlayView = [[MKPolylineView alloc] initWithOverlay:overlay];
+    GradientPolylineView *overlayView = [[GradientPolylineView alloc] initWithOverlay:overlay];
     overlayView.lineWidth = 5;
-    overlayView.strokeColor = [UIColor redColor];
-    overlayView.fillColor = [[UIColor purpleColor] colorWithAlphaComponent:0.5f];
+//    overlayView.strokeColor = [UIColor redColor];
+//    overlayView.fillColor = [[UIColor purpleColor] colorWithAlphaComponent:0.5f];
     return overlayView;
 }
 #pragma mark - Utilities
@@ -544,6 +546,10 @@
     if (_selectedBankItem) {
         [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
     }
+}
+
+- (IBAction)showCurrentLocation:(id)sender {
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
 -(void)showPickerWithData:(NSArray*)data

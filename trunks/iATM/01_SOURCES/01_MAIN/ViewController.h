@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 @property (weak, nonatomic) IBOutlet BBTableView *bankTableView;
+@property (weak, nonatomic) IBOutlet UIButton *currentLocationBtn;
 
 - (IBAction)refreshTouchUpInside:(UIBarButtonItem *)sender;
 - (IBAction)pickerCancelTouchUpInside:(id)sender;
@@ -31,6 +32,7 @@
 
 - (IBAction)bankTypeBtnTouchUpInside:(id)sender;
 - (IBAction)directionBtnTouchUpInside:(UIButton *)sender;
+- (IBAction)showCurrentLocation:(id)sender;
 
 
 @end

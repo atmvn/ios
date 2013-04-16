@@ -16,9 +16,10 @@
 -(void)bankDetailViewRouteTouchUpInside:(BankDetailView*)view;
 
 @end
-@interface BankDetailView : UIView
+@interface BankDetailView : UIView <UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) id<BankDetailViewDelegate> delegate;
+@property (weak, nonatomic) UIView *movingView;
 
 @property (weak, nonatomic) IBOutlet UILabel *bankName;
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLbl;
