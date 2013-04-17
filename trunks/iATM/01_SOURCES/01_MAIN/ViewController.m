@@ -15,6 +15,7 @@
 #import "UIView+Transition.h"
 #import "BankDetailView.h"
 #import "GradientPolylineView.h"
+#import "TTAutoCollapseMenu.h"
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
 #define KEY_TITLE @"bankTitle"
@@ -22,7 +23,7 @@
 
 #define NUMBER_OF_VISIBLE_ITEM 20
 
-@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, BankDetailViewDelegate>
+@interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, BankDetailViewDelegate, TTAutoCollapseMenuDelegate>
 {
     CLLocationManager *_locationManager;
     CLLocation *currentLocation;
@@ -49,7 +50,11 @@
     BankDetailView *_bankDetailView;
     
     BOOL _isRefreshing;
+    
+    NSMutableArray *_arrMenuImages;
 }
+
+@property (retain, nonatomic) TTAutoCollapseMenu *actionHeaderView;
 
 @property (retain, nonatomic) NSFetchedResultsController    *fetchedResultsController;
 
@@ -69,6 +74,32 @@
     _bankDetailView = [[BankDetailView alloc] init];
     _bankDetailView.delegate = self;
     _bankDetailView.movingView = self.currentLocationBtn;
+    
+    // init bank type menu
+    self.actionHeaderView = [[TTAutoCollapseMenu alloc] initWithFrame:self.view.bounds atPosition:enumTTAutoCollapseMenuPosition_Bottom];
+    // Set title
+    self.actionHeaderView.titleLabel.text = @"Tap to explore menu";
+    _arrMenuImages = [[NSMutableArray alloc] initWithObjects:@"facebook", @"twitter", @"mail", nil];
+    // Set action items, and previous items will be removed from action picker if there is any.
+    self.actionHeaderView.borderGradientHidden = NO;
+	self.actionHeaderView.delegate = self;
+    [self.view addSubview:self.actionHeaderView];
+    [self.actionHeaderView reloadData];
+    
+    // add other button
+    _refreshBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 3, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT)];
+    [_refreshBtn setImage:[UIImage imageNamed:@"aqua_land_2_refresh.png"] forState:UIControlStateNormal];
+    [_refreshBtn addTarget:self action:@selector(refreshTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.actionHeaderView addSubview:_refreshBtn];
+    
+    _bankBtn = [[UIButton alloc] initWithFrame:CGRectMake(55, 5, 210, AUTOEXPANDMENU_ITEM_HEIGHT)];
+//    [_bankBtn setImage:[UIImage imageNamed:@"aqua_land_2_refresh.png"] forState:UIControlStateNormal];
+    [_bankBtn addTarget:self action:@selector(bankBtnTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    [self.actionHeaderView addSubview:_bankBtn];
+    
+    _refreshBtn.backgroundColor = _bankBtn.backgroundColor = [UIColor greenColor];
+    
+    // add bank detail view
     [self.view addSubview:_bankDetailView];
     
     // init bank list, and bank type
@@ -558,23 +589,23 @@
 }
 
 - (IBAction)pickerDoneTouchUpInside:(id)sender {
-    [self closePickerView];
-    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
-    UIBarButtonItem *tempBtn = self.bankBtn;
-    if (_activeList == _listBankType) {
-        tempBtn = self.bankTypeBtn;
-        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
-    }
-    else {
-        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
-    }
-    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        [tempBtn setTitle:selectedStr];
-    } completion:nil];
-    
-    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
-    // reload list ATM on map
-    [self loadInterface];
+//    [self closePickerView];
+//    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
+//    UIBarButtonItem *tempBtn = self.bankBtn;
+//    if (_activeList == _listBankType) {
+//        tempBtn = self.bankTypeBtn;
+//        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
+//    }
+//    else {
+//        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
+//    }
+//    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+//        [tempBtn setTitle:selectedStr];
+//    } completion:nil];
+//    
+//    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+//    // reload list ATM on map
+//    [self loadInterface];
 }
 
 - (IBAction)bankBtnTouchUpInside:(id)sender {
@@ -636,7 +667,7 @@
     _selectedBank = _selectedRow == 0 ? nil : selectedStr;
     
     [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        [self.bankBtn setTitle:selectedStr];
+        [self.bankBtn setTitle:selectedStr forState:UIControlStateNormal];
     } completion:nil];
     
     [self performSearchKardForBankName:_selectedBank withType:_selectedType];
@@ -874,6 +905,34 @@
     if (_selectedBankItem) {
         [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
     }
+}
+
+#pragma mark - TTAutoCollapseMenuDelegate
+-(NSInteger)numberOfItemInAutoCollapseMenu
+{
+    return _arrMenuImages.count;
+}
+
+-(UIButton *)autoCollapseMenu:(TTAutoCollapseMenu *)menu viewForItemAtIndex:(NSInteger)index
+{
+    UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
+    [view setImage:[UIImage imageNamed:[_arrMenuImages objectAtIndex:index]] forState:UIControlStateNormal];
+    view.frame = CGRectMake(0.0f, 0.0f, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT);
+    view.imageEdgeInsets = UIEdgeInsetsMake(13.0f, 13.0f, 13.0f, 13.0f);
+    view.backgroundColor = [UIColor redColor];
+    return view;
+}
+
+-(void)autoCollapseMenu:(TTAutoCollapseMenu *)menu didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"didSelectItemAtIndex %d", index);
+
+    _selectedType = index == 0 ? enumBankType_Num : (index - 1);
+
+    
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+    // reload list ATM on map
+    [self loadInterface];
 }
 
 @end

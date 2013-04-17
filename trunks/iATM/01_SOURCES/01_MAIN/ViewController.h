@@ -17,14 +17,15 @@
 
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *bankBtn;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *bankTypeBtn;
 @property (weak, nonatomic) IBOutlet UIView *pickerContainerView;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 @property (weak, nonatomic) IBOutlet BBTableView *bankTableView;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationBtn;
-@property (weak, nonatomic) IBOutlet UIButton *refreshBtn;
+
+@property (strong, nonatomic) UIButton *bankBtn;
+@property (retain, nonatomic) UIButton *refreshBtn;
 
 - (IBAction)refreshTouchUpInside:(id)sender;
 - (IBAction)pickerCancelTouchUpInside:(id)sender;

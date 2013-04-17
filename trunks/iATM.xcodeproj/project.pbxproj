@@ -91,6 +91,7 @@
 		18653C9816F76B1000849ACA /* arrest.png in Resources */ = {isa = PBXBuildFile; fileRef = 18653C9716F76B1000849ACA /* arrest.png */; };
 		18AD4C40171D91F5008BD9A7 /* atm_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C3F171D91F5008BD9A7 /* atm_icon.png */; };
 		18AD4C44171D9310008BD9A7 /* atm_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */; };
+		18AD4C60171F05E4008BD9A7 /* TTAutoCollapseMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4C5F171F05E4008BD9A7 /* TTAutoCollapseMenu.m */; };
 		18AED95F171AA78600B85679 /* allATM.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AED95E171AA78600B85679 /* allATM.png */; };
 		18AED963171AFC0700B85679 /* BankDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AED962171AFC0700B85679 /* BankDetailView.m */; };
 		18AED965171AFC1A00B85679 /* BankDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AED964171AFC1A00B85679 /* BankDetailView.xib */; };
@@ -284,6 +285,8 @@
 		18653C9716F76B1000849ACA /* arrest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrest.png; sourceTree = "<group>"; };
 		18AD4C3F171D91F5008BD9A7 /* atm_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = atm_icon.png; path = ../../atm_icon.png; sourceTree = "<group>"; };
 		18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "atm_icon@2x.png"; path = "../../atm_icon@2x.png"; sourceTree = "<group>"; };
+		18AD4C5E171F05E4008BD9A7 /* TTAutoCollapseMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAutoCollapseMenu.h; sourceTree = "<group>"; };
+		18AD4C5F171F05E4008BD9A7 /* TTAutoCollapseMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAutoCollapseMenu.m; sourceTree = "<group>"; };
 		18AED95E171AA78600B85679 /* allATM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allATM.png; sourceTree = "<group>"; };
 		18AED961171AFC0700B85679 /* BankDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankDetailView.h; sourceTree = "<group>"; };
 		18AED962171AFC0700B85679 /* BankDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankDetailView.m; sourceTree = "<group>"; };
@@ -672,6 +675,7 @@
 		1859A15D16E63EB6001EB8CF /* 04_SUPPORT */ = {
 			isa = PBXGroup;
 			children = (
+				18AD4C5D171F05E4008BD9A7 /* AutoCollapseMenu */,
 				1859A15E16E63EB6001EB8CF /* APIRequester.h */,
 				1859A15F16E63EB6001EB8CF /* APIRequester.m */,
 				1859A16016E63EB6001EB8CF /* Define.h */,
@@ -687,6 +691,15 @@
 				1859A16A16E63EB6001EB8CF /* Utilities.m */,
 			);
 			path = 04_SUPPORT;
+			sourceTree = "<group>";
+		};
+		18AD4C5D171F05E4008BD9A7 /* AutoCollapseMenu */ = {
+			isa = PBXGroup;
+			children = (
+				18AD4C5E171F05E4008BD9A7 /* TTAutoCollapseMenu.h */,
+				18AD4C5F171F05E4008BD9A7 /* TTAutoCollapseMenu.m */,
+			);
+			path = AutoCollapseMenu;
 			sourceTree = "<group>";
 		};
 		18BFB1D116F8B249009ED31E /* 02_DATA_MODEL */ = {
@@ -974,6 +987,7 @@
 				18AED963171AFC0700B85679 /* BankDetailView.m in Sources */,
 				2CDE0EBB171BE99A00643CB3 /* UIView+Transition.m in Sources */,
 				2CDD235C171D0EC4008BCCEA /* GradientPolylineView.m in Sources */,
+				18AD4C60171F05E4008BD9A7 /* TTAutoCollapseMenu.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

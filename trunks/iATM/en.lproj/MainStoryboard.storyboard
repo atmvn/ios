@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="2">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -42,11 +42,7 @@
                                             <action selector="refreshTouchUpInside:" destination="2" id="EU9-78-Hhh"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Tất Cả Ngân Hàng" width="171" id="zTH-kD-WyP">
-                                        <connections>
-                                            <action selector="bankBtnTouchUpInside:" destination="2" id="Za3-Xj-hD4"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="Tất Cả Ngân Hàng" width="171" id="zTH-kD-WyP"/>
                                     <barButtonItem title="Mọi Loại" width="70" id="ygW-8b-jLQ">
                                         <connections>
                                             <action selector="bankTypeBtnTouchUpInside:" destination="2" id="dJG-V4-5IW"/>
@@ -65,9 +61,6 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="refreshTouchUpInside:" destination="2" eventType="touchUpInside" id="QD5-hx-Jra"/>
-                                </connections>
                             </button>
                             <view contentMode="scaleToFill" id="cNO-SU-4dv">
                                 <rect key="frame" x="0.0" y="548" width="320" height="260"/>
@@ -129,7 +122,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="bankBtn" destination="zTH-kD-WyP" id="rat-wa-j4K"/>
                         <outlet property="bankTableView" destination="Eb3-9d-qjC" id="6Nc-xa-SrI"/>
                         <outlet property="bankTypeBtn" destination="ygW-8b-jLQ" id="6b7-LM-Vud"/>
                         <outlet property="currentLocationBtn" destination="zHW-Y6-SZs" id="lXU-jg-D6E"/>
@@ -137,7 +129,6 @@
                         <outlet property="mapView" destination="76H-vt-VJo" id="cco-Rm-cg5"/>
                         <outlet property="pickerContainerView" destination="cNO-SU-4dv" id="1Tm-5R-ODA"/>
                         <outlet property="pickerView" destination="nr7-cW-inC" id="SGF-EP-qAL"/>
-                        <outlet property="refreshBtn" destination="Xuj-up-4n2" id="KIi-Ad-f4Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -163,7 +154,6 @@
                 <relationship kind="action" name="pickerDoneTouchUpInside:"/>
                 <relationship kind="action" name="refreshTouchUpInside:"/>
                 <relationship kind="action" name="showCurrentLocation:"/>
-                <relationship kind="outlet" name="bankBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="bankTableView" candidateClass="BBTableView"/>
                 <relationship kind="outlet" name="bankTypeBtn" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="currentLocationBtn" candidateClass="UIButton"/>
@@ -171,7 +161,6 @@
                 <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="pickerContainerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="pickerView" candidateClass="UIPickerView"/>
-                <relationship kind="outlet" name="refreshBtn" candidateClass="UIButton"/>
             </relationships>
         </class>
     </classes>
