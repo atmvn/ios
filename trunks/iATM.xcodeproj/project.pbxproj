@@ -89,6 +89,8 @@
 		1859A17D16E641E2001EB8CF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */; };
 		1859A17F16E641FB001EB8CF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */; };
 		18653C9816F76B1000849ACA /* arrest.png in Resources */ = {isa = PBXBuildFile; fileRef = 18653C9716F76B1000849ACA /* arrest.png */; };
+		18AD4C40171D91F5008BD9A7 /* atm_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C3F171D91F5008BD9A7 /* atm_icon.png */; };
+		18AD4C44171D9310008BD9A7 /* atm_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */; };
 		18AED95F171AA78600B85679 /* allATM.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AED95E171AA78600B85679 /* allATM.png */; };
 		18AED963171AFC0700B85679 /* BankDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AED962171AFC0700B85679 /* BankDetailView.m */; };
 		18AED965171AFC1A00B85679 /* BankDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AED964171AFC1A00B85679 /* BankDetailView.xib */; };
@@ -276,6 +278,8 @@
 		1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		18653C9716F76B1000849ACA /* arrest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrest.png; sourceTree = "<group>"; };
+		18AD4C3F171D91F5008BD9A7 /* atm_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = atm_icon.png; path = ../../atm_icon.png; sourceTree = "<group>"; };
+		18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "atm_icon@2x.png"; path = "../../atm_icon@2x.png"; sourceTree = "<group>"; };
 		18AED95E171AA78600B85679 /* allATM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allATM.png; sourceTree = "<group>"; };
 		18AED961171AFC0700B85679 /* BankDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankDetailView.h; sourceTree = "<group>"; };
 		18AED962171AFC0700B85679 /* BankDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankDetailView.m; sourceTree = "<group>"; };
@@ -764,6 +768,8 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */,
+				18AD4C3F171D91F5008BD9A7 /* atm_icon.png */,
 				2CDD239A171D740C008BCCEA /* aqua_land_2_refresh.png */,
 				2CDD235D171D57F3008BCCEA /* nearby_pink.png */,
 				2CDD235E171D57F3008BCCEA /* nearby_white.png */,
@@ -869,6 +875,8 @@
 				2CDD235F171D57F3008BCCEA /* nearby_pink.png in Resources */,
 				2CDD2360171D57F3008BCCEA /* nearby_white.png in Resources */,
 				2CDD239B171D740C008BCCEA /* aqua_land_2_refresh.png in Resources */,
+				18AD4C40171D91F5008BD9A7 /* atm_icon.png in Resources */,
+				18AD4C44171D9310008BD9A7 /* atm_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
