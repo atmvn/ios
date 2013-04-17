@@ -23,6 +23,9 @@
         {
             self.type = enumBankType_ATM;
         }
+        else {
+            self.type = enumBankType_Branch;
+        }
         self.city = [obj objectForKey:@"city"];
         self.locationName = [obj objectForKey:@"locationname"];
         self.phoneNumber = [obj objectForKey:@"phones"];

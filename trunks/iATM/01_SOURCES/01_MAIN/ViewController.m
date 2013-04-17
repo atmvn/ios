@@ -158,6 +158,9 @@
         {
             item.type = enumBankType_ATM;
         }
+        else {
+            item.type = enumBankType_Branch;
+        }
         item.city = info.city;
         item.locationName = info.locationname;
         item.phoneNumber = info.phoneNumber;
@@ -226,7 +229,13 @@
 - (void)performSearchKardForBankName:(NSString*)name withType:(enumBankType)type
 {
     _searchStr = name ? name : @"";
-    _searchType = type == enumBankType_ATM ? @"ATM" : @"";
+    if (type == enumBankType_ATM)
+        _searchType = @"ATM";
+    else if (type == enumBankType_Branch)
+        _searchType = @"BRANCH";
+    else
+        _searchType = @"";
+
     _fetchedResultsController = nil;
     
     NSError *error;
@@ -370,8 +379,13 @@
 {
     if(currentLocation == nil) {
         currentLocation = newLocation;
-        // TODO: call API for update location
+        // request list nearest ATM
         [self requestListNearestATM];
+    }
+    else if ([currentLocation distanceFromLocation:newLocation] > 0)
+    {
+        NSLog(@"didUpdateToLocation = (%f,%f)", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+//        currentLocation = newLocation;
     }
 }
 
@@ -467,15 +481,18 @@
     static NSString *identifier = @"BankItemID";
     if ([annotation isKindOfClass:[BankItem class]]) {
         
+        // select pin image
+        NSString *imageName = ((BankItem*)annotation).type == enumBankType_Branch ? @"red_pin_bank.png" : @"red_pin_atm.png";
+        
         MKAnnotationView *annotationView = (MKAnnotationView *) [_mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
         if (annotationView == nil) {
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
             annotationView.enabled = YES;
             annotationView.canShowCallout = NO;
-            annotationView.image = [UIImage imageNamed:@"arrest.png"];//here we use a nice image instead of the default pins
         } else {
             annotationView.annotation = annotation;
         }
+        annotationView.image = [UIImage imageNamed:imageName];
         
         return annotationView;
     }
@@ -516,6 +533,14 @@
 #pragma mark - Utilities
 
 - (IBAction)refreshTouchUpInside:(id)sender {
+    ((UIButton*)sender).selected = !((UIButton*)sender).selected;
+    
+    if (!((UIButton*)sender).selected) {
+        [self.refreshBtn.layer removeAllAnimations];
+        _isRefreshing = NO;
+        return;
+    }
+    
     currentLocation = nil;
     
     CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
