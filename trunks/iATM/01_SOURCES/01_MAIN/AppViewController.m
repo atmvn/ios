@@ -134,7 +134,7 @@ static AppViewController *_appVCInstance;
 #pragma mark - APIRequesterProtocol
 
 - (void)requestFinished:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
-    NSLog(@"requestFinished %@, request.responseStatusCode: %i", request.responseString, request.responseStatusCode);
+//    NSLog(@"requestFinished %@, request.responseStatusCode: %i", request.responseString, request.responseStatusCode);
     
     [[AppViewController Shared] isRequesting:NO andRequestType:ENUM_API_REQUEST_TYPE_INVALID andFrame:CGRectZero];
     
@@ -220,9 +220,9 @@ static AppViewController *_appVCInstance;
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:kSqliteFileName withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    NSLog(@"----%@",[_managedObjectModel entities]);
-    NSLog(@"----%@",modelURL);
-    NSLog(@"%@---%@", _managedObjectModel,modelURL);
+//    NSLog(@"----%@",[_managedObjectModel entities]);
+//    NSLog(@"----%@",modelURL);
+//    NSLog(@"%@---%@", _managedObjectModel,modelURL);
     
     return _managedObjectModel;
 }
@@ -241,7 +241,7 @@ static AppViewController *_appVCInstance;
     
     NSURL *storeURL = [[self applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",kSqliteFileName]];
     
-    NSLog(@"Local database path: %@", storeURL);
+//    NSLog(@"Local database path: %@", storeURL);
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -282,7 +282,7 @@ static AppViewController *_appVCInstance;
     
     NSURL *storeURL = [[self applicationCacheDirectory] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.sqlite",kSqliteFileName]];
     
-    NSLog(@"Local database path: %@", storeURL);
+//    NSLog(@"Local database path: %@", storeURL);
     
     NSError * error = nil;
     

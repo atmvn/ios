@@ -16,6 +16,8 @@
 #import "BankDetailView.h"
 #import "GradientPolylineView.h"
 #import "TTAutoCollapseMenu.h"
+#import "UIGlossyButton.h"
+#import "UIView+LayerEffects.h"
 
 #define REQUEST_URL_GOOGLE_DIRECTION_API @"http://maps.googleapis.com/maps/api/directions/json"
 #define KEY_TITLE @"bankTitle"
@@ -76,10 +78,9 @@
     _bankDetailView.movingView = self.currentLocationBtn;
     
     // init bank type menu
+    _arrMenuImages = [[NSMutableArray alloc] initWithObjects:@"allBtn", @"atmBtn", @"bankBtn", nil];
+    
     self.actionHeaderView = [[TTAutoCollapseMenu alloc] initWithFrame:self.view.bounds atPosition:enumTTAutoCollapseMenuPosition_Bottom];
-    // Set title
-    self.actionHeaderView.titleLabel.text = @"Tap to explore menu";
-    _arrMenuImages = [[NSMutableArray alloc] initWithObjects:@"facebook", @"twitter", @"mail", nil];
     // Set action items, and previous items will be removed from action picker if there is any.
     self.actionHeaderView.borderGradientHidden = NO;
 	self.actionHeaderView.delegate = self;
@@ -87,17 +88,22 @@
     [self.actionHeaderView reloadData];
     
     // add other button
-    _refreshBtn = [[UIButton alloc] initWithFrame:CGRectMake(10, 3, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT)];
+    _refreshBtn = [[UIButton alloc] initWithFrame:CGRectMake(8, 3, AUTOEXPANDMENU_ITEM_WIDTH + 4, AUTOEXPANDMENU_ITEM_HEIGHT + 4)];
+    [_refreshBtn setShadow:[UIColor blackColor] opacity:0.7 offset:CGSizeMake(0, 1) blurRadius: 2];
     [_refreshBtn setImage:[UIImage imageNamed:@"aqua_land_2_refresh.png"] forState:UIControlStateNormal];
     [_refreshBtn addTarget:self action:@selector(refreshTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     [self.actionHeaderView addSubview:_refreshBtn];
     
-    _bankBtn = [[UIButton alloc] initWithFrame:CGRectMake(55, 5, 210, AUTOEXPANDMENU_ITEM_HEIGHT)];
-//    [_bankBtn setImage:[UIImage imageNamed:@"aqua_land_2_refresh.png"] forState:UIControlStateNormal];
+    _bankBtn = [[UIGlossyButton alloc ]initWithFrame:CGRectMake(55, 5, 210, 40)];
+	[_bankBtn useWhiteLabel: YES]; _bankBtn.tintColor = [UIColor doneButtonColor];
+	[_bankBtn setShadow:[UIColor blackColor] opacity:0.7 offset:CGSizeMake(0, 1) blurRadius: 2];
+    [(UIGlossyButton*)_bankBtn setGradientType:kUIGlossyButtonGradientTypeLinearSmoothBrightToNormal];
+    [(UIGlossyButton*)_bankBtn setButtonCornerRadius:20.0f];
+    [self.bankBtn setTitle:@"Tất Cả Ngân Hàng" forState:UIControlStateNormal];
+    [self.bankBtn.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+
     [_bankBtn addTarget:self action:@selector(bankBtnTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
     [self.actionHeaderView addSubview:_bankBtn];
-    
-    _refreshBtn.backgroundColor = _bankBtn.backgroundColor = [UIColor greenColor];
     
     // add bank detail view
     [self.view addSubview:_bankDetailView];
@@ -110,9 +116,6 @@
                  @"Techcombank",
                  nil];
     _listBankType = [[NSMutableArray alloc] initWithObjects:@"Mọi Loại", @"ATM", @"Điểm Giao Dịch", nil];
-    CGRect r = self.pickerContainerView.frame;
-    r.origin.y = self.view.frame.size.height;
-    self.pickerContainerView.frame = r;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(applicationWillResignActive)
@@ -142,11 +145,7 @@
 
 - (void)viewDidUnload {
     [self setMapView:nil];
-    [self setPickerContainerView:nil];
-    [self setPickerView:nil];
     [self setBankBtn:nil];
-    [self setBankTypeBtn:nil];
-    [self setDirectionBtn:nil];
     [self setBankTableView:nil];
     [self setCurrentLocationBtn:nil];
     [self setRefreshBtn:nil];
@@ -303,9 +302,7 @@
     [_mapView removeOverlay:_polyLine];
     _polyLine = [MKPolyline polylineWithCoordinates:coordinates count:numberOfSteps];
     [_mapView addOverlay:_polyLine];
-    
-    // hide button request direction
-    self.directionBtn.hidden = YES;
+
 }
 
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedStr
@@ -454,6 +451,7 @@
         // stop refresh animation
         [self.refreshBtn.layer removeAllAnimations];
         _isRefreshing = NO;
+        self.refreshBtn.selected = NO;
     }
     
     NSError *error;
@@ -486,13 +484,13 @@
     }
     else if (type == ENUM_API_REQUEST_TYPE_GET_DIRECTION)
     {
-        NSLog(@"Direction = %@", dicJson);
+//        NSLog(@"Direction = %@", dicJson);
         [self updateDirectionWithData:dicJson];
     }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
-    NSLog(@" requestFailed %@ ", request.responseString);
+//    NSLog(@" requestFailed %@ ", request.responseString);
     
     [[AppViewController Shared] isRequesting:NO andRequestType:type andFrame:CGRectZero];
     
@@ -503,6 +501,7 @@
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM && _isRefreshing) {
         // stop refresh animation
         [self.refreshBtn.layer removeAllAnimations];
+        self.refreshBtn.selected = NO;
         _isRefreshing = NO;
     }
 }
@@ -584,30 +583,6 @@
     _isRefreshing = YES;
 }
 
-- (IBAction)pickerCancelTouchUpInside:(id)sender {
-    [self closePickerView];
-}
-
-- (IBAction)pickerDoneTouchUpInside:(id)sender {
-//    [self closePickerView];
-//    NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
-//    UIBarButtonItem *tempBtn = self.bankBtn;
-//    if (_activeList == _listBankType) {
-//        tempBtn = self.bankTypeBtn;
-//        _selectedType = _selectedRow == 0 ? enumBankType_Num : (_selectedRow - 1);
-//    }
-//    else {
-//        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
-//    }
-//    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-//        [tempBtn setTitle:selectedStr];
-//    } completion:nil];
-//    
-//    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
-//    // reload list ATM on map
-//    [self loadInterface];
-}
-
 - (IBAction)bankBtnTouchUpInside:(id)sender {
 
     _activeList = _listBank;
@@ -619,9 +594,6 @@
     self.bankTableView.hidden = NO;
     [self.bankTableView fadingTransisitonShowWithMask];
 }
-- (IBAction)bankTypeBtnTouchUpInside:(id)sender {
-    [self showPickerWithData:_listBankType];
-}
 
 - (IBAction)directionBtnTouchUpInside:(UIButton *)sender {
     if (_selectedBankItem) {
@@ -631,28 +603,6 @@
 
 - (IBAction)showCurrentLocation:(id)sender {
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-}
-
--(void)showPickerWithData:(NSArray*)data
-{
-    // reload data
-    _activeList = data;
-    [self.pickerView reloadAllComponents];
-    
-    CGRect r = self.pickerContainerView.frame;
-    r.origin.y = self.view.bounds.size.height - r.size.height;
-    [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
-        self.pickerContainerView.frame = r;
-    } completion:nil];
-}
-
--(void)closePickerView
-{
-    CGRect r = self.pickerContainerView.frame;
-    r.origin.y = self.view.bounds.size.height;
-    [UIView animateWithDuration:0.5f delay:0.0 options:UIViewAnimationCurveEaseOut animations:^{
-        self.pickerContainerView.frame = r;
-    } completion:nil];
 }
 
 -(void)doubleTapOnCell:(UITapGestureRecognizer*)recognizer
@@ -674,42 +624,6 @@
     // reload list ATM on map
     [self loadInterface];
 }
-
-#pragma mark - UIPickerViewDelegate
-- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
-{
-	return 260.0;
-}
-
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-	return 46.0;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if(!_activeList) return 0;
-    
-	NSInteger rows = [_activeList count];
-	return rows;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-	return 1;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-	return [_activeList objectAtIndex:row];
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    _selectedRow = row;
-}
-
-
 
 #pragma mark UITableViewDelegate Methods
 
@@ -734,7 +648,7 @@
     {
         cell = [[BBCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:test];
         UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnCell:)];
-        tapgesture.numberOfTapsRequired = 2;
+        tapgesture.numberOfTapsRequired = 1;
         [cell addGestureRecognizer:tapgesture];
     }
     cell.tag = indexPath.row;
@@ -917,9 +831,8 @@
 {
     UIButton *view = [UIButton buttonWithType:UIButtonTypeCustom];
     [view setImage:[UIImage imageNamed:[_arrMenuImages objectAtIndex:index]] forState:UIControlStateNormal];
-    view.frame = CGRectMake(0.0f, 0.0f, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT);
     view.imageEdgeInsets = UIEdgeInsetsMake(13.0f, 13.0f, 13.0f, 13.0f);
-    view.backgroundColor = [UIColor redColor];
+    [view setShadow:[UIColor blackColor] opacity:0.8 offset:CGSizeMake(0, 1) blurRadius: 3];
     return view;
 }
 

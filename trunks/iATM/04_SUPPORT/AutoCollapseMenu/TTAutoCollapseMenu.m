@@ -108,7 +108,8 @@
         UIView *itemView = [self.delegate autoCollapseMenu:self viewForItemAtIndex:i];
         
         // init frame
-        itemView.frame = CGRectMake(0.0f, 0.0f, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT);
+        itemView.frame = CGRectMake(0.0f, 0.0f, 1.35f*AUTOEXPANDMENU_ITEM_WIDTH, 1.35f*AUTOEXPANDMENU_ITEM_HEIGHT);
+        NSLog(@"loadItem-0 %@", itemView);
         itemView.center = CGPointMake((AUTOEXPANDMENU_ITEM_WIDTH / 2 + i * AUTOEXPANDMENU_ITEM_WIDTH), AUTOEXPANDMENU_ITEM_RADIUS);
         
         // add to menu view
@@ -158,26 +159,43 @@
     self.titleLabel.frame = CGRectMake(12.0f, (AUTOEXPANDMENU_MENU_HEIGHT - 45.0f )/2, self.frame.size.width - AUTOEXPANDMENU_MENU_HEIGHT, 45.0f);
     _actionPickerGradientLayer.bounds = CGRectMake(0.0f, 0.0f, self.frame.size.width - 2*MENU_PADDING, AUTOEXPANDMENU_ITEM_HEIGHT);
     
-    NSLog(@"AUTOEXPANDMENU_MENU_HEIGHT = %f", AUTOEXPANDMENU_MENU_HEIGHT);
-    NSLog(@"MENU_PADDING = %f", MENU_PADDING);
-    NSLog(@"AUTOEXPANDMENU_ITEM_WIDTH = %f", AUTOEXPANDMENU_ITEM_WIDTH);
-    NSLog(@"AUTOEXPANDMENU_ITEM_HEIGHT = %f", AUTOEXPANDMENU_ITEM_HEIGHT);
-    NSLog(@"AUTOEXPANDMENU_ITEM_RADIUS = %f", AUTOEXPANDMENU_ITEM_RADIUS);
-    
-    NSLog(@"self = %@", self);
+//    NSLog(@"AUTOEXPANDMENU_MENU_HEIGHT = %f", AUTOEXPANDMENU_MENU_HEIGHT);
+//    NSLog(@"MENU_PADDING = %f", MENU_PADDING);
+//    NSLog(@"AUTOEXPANDMENU_ITEM_WIDTH = %f", AUTOEXPANDMENU_ITEM_WIDTH);
+//    NSLog(@"AUTOEXPANDMENU_ITEM_HEIGHT = %f", AUTOEXPANDMENU_ITEM_HEIGHT);
+//    NSLog(@"AUTOEXPANDMENU_ITEM_RADIUS = %f", AUTOEXPANDMENU_ITEM_RADIUS);
+//    
+//    NSLog(@"self = %@", self);
 	if (CGRectIsEmpty(_actionPickerView.frame)) {
         _isExpanded = NO;
 		_actionPickerView.frame = CGRectMake(self.frame.size.width - (AUTOEXPANDMENU_ITEM_WIDTH + MENU_PADDING), (AUTOEXPANDMENU_MENU_HEIGHT - AUTOEXPANDMENU_ITEM_HEIGHT) / 2, AUTOEXPANDMENU_ITEM_WIDTH, AUTOEXPANDMENU_ITEM_HEIGHT);
-        NSLog(@"menu = %@", _actionPickerView);
+//        NSLog(@"menu = %@", _actionPickerView);
 	} else {
         __block __typeof__(self) blockSelf = self;
         CGRect selectedItemRect = _firstItem.frame;
 		[UIView animateWithDuration:0.6
 						 animations:^{
 							 if (blockSelf.titleLabel.isHidden) {
+                                 // expande menu
+                                 // fade out all subview, except main menu
+                                 for (UIView *subView in self.subviews)
+                                 {
+                                     if (subView != _actionPickerView) {
+                                         subView.alpha = 0.0f;
+                                     }
+                                 }
 								 _actionPickerView.frame = CGRectMake(MENU_PADDING, (AUTOEXPANDMENU_MENU_HEIGHT - AUTOEXPANDMENU_ITEM_HEIGHT) / 2 , blockSelf.frame.size.width - 2*MENU_PADDING, AUTOEXPANDMENU_ITEM_WIDTH);
                                  
 							 } else {
+                                 // collapse menu
+                                 // fade in all subview, except main menu
+                                 for (UIView *subView in self.subviews)
+                                 {
+                                     if (subView != _actionPickerView) {
+                                         subView.alpha = 1.0f;
+                                     }
+                                 }
+                                 
                                  if(_firstItem != _selectedItem)
                                  {
                                      _firstItem.frame = _selectedItem.frame;
@@ -268,24 +286,6 @@
 - (BOOL)isActionPickerExpanded {
 	return (self.titleLabel.isHidden && _actionPickerView.bounds.size.width != AUTOEXPANDMENU_ITEM_WIDTH);
 }
-
-//- (void)setItems:(NSArray *)newItems {
-//    if (newItems.count > 0 && _items != newItems) {
-//        for (UIView *subview in _actionPickerView.subviews) {
-//            [subview removeFromSuperview];
-//        }
-//        
-//        _items = [NSMutableArray arrayWithArray:newItems];
-//        _firstItem = _selectedItem = [_items objectAtIndex:0];
-//        for (UIView *item in _items) {
-//			if ([item isKindOfClass:[UIView class]]) {
-//				[_actionPickerView addSubview:item];
-//                UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleActionPickerViewTap:)];
-//                [item addGestureRecognizer:tapGesture];
-//			}
-//        }
-//    }
-//}
 
 #pragma mark -
 #pragma mark UITapGestureRecognizer & UIGestureRecognizerDelegate

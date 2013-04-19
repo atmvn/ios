@@ -15,25 +15,16 @@
 #define METERS_PER_MILE 1609.344
 #define NUMBER_OF_REQUEST_ATM 100
 
-@interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@class UIGlossyButton;
+
+@interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *bankTypeBtn;
-@property (weak, nonatomic) IBOutlet UIView *pickerContainerView;
-@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
-@property (weak, nonatomic) IBOutlet UIButton *directionBtn;
 @property (weak, nonatomic) IBOutlet BBTableView *bankTableView;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationBtn;
 
 @property (strong, nonatomic) UIButton *bankBtn;
 @property (retain, nonatomic) UIButton *refreshBtn;
 
-- (IBAction)refreshTouchUpInside:(id)sender;
-- (IBAction)pickerCancelTouchUpInside:(id)sender;
-- (IBAction)pickerDoneTouchUpInside:(id)sender;
-- (IBAction)bankBtnTouchUpInside:(id)sender;
-
-- (IBAction)bankTypeBtnTouchUpInside:(id)sender;
-- (IBAction)directionBtnTouchUpInside:(UIButton *)sender;
 - (IBAction)showCurrentLocation:(id)sender;
 
 

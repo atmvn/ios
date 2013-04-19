@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18041864172116E1000EAF46 /* atmBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804185C172116E1000EAF46 /* atmBtn@2x.png */; };
+		18041865172116E1000EAF46 /* atmBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804185D172116E1000EAF46 /* atmBtn.png */; };
+		18041866172116E1000EAF46 /* bankBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804185E172116E1000EAF46 /* bankBtn@2x.png */; };
+		18041867172116E1000EAF46 /* bankBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804185F172116E1000EAF46 /* bankBtn.png */; };
+		1804186A17212557000EAF46 /* allBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804186817212557000EAF46 /* allBtn@2x.png */; };
+		1804186B17212557000EAF46 /* allBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804186917212557000EAF46 /* allBtn.png */; };
+		1804186E17212ACD000EAF46 /* refreshBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804186C17212ACD000EAF46 /* refreshBtn.png */; };
+		1804186F17212ACD000EAF46 /* refreshBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804186D17212ACD000EAF46 /* refreshBtn@2x.png */; };
+		1804187517212E5C000EAF46 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804187217212E5C000EAF46 /* UIGlossyButton.m */; };
+		1804187617212E5C000EAF46 /* UIView+LayerEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804187417212E5C000EAF46 /* UIView+LayerEffects.m */; };
 		18202B9416E6300A0042F0C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9316E6300A0042F0C1 /* UIKit.framework */; };
 		18202B9616E6300A0042F0C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9516E6300A0042F0C1 /* Foundation.framework */; };
 		18202B9816E6300A0042F0C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9716E6300A0042F0C1 /* CoreGraphics.framework */; };
@@ -92,7 +102,6 @@
 		18AD4C40171D91F5008BD9A7 /* atm_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C3F171D91F5008BD9A7 /* atm_icon.png */; };
 		18AD4C44171D9310008BD9A7 /* atm_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */; };
 		18AD4C60171F05E4008BD9A7 /* TTAutoCollapseMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AD4C5F171F05E4008BD9A7 /* TTAutoCollapseMenu.m */; };
-		18AED95F171AA78600B85679 /* allATM.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AED95E171AA78600B85679 /* allATM.png */; };
 		18AED963171AFC0700B85679 /* BankDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18AED962171AFC0700B85679 /* BankDetailView.m */; };
 		18AED965171AFC1A00B85679 /* BankDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18AED964171AFC1A00B85679 /* BankDetailView.xib */; };
 		18AED967171AFE9600B85679 /* Bike_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18AED966171AFE9600B85679 /* Bike_icon.png */; };
@@ -128,6 +137,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1804185C172116E1000EAF46 /* atmBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "atmBtn@2x.png"; sourceTree = "<group>"; };
+		1804185D172116E1000EAF46 /* atmBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atmBtn.png; sourceTree = "<group>"; };
+		1804185E172116E1000EAF46 /* bankBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bankBtn@2x.png"; sourceTree = "<group>"; };
+		1804185F172116E1000EAF46 /* bankBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bankBtn.png; sourceTree = "<group>"; };
+		1804186817212557000EAF46 /* allBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "allBtn@2x.png"; sourceTree = "<group>"; };
+		1804186917212557000EAF46 /* allBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allBtn.png; sourceTree = "<group>"; };
+		1804186C17212ACD000EAF46 /* refreshBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refreshBtn.png; sourceTree = "<group>"; };
+		1804186D17212ACD000EAF46 /* refreshBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refreshBtn@2x.png"; sourceTree = "<group>"; };
+		1804187117212E5C000EAF46 /* UIGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIGlossyButton.h; sourceTree = "<group>"; };
+		1804187217212E5C000EAF46 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIGlossyButton.m; sourceTree = "<group>"; };
+		1804187317212E5C000EAF46 /* UIView+LayerEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayerEffects.h"; sourceTree = "<group>"; };
+		1804187417212E5C000EAF46 /* UIView+LayerEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerEffects.m"; sourceTree = "<group>"; };
 		18202B8F16E6300A0042F0C1 /* iATM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iATM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18202B9316E6300A0042F0C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		18202B9516E6300A0042F0C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -287,7 +308,6 @@
 		18AD4C43171D9310008BD9A7 /* atm_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "atm_icon@2x.png"; path = "../../atm_icon@2x.png"; sourceTree = "<group>"; };
 		18AD4C5E171F05E4008BD9A7 /* TTAutoCollapseMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAutoCollapseMenu.h; sourceTree = "<group>"; };
 		18AD4C5F171F05E4008BD9A7 /* TTAutoCollapseMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAutoCollapseMenu.m; sourceTree = "<group>"; };
-		18AED95E171AA78600B85679 /* allATM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = allATM.png; sourceTree = "<group>"; };
 		18AED961171AFC0700B85679 /* BankDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankDetailView.h; sourceTree = "<group>"; };
 		18AED962171AFC0700B85679 /* BankDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankDetailView.m; sourceTree = "<group>"; };
 		18AED964171AFC1A00B85679 /* BankDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BankDetailView.xib; sourceTree = "<group>"; };
@@ -358,6 +378,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1804187017212E5C000EAF46 /* GlossyButton */ = {
+			isa = PBXGroup;
+			children = (
+				1804187117212E5C000EAF46 /* UIGlossyButton.h */,
+				1804187217212E5C000EAF46 /* UIGlossyButton.m */,
+				1804187317212E5C000EAF46 /* UIView+LayerEffects.h */,
+				1804187417212E5C000EAF46 /* UIView+LayerEffects.m */,
+			);
+			path = GlossyButton;
+			sourceTree = "<group>";
+		};
 		18202B8416E630090042F0C1 = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +455,7 @@
 		1859A00616E63E22001EB8CF /* 02_LIBS */ = {
 			isa = PBXGroup;
 			children = (
+				1804187017212E5C000EAF46 /* GlossyButton */,
 				2CDE0EB8171BE99A00643CB3 /* UIView+Trasition */,
 				2CDAC561170E82D10096A939 /* BBTableView */,
 				1859A00716E63E22001EB8CF /* ASIHTTP */,
@@ -789,6 +821,14 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				1804186817212557000EAF46 /* allBtn@2x.png */,
+				1804186917212557000EAF46 /* allBtn.png */,
+				1804186C17212ACD000EAF46 /* refreshBtn.png */,
+				1804186D17212ACD000EAF46 /* refreshBtn@2x.png */,
+				1804185C172116E1000EAF46 /* atmBtn@2x.png */,
+				1804185D172116E1000EAF46 /* atmBtn.png */,
+				1804185E172116E1000EAF46 /* bankBtn@2x.png */,
+				1804185F172116E1000EAF46 /* bankBtn.png */,
 				2CDA8D27171E8C0400905DEA /* red_pin_atm@2x.png */,
 				2CDA8D28171E8C0400905DEA /* red_pin_bank@2x.png */,
 				2CDA8D21171E83FD00905DEA /* red_pin_atm.png */,
@@ -804,7 +844,6 @@
 				2CDE0EC1171C25B700643CB3 /* dard_bg@2x.png */,
 				2CDE0EBC171C1F1100643CB3 /* cell_shadow_top@2x.png */,
 				18AED966171AFE9600B85679 /* Bike_icon.png */,
-				18AED95E171AA78600B85679 /* allATM.png */,
 				2CDAC56D170E8BE20096A939 /* bank_icons */,
 				18653C9716F76B1000849ACA /* arrest.png */,
 				2CDB13B216E83AC1005D4598 /* Default-568h@2x.png */,
@@ -889,7 +928,6 @@
 				18653C9816F76B1000849ACA /* arrest.png in Resources */,
 				AABDA1FA16FDFA3600A52F5D /* fakeLoc.gpx in Resources */,
 				2CDAC56F170E8BE20096A939 /* vietcombank.png in Resources */,
-				18AED95F171AA78600B85679 /* allATM.png in Resources */,
 				18AED965171AFC1A00B85679 /* BankDetailView.xib in Resources */,
 				18AED967171AFE9600B85679 /* Bike_icon.png in Resources */,
 				2CDE0EBD171C1F1100643CB3 /* cell_shadow_top@2x.png in Resources */,
@@ -906,6 +944,14 @@
 				2CDA8D26171E83FD00905DEA /* red_pin_bank.png in Resources */,
 				2CDA8D29171E8C0400905DEA /* red_pin_atm@2x.png in Resources */,
 				2CDA8D2A171E8C0400905DEA /* red_pin_bank@2x.png in Resources */,
+				18041864172116E1000EAF46 /* atmBtn@2x.png in Resources */,
+				18041865172116E1000EAF46 /* atmBtn.png in Resources */,
+				18041866172116E1000EAF46 /* bankBtn@2x.png in Resources */,
+				18041867172116E1000EAF46 /* bankBtn.png in Resources */,
+				1804186A17212557000EAF46 /* allBtn@2x.png in Resources */,
+				1804186B17212557000EAF46 /* allBtn.png in Resources */,
+				1804186E17212ACD000EAF46 /* refreshBtn.png in Resources */,
+				1804186F17212ACD000EAF46 /* refreshBtn@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -988,6 +1034,8 @@
 				2CDE0EBB171BE99A00643CB3 /* UIView+Transition.m in Sources */,
 				2CDD235C171D0EC4008BCCEA /* GradientPolylineView.m in Sources */,
 				18AD4C60171F05E4008BD9A7 /* TTAutoCollapseMenu.m in Sources */,
+				1804187517212E5C000EAF46 /* UIGlossyButton.m in Sources */,
+				1804187617212E5C000EAF46 /* UIView+LayerEffects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
