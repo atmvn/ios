@@ -25,8 +25,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *subTitleLbl;
 @property (weak, nonatomic) IBOutlet UILabel *titleLbl;
 @property (weak, nonatomic) IBOutlet UIButton *routeBtn;
+@property (weak, nonatomic) IBOutlet UILabel *workingTimeLbl;
+@property (weak, nonatomic) IBOutlet UITextView *phoneTxtView;
 
 - (IBAction)routeTouchUpInside:(id)sender;
+- (IBAction)callTouchUpInside:(UIButton *)sender;
 -(void)show;
 -(void)hide;
+-(void)setPhoneNumber:(NSString*)phoneNumber;
+- (void)setWorkingTime:(NSString*)workingTime;
 @end

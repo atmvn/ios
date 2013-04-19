@@ -66,6 +66,19 @@ typedef enum
 }
 */
 
+-(void)setWorkingTime:(NSString *)workingTime
+{
+    self.workingTimeLbl.text = workingTime;
+}
+
+-(void)setPhoneNumber:(NSString *)phoneNumber
+{
+    NSArray* words = [phoneNumber componentsSeparatedByCharactersInSet :[NSCharacterSet characterSetWithCharactersInString:@"/-"]];
+    phoneNumber = [words componentsJoinedByString:@"\n"];
+    
+    self.phoneTxtView.text = phoneNumber;
+}
+
 -(void)setMovingView:(UIView *)movingView
 {
     _movingView = movingView;
@@ -75,6 +88,18 @@ typedef enum
 - (IBAction)routeTouchUpInside:(id)sender {
     if ([self.delegate respondsToSelector:@selector(bankDetailViewRouteTouchUpInside:)]) {
         [self.delegate bankDetailViewRouteTouchUpInside:self];
+    }
+}
+
+- (IBAction)callTouchUpInside:(UIButton *)sender {
+    NSString *phoneNumber = self.phoneTxtView.text;
+    NSArray* words = [phoneNumber componentsSeparatedByCharactersInSet :[NSCharacterSet characterSetWithCharactersInString:@". "]];
+    phoneNumber = [words componentsJoinedByString:@""];
+    NSLog(@"Phone = {%@}", phoneNumber);
+    
+    if (![phoneNumber isEqualToString:@""]) {
+        NSString *phoneNumberStr = [NSString stringWithFormat:@"telprompt://%@", phoneNumber];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumberStr]];
     }
 }
 

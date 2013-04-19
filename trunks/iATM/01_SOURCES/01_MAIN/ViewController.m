@@ -539,6 +539,8 @@
         _bankDetailView.bankName.text = _selectedBankItem.bankName;
         _bankDetailView.titleLbl.text = _selectedBankItem.locationName;
         _bankDetailView.subTitleLbl.text = _selectedBankItem.address;
+        [_bankDetailView setWorkingTime: _selectedBankItem.workingTime];
+        [_bankDetailView setPhoneNumber: _selectedBankItem.phoneNumber];
         [_bankDetailView show];
     }
 }

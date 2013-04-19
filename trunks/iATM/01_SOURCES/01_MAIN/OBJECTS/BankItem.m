@@ -30,6 +30,12 @@
         self.locationName = [obj objectForKey:@"locationname"];
         self.phoneNumber = [obj objectForKey:@"phones"];
         self.workingTime = [obj objectForKey:@"workingtime"];
+        if ([self.workingTime isEqualToString:@""]) {
+            self.workingTime = @"(N/A)";
+        }
+        if ([self.phoneNumber isEqualToString:@""]) {
+            self.phoneNumber = @"<N/A>";
+        }
         CGFloat latitude = [[[obj objectForKey:@"loc"] objectAtIndex:0] floatValue];
         CGFloat longtitude = [[[obj objectForKey:@"loc"] objectAtIndex:1] floatValue];
         self.location = CLLocationCoordinate2DMake(latitude, longtitude);

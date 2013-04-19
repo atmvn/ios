@@ -17,6 +17,8 @@
 		1804186F17212ACD000EAF46 /* refreshBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804186D17212ACD000EAF46 /* refreshBtn@2x.png */; };
 		1804187517212E5C000EAF46 /* UIGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804187217212E5C000EAF46 /* UIGlossyButton.m */; };
 		1804187617212E5C000EAF46 /* UIView+LayerEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804187417212E5C000EAF46 /* UIView+LayerEffects.m */; };
+		1804187817214014000EAF46 /* line_space_field_signin.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804187717214014000EAF46 /* line_space_field_signin.png */; };
+		1804187A17214092000EAF46 /* line_space_field_signin_vertical.png in Resources */ = {isa = PBXBuildFile; fileRef = 1804187917214092000EAF46 /* line_space_field_signin_vertical.png */; };
 		18202B9416E6300A0042F0C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9316E6300A0042F0C1 /* UIKit.framework */; };
 		18202B9616E6300A0042F0C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9516E6300A0042F0C1 /* Foundation.framework */; };
 		18202B9816E6300A0042F0C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202B9716E6300A0042F0C1 /* CoreGraphics.framework */; };
@@ -149,6 +151,8 @@
 		1804187217212E5C000EAF46 /* UIGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIGlossyButton.m; sourceTree = "<group>"; };
 		1804187317212E5C000EAF46 /* UIView+LayerEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LayerEffects.h"; sourceTree = "<group>"; };
 		1804187417212E5C000EAF46 /* UIView+LayerEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LayerEffects.m"; sourceTree = "<group>"; };
+		1804187717214014000EAF46 /* line_space_field_signin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line_space_field_signin.png; sourceTree = "<group>"; };
+		1804187917214092000EAF46 /* line_space_field_signin_vertical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line_space_field_signin_vertical.png; sourceTree = "<group>"; };
 		18202B8F16E6300A0042F0C1 /* iATM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iATM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18202B9316E6300A0042F0C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		18202B9516E6300A0042F0C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -821,6 +825,8 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				1804187917214092000EAF46 /* line_space_field_signin_vertical.png */,
+				1804187717214014000EAF46 /* line_space_field_signin.png */,
 				1804186817212557000EAF46 /* allBtn@2x.png */,
 				1804186917212557000EAF46 /* allBtn.png */,
 				1804186C17212ACD000EAF46 /* refreshBtn.png */,
@@ -952,6 +958,8 @@
 				1804186B17212557000EAF46 /* allBtn.png in Resources */,
 				1804186E17212ACD000EAF46 /* refreshBtn.png in Resources */,
 				1804186F17212ACD000EAF46 /* refreshBtn@2x.png in Resources */,
+				1804187817214014000EAF46 /* line_space_field_signin.png in Resources */,
+				1804187A17214092000EAF46 /* line_space_field_signin_vertical.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
