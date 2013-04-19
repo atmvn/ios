@@ -30,7 +30,7 @@
 
 -(void)drawMapRect:(MKMapRect)mapRect zoomScale:(MKZoomScale)zoomScale inContext:(CGContextRef)context
 {
-    UIColor *fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.6];
+    UIColor *fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5];
     CGFloat lineWidth = 75.0;
     
     CGContextSetFillColorWithColor(context, fillColor.CGColor);
