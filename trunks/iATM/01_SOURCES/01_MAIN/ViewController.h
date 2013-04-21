@@ -13,9 +13,16 @@
 #import "BBTableView.h"
 
 #define METERS_PER_MILE 1609.344
-#define NUMBER_OF_REQUEST_ATM 100
+#define NUMBER_OF_REQUEST_ATM 10
 
 @class UIGlossyButton;
+
+typedef enum {
+    enumATMDataRequestType_ListBank = 0,
+    enumATMDataRequestType_NearestATM,
+    enumATMDataRequestType_ATMOfBank,
+    enumATMDataRequestType_Num
+}enumATMDataRequestType;
 
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;

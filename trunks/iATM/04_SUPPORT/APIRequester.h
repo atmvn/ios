@@ -25,6 +25,8 @@
 
 // USER
 #define STRING_REQUEST_URL_GET_NEAREST_ATM                                   [NSString stringWithFormat:@"%@/atm/distance", STRING_REQUEST_ROOT]
+#define STRING_REQUEST_URL_GET_LIST_BANK                                     [NSString stringWithFormat:@"%@/atm/configuration", STRING_REQUEST_ROOT]
+#define STRING_REQUEST_URL_GET_ATM_OF_BANK                                   [NSString stringWithFormat:@"%@/atm/searchID_v1", STRING_REQUEST_ROOT]
 
 // FB
 #define STRING_RESPONSE_KEY_FB_NAME                                     @"name"
@@ -75,6 +77,8 @@
 #define STRING_REQUEST_KEY_LONGTITUDE                                  @"longtitude"
 #define STRING_REQUEST_KEY_LATTITUDE                                   @"lattitude"
 #define STRING_REQUEST_KEY_NUMBER                                      @"number"
+#define STRING_REQUEST_KEY_BANK_ID                                     @"bankID"
+#define STRING_REQUEST_KEY_BANK_TYPE                                   @"banktype"
 
 #define STRING_RESPONSE_KEY_MSG                                         @"msg"
 #define STRING_RESPONSE_KEY_OK                                          @"ok"

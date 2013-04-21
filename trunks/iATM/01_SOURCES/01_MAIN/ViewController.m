@@ -25,13 +25,15 @@
 
 #define NUMBER_OF_VISIBLE_ITEM 20
 
+
 @interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, BankDetailViewDelegate, TTAutoCollapseMenuDelegate>
 {
-    CLLocationManager *_locationManager;
-    CLLocation *currentLocation;
+//    CLLocationManager *_locationManager;
+//    CLLocation *currentLocation;
     MKPolyline *_polyLine;
     APIRequester                            *_APIRequester;
     
+    NSMutableDictionary *_bankName2BankID;
     NSMutableArray      *_listBank; // list available bank in current area (city, provice)
     NSMutableArray      *_listBankType; // ATM, Tradding place
     NSArray             *_activeList; // temporaty variable
@@ -68,7 +70,7 @@
 {
     [super viewDidLoad];
     _APIRequester = [APIRequester new];
-    currentLocation = nil;
+//    currentLocation = nil;
     _selectedBank = nil;
     _selectedType = enumBankType_Num;
     _searchStr = @"";
@@ -76,6 +78,7 @@
     _bankDetailView = [[BankDetailView alloc] init];
     _bankDetailView.delegate = self;
     _bankDetailView.movingView = self.currentLocationBtn;
+    _bankName2BankID = nil;
     
     // init bank type menu
     _arrMenuImages = [[NSMutableArray alloc] initWithObjects:@"allBtn", @"atmBtn", @"bankBtn", nil];
@@ -131,10 +134,12 @@
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    [_locationManager startUpdatingLocation];
+//    _locationManager = [[CLLocationManager alloc] init];
+//    _locationManager.delegate = self;
+//    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    NSLog(@"viewDidLoad-0");
+//    [_locationManager startUpdatingLocation];
+    [self requestData:enumATMDataRequestType_ListBank];
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,16 +159,8 @@
 
 -(void)updateListBank
 {
-    [_listBank removeAllObjects];
-    [self performSearchKardForBankName:@"" withType:enumBankType_Num];
-    for (BankInfosModule *info in self.fetchedResultsController.fetchedObjects)
-    {
-        NSLog(@"name = %@", info.bankNameEN);
-        if (![_listBank containsObject:info.bankNameEN]) {
-            [_listBank addObject:info.bankNameEN];
-        }
-    }
-    _listBank = [NSMutableArray arrayWithArray:[_listBank sortedArrayUsingSelector:@selector(compare:)]];
+    _listBank = [NSMutableArray arrayWithArray: [_bankName2BankID.allKeys sortedArrayUsingSelector:@selector(compare:)]];
+    
     if (_listBank.count > 0) {
         [_listBank insertObject:@"Tất Cả Ngân Hàng" atIndex:0];
     }
@@ -203,7 +200,7 @@
         [listAnotation addObject:item];
     }
     
-    NSLog(@"Number Item = %d", listAnotation.count);
+//    NSLog(@"Number Item = %d", listAnotation.count);
     
     // add anotation to map view
     [self.mapView addAnnotations:listAnotation];
@@ -355,6 +352,32 @@
     return array;
 }
 
+-(void)requestData:(enumATMDataRequestType)type
+{
+    switch (type) {
+        case enumATMDataRequestType_ListBank:
+        {
+            // update list bank name if it doesn't exist in localdatabase
+            // if it existed, load nearest ATM
+            if (!_bankName2BankID) {
+                [self requestListBanks];
+            } else {
+                // refresh list bank
+                [self updateListBank];
+                // load nearest ATM
+                [self requestData:enumATMDataRequestType_NearestATM];
+            }
+            break;
+        }
+        case enumATMDataRequestType_NearestATM:
+        {
+            [self requestListNearestATM];
+            break;
+        }
+        default:
+            break;
+    }
+}
 #pragma mark - Database Methods
 - (void)deleteAllBankData
 {
@@ -373,25 +396,50 @@
 {
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    
+    // if bank item is NOT existed in local DB, insert it (same bankID, Type, location)
+    // else, ignore it
+    
+    // get available items in local DB
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+    
     for (NSMutableDictionary *dict in dataList) {
         
         NSMutableDictionary *dicJson = [SupportFunction normalizeDictionary:dict];
-        
-        BankInfosModule *kardsItem = [NSEntityDescription insertNewObjectForEntityForName:@"BankInfosModule" inManagedObjectContext:[[AppViewController Shared] managedObjectContext]];
-        kardsItem.distance = [dicJson objectForKey:@"dis"];
         NSDictionary *obj = [dicJson objectForKey:@"obj"];
-        kardsItem.itemID = [obj objectForKey:@"_id"];
-        kardsItem.address = [obj objectForKey:@"address"];
-        kardsItem.bankID = [obj objectForKey:@"bankID"];
-        kardsItem.bankNameEN = [obj objectForKey:@"bankNameEN"];
-        kardsItem.bankNameVN = [obj objectForKey:@"bankNameVN"];
-        kardsItem.banktype = [obj objectForKey:@"banktype"];
-        kardsItem.city = [obj objectForKey:@"city"];
-        kardsItem.locationname = [obj objectForKey:@"locationname"];
-        kardsItem.phoneNumber = [obj objectForKey:@"phones"];
-        kardsItem.workingtime = [obj objectForKey:@"workingtime"];
-        kardsItem.latitude = [[obj objectForKey:@"loc"] objectAtIndex:1];
-        kardsItem.longtitude = [[obj objectForKey:@"loc"] objectAtIndex:0];
+        NSString *bankID = [obj objectForKey:@"bankID"];
+        NSString *bankType = [obj objectForKey:@"banktype"];
+        NSNumber *lon = [[obj objectForKey:@"loc"] objectAtIndex:0];
+        NSNumber *lat = [[obj objectForKey:@"loc"] objectAtIndex:1];
+        // check exist
+        BOOL isExisted = NO;
+        for (BankInfosModule *item in self.fetchedResultsController.fetchedObjects)
+        {
+            if ([item.bankID isEqualToString:bankID] && [item.banktype isEqualToString:bankType] && [item.longtitude isEqualToNumber:lon] && [item.latitude isEqualToNumber:lat]) {
+                isExisted = YES;
+            }
+        }
+        
+        // if it is NOT existed, insert to DB
+        if (!isExisted) {
+            BankInfosModule *kardsItem = [NSEntityDescription insertNewObjectForEntityForName:@"BankInfosModule" inManagedObjectContext:[[AppViewController Shared] managedObjectContext]];
+            kardsItem.distance = [dicJson objectForKey:@"dis"];
+            kardsItem.itemID = [obj objectForKey:@"_id"];
+            kardsItem.address = [obj objectForKey:@"address"];
+            kardsItem.bankID = bankID;
+            kardsItem.bankNameEN = [obj objectForKey:@"bankNameEN"];
+            kardsItem.bankNameVN = [obj objectForKey:@"bankNameVN"];
+            kardsItem.banktype = bankType;
+            kardsItem.city = [obj objectForKey:@"city"];
+            kardsItem.locationname = [obj objectForKey:@"locationname"];
+            kardsItem.phoneNumber = [obj objectForKey:@"phones"];
+            kardsItem.workingtime = [obj objectForKey:@"workingtime"];
+            kardsItem.latitude = lat;
+            kardsItem.longtitude = lon;
+        }
+        else {
+            NSLog(@"item is existed");
+        }
     }
     
     [[AppViewController Shared] saveContext];
@@ -403,35 +451,36 @@
 }
 
 #pragma mark - CLLocationManagerDelegate
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    if(currentLocation == nil) {
-        currentLocation = newLocation;
-        // request list nearest ATM
-        [self requestListNearestATM];
-    }
-    else if ([currentLocation distanceFromLocation:newLocation] > 0)
-    {
-        NSLog(@"didUpdateToLocation = (%f,%f)", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+//{
+//    if(currentLocation == nil) {
 //        currentLocation = newLocation;
-    }
-}
+//        // request list nearest ATM
+//        [self requestListNearestATM];
+//    }
+//    else if ([currentLocation distanceFromLocation:newLocation] > 0)
+//    {
+//        NSLog(@"didUpdateToLocation = (%f,%f)", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+////        currentLocation = newLocation;
+//    }
+//}
 
 - (void)applicationWillResignActive
 {
-    if (YES)
-    {
-        [_locationManager stopUpdatingLocation];
-    }
+    NSLog(@"applicationWillResignActive-0");
+//    [_locationManager stopUpdatingLocation];
 }
 
 - (void)applicationDidBecomeActive
 {
-    [_locationManager startUpdatingLocation];
+    NSLog(@"applicationDidBecomeActive-0");
+//    currentLocation = nil;
+//    [_locationManager startUpdatingLocation];
 }
 
 - (void)requestListNearestATM
 {
+    CLLocation *currentLocation = self.mapView.userLocation.location;
     if(!currentLocation) return;
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:3];
     [params setValue:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] forKey:STRING_REQUEST_KEY_LONGTITUDE];
@@ -442,12 +491,45 @@
     [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM andRootURL:STRING_REQUEST_URL_GET_NEAREST_ATM andPostMethodKind:YES andParams:params andDelegate:self];
 }
 
+-(void)requestListBanks
+{
+    [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_LIST_BANK andRootURL:STRING_REQUEST_URL_GET_LIST_BANK andPostMethodKind:NO andParams:nil andDelegate:self];
+}
+
+-(void)requestListATMOfBank:(NSString*)bankName  withType:(enumBankType)type
+{
+    CLLocation *currentLocation = self.mapView.userLocation.location;
+    if(!currentLocation) return;
+    
+    // get bank ID from bank name
+    NSString *bankID = [_bankName2BankID valueForKey:bankName];
+    
+    // get bank type
+    NSString *bankType;
+    if (type == enumBankType_ATM)
+        bankType = @"ATM";
+    else if (type == enumBankType_Branch)
+        bankType = @"BRANCH";
+    else
+        bankType = @"all";
+
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithCapacity:3];
+    [params setValue:[NSString stringWithFormat:@"%f", currentLocation.coordinate.longitude] forKey:STRING_REQUEST_KEY_LONGTITUDE];
+    [params setValue:[NSString stringWithFormat:@"%f", currentLocation.coordinate.latitude] forKey:STRING_REQUEST_KEY_LATTITUDE];
+    [params setValue:[NSString stringWithFormat:@"%d", NUMBER_OF_REQUEST_ATM] forKey:STRING_REQUEST_KEY_NUMBER];
+    [params setValue:bankID forKey:STRING_REQUEST_KEY_BANK_ID];
+    [params setValue:bankType forKey:STRING_REQUEST_KEY_BANK_TYPE];
+    
+    [[AppViewController Shared] isRequesting:YES andRequestType:ENUM_API_REQUEST_TYPE_GET_LIST_ATM_OF_BANK andFrame:FRAME(0, 0, WIDTH_IPHONE, HEIGHT_IPHONE)];
+    [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_LIST_ATM_OF_BANK andRootURL:STRING_REQUEST_URL_GET_ATM_OF_BANK andPostMethodKind:YES andParams:params andDelegate:self];
+}
+
 #pragma mark - APIRequesterProtocol
 - (void)requestFinished:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
     
     [[AppViewController Shared] isRequesting:NO andRequestType:type andFrame:CGRectZero];
     
-    if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM && _isRefreshing) {
+    if (_isRefreshing) {
         // stop refresh animation
         [self.refreshBtn.layer removeAllAnimations];
         _isRefreshing = NO;
@@ -469,14 +551,12 @@
     if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM) {
         
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
-        NSLog(@"list item request = %d", atmList.count);
+//        NSLog(@"list item request = %d", atmList.count);
         // delete all bank in database first
         [self deleteAllBankData];
         // add new bank data
         [self insertKardDataFromServer:atmList];
         
-        // update list bank name
-        [self updateListBank];
         // fetch data
         [self performSearchKardForBankName:_selectedBank withType:_selectedType];
         // reload interface
@@ -486,6 +566,33 @@
     {
 //        NSLog(@"Direction = %@", dicJson);
         [self updateDirectionWithData:dicJson];
+    }
+    else if (type == ENUM_API_REQUEST_TYPE_GET_LIST_BANK)
+    {
+        _bankName2BankID = [[NSMutableDictionary alloc] init];
+        NSArray *listBankName = [[dicJson objectForKey:@"_configuration"] objectForKey:@"bankNameENList"];
+        NSArray *listBankIDs = [[dicJson objectForKey:@"_configuration"] objectForKey:@"bankIDList"];
+        for (NSInteger i = 0; i < listBankName.count; i++) {
+            [_bankName2BankID setValue:[listBankIDs objectAtIndex:i] forKey:[listBankName objectAtIndex:i]];
+        }
+        
+        // update list bank name
+        [self updateListBank];
+        
+        // request nearest ATMs
+        [self requestData:enumATMDataRequestType_NearestATM];
+    }
+    else if (type == ENUM_API_REQUEST_TYPE_GET_LIST_ATM_OF_BANK)
+    {
+        NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
+        
+        // add new bank data
+        [self insertKardDataFromServer:atmList];
+        
+        // fetch data
+        [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+        // reload interface
+        [self loadInterface];
     }
 }
 
@@ -498,7 +605,7 @@
         ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_CONNECTION_ERROR);
     }
     
-    if (type == ENUM_API_REQUEST_TYPE_GET_NEAREST_ATM && _isRefreshing) {
+    if (_isRefreshing) {
         // stop refresh animation
         [self.refreshBtn.layer removeAllAnimations];
         self.refreshBtn.selected = NO;
@@ -548,8 +655,6 @@
 {
     NSLog(@"didDeselectAnnotationView");
     if ([view.annotation isKindOfClass:[BankItem class]]) {
-//        self.directionBtn.hidden = YES;
-//        _selectedBankItem = nil;
         [_bankDetailView hide];
     }
 }
@@ -573,8 +678,6 @@
         return;
     }
     
-    currentLocation = nil;
-    
     CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     animation.fromValue = [NSNumber numberWithFloat:0.0f];
     animation.toValue = [NSNumber numberWithFloat: 2*M_PI];
@@ -583,6 +686,14 @@
     [self.refreshBtn.layer addAnimation:animation forKey:@"refresh_button_animation"];
     
     _isRefreshing = YES;
+    
+    // refresh data of current bank and type
+    if (_selectedBank) {
+        [self requestListATMOfBank:_selectedBank withType:_selectedType];
+    }
+    else {
+        [self requestData:enumATMDataRequestType_NearestATM];
+    }
 }
 
 - (IBAction)bankBtnTouchUpInside:(id)sender {
@@ -599,7 +710,7 @@
 
 - (IBAction)directionBtnTouchUpInside:(UIButton *)sender {
     if (_selectedBankItem) {
-        [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
+        [self getDirectionFrom:self.mapView.userLocation.location.coordinate to:_selectedBankItem.location];
     }
 }
 
@@ -622,9 +733,22 @@
         [self.bankBtn setTitle:selectedStr forState:UIControlStateNormal];
     } completion:nil];
     
+    // check in local DB, if data of selected Bank is existed, show it
+    // if it is not existed, load from server
     [self performSearchKardForBankName:_selectedBank withType:_selectedType];
-    // reload list ATM on map
-    [self loadInterface];
+    if (self.fetchedResultsController.fetchedObjects.count > 0) {
+        // reload list ATM on map
+        [self loadInterface];
+    }
+    else {
+        // load from server
+        if (_selectedBank) {
+            [self requestListATMOfBank:_selectedBank withType:_selectedType];
+        }
+        else {
+            [self requestData:enumATMDataRequestType_NearestATM];
+        }
+    }
 }
 
 #pragma mark UITableViewDelegate Methods
@@ -664,7 +788,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"did select = %d", indexPath.row);
+//    NSLog(@"did select = %d", indexPath.row);
 }
 
 //read the data from the plist and alos the image will be masked to form a circular shape
@@ -779,7 +903,7 @@
     _centralPoint.latitude    = (bigLattitute + smallLattitute)/2;
     _centralPoint.longitude   = (bigLongtitute + smallLongtitute)/2;
     
-    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
+//    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
     
 
     
@@ -795,7 +919,7 @@
         //I think we can settle on something in the middle.  How about something like a 1Km radius
         _radiusMeters = 1000;
     }
-    NSLog(@"Distance in meters: %f", _radiusMeters);
+//    NSLog(@"Distance in meters: %f", _radiusMeters);
 }
 
 - (MKCoordinateRegion)createZoomRegionFromCentralPointAndRadius:(NSMutableArray*) categoryArray {
@@ -819,7 +943,7 @@
 -(void)bankDetailViewRouteTouchUpInside:(BankDetailView *)view
 {
     if (_selectedBankItem) {
-        [self getDirectionFrom:currentLocation.coordinate to:_selectedBankItem.location];
+        [self getDirectionFrom:self.mapView.userLocation.location.coordinate to:_selectedBankItem.location];
     }
 }
 
@@ -840,7 +964,7 @@
 
 -(void)autoCollapseMenu:(TTAutoCollapseMenu *)menu didSelectItemAtIndex:(NSInteger)index
 {
-    NSLog(@"didSelectItemAtIndex %d", index);
+//    NSLog(@"didSelectItemAtIndex %d", index);
 
     _selectedType = index == 0 ? enumBankType_Num : (index - 1);
 
