@@ -474,6 +474,13 @@
 - (void)applicationDidBecomeActive
 {
     NSLog(@"applicationDidBecomeActive-0");
+    // refresh data
+    if (_selectedBank) {
+        [self requestListATMOfBank:_selectedBank withType:_selectedType];
+    }
+    else {
+        [self requestData:enumATMDataRequestType_NearestATM];
+    }
 //    currentLocation = nil;
 //    [_locationManager startUpdatingLocation];
 }
