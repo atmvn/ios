@@ -28,7 +28,7 @@ typedef enum
 @property (assign, nonatomic) CLLocationCoordinate2D          location;
 @property (copy, nonatomic) NSString          *phoneNumber;
 @property (copy, nonatomic) NSString          *workingTime;
-@property (assign, nonatomic) CGFloat           distance;
+@property (assign, nonatomic) double           distance;
 
 -(id)initWithData:(NSDictionary*)dataDic;
 @end

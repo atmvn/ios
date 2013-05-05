@@ -45,7 +45,7 @@
 - (void)requestFailed:(ASIHTTPRequest *)request {
 //    NSLog(@" requestFailed ");
     if ([m_Delegate respondsToSelector:@selector(requestFailed:andType:)]) {
-        [m_Delegate requestFailed:request andType:m_RequestType];
+        [m_Delegate requestFailed:request andType:request.tag];
     }
     m_RequestStep = ENUM_API_REQUESTER_STEP_FAILED;
 }
@@ -53,13 +53,13 @@
 - (void)requestFinished:(ASIHTTPRequest *)request {
 //	NSLog(@" requestFinished ");
     if ([m_Delegate respondsToSelector:@selector(requestFinished:andType:)]) {
-        [m_Delegate requestFinished:request andType:m_RequestType];
+        [m_Delegate requestFinished:request andType:request.tag];
     }
     m_RequestStep = ENUM_API_REQUESTER_STEP_FINISHED;
 }
 
 - (void)queueFinished:(ASINetworkQueue *)queue {
-//    VKLog(@" Queue finished");
+    VKLog(@" Queue finished");
     // You could release the queue here if you wanted
 //	if ([m_networkQueue requestsCount] == 0) {
 //		m_networkQueue = nil;
@@ -129,6 +129,8 @@
         [m_ASIRequest setDelegate:self];
 //        [m_ASIRequest setDidFailSelector:@selector(requestFailed)];
 //        [m_ASIRequest setDidFinishSelector:@selector(requestFinished:)];
+        m_ASIFormRequest.tag = type;
+        m_ASIRequest.tag = type;  
         [m_ASIRequest setValidatesSecureCertificate:NO];
 		[m_ASIRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
         [m_ASIRequest startAsynchronous];
@@ -179,6 +181,8 @@
                 NSLog(@"VALUE: %@; KEY: %@", [[params allValues] objectAtIndex:i], [[params allKeys] objectAtIndex:i]);
             }
         }
+        m_ASIFormRequest.tag = type;
+        m_ASIRequest.tag = type; 
         [m_ASIRequest setValidatesSecureCertificate:NO];
 		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
         [m_ASIFormRequest startAsynchronous];
@@ -236,6 +240,8 @@
             }
             }
         }
+        m_ASIFormRequest.tag = type;
+        m_ASIRequest.tag = type; 
         [m_ASIRequest setValidatesSecureCertificate:NO];
 		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
         [m_ASIFormRequest startAsynchronous];
@@ -291,6 +297,8 @@
                 
             }
         }
+        m_ASIFormRequest.tag = type;
+        m_ASIRequest.tag = type; 
         [m_ASIRequest setValidatesSecureCertificate:NO];
 		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
         [m_ASIFormRequest startAsynchronous];
@@ -406,12 +414,6 @@
             [m_ASIFormRequest setData:data withFileName:[NSString stringWithFormat:@"%@.jpg", [[SupportFunction stringFromDate:[NSDate date]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] andContentType:STRING_REQUEST_KEY_CONTENT_TYPE_IMAGE_JPEG forKey:STRING_REQUEST_KEY_FILE];
         }
         
-        [m_ASIRequest setValidatesSecureCertificate:NO];
-		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
-        [m_ASIFormRequest startAsynchronous];
-    }
-}
-
 // Trong Vu - Request Queue
 - (void)queueWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate
 {
@@ -424,7 +426,7 @@
     m_RequestStep = ENUM_API_REQUESTER_STEP_REQUEST;
     m_StringURL = STRING_REQUEST_ROOT;
     
-    NSLog(@"rootURL: %@", rootURL);
+    VKLog(@"rootURL: %@", rootURL);
     {
         m_ASIFormRequest = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:rootURL]];
         [m_ASIFormRequest setDelegate:self];
@@ -432,12 +434,12 @@
         if (methodKind == YES) {
             [m_ASIFormRequest setRequestMethod:@"POST"];
             
-            NSLog(@"POST ");
+            VKLog(@"POST ");
         }
         if (params) {
             for (int i = 0; i < [params allKeys].count; i++) {
                 [m_ASIFormRequest setPostValue:[[params allValues] objectAtIndex:i]  forKey:[[params allKeys] objectAtIndex:i]];
-                NSLog(@"VALUE: %@; KEY: %@", [[params allValues] objectAtIndex:i], [[params allKeys] objectAtIndex:i]);
+                VKLog(@"VALUE: %@; KEY: %@", [[params allValues] objectAtIndex:i], [[params allKeys] objectAtIndex:i]);
             }
         }
         m_ASIFormRequest.tag = type;

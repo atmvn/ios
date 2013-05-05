@@ -10,10 +10,18 @@
 #import "Define.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
+#import "ASINetworkQueue.h"
+#import "ASIS3Request.h"
+#import "ASIS3ObjectRequest.h"
 
 #define STRING_REQUEST_ROOT                                                 @"http://atm.rs.af.cm"
 
 #define TIMER_REQUEST_TIMEOUT                                               60
+
+#define S3_SHARED_SECRECT_ACCESS_KEY_TEST                                        @"AQV4D2MSvKY6Mdt2XaidgIYOcCeJYoGaY0BcTKIr"
+#define S3_SHARED_ACCESS_KEY_TEST                                                 @"AKIAJ5ZVQSDP5TYK7COA"
+#define S3_BUCKET_NAME_TEST                                                      @"api-testing"
+
 
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
@@ -94,7 +102,7 @@
 - (void)requestFinished:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type;
 - (void)requestTimeoutWithType:(ENUM_API_REQUEST_TYPE)type;
 - (void)requestRetried:(ENUM_API_REQUEST_TYPE)type;
-
+- (void)queueFinished:(ASINetworkQueue *)queue; // Trong Vu
 @end
 
 @interface APIRequester : NSObject <ASIHTTPRequestDelegate, AppViewControllerProtocol, UIAlertViewDelegate>
@@ -111,6 +119,7 @@
     
     ASIFormDataRequest                                  *m_ASIFormRequest;
     NSMutableDictionary                                 *m_ParamsDic;
+    ASINetworkQueue                                     *m_networkQueue;
 }
 - (void)requestWithType:(ENUM_API_REQUEST_TYPE)type andURL:(NSString *)url andDelegate:(id)delegate;
 - (void)requestWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate;
@@ -134,5 +143,11 @@
                      andDelegate:(id)delegate;
 
 - (void)cancelRequest;
+
+//Trong Vu
+- (void)queueWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate;
+- (void)startQueue;
+- (void)uploadToAS3Job:(ENUM_API_REQUEST_TYPE)type andPathName:(NSString *)pathName andFileName:(NSString *)fileName andData:(NSData *)objectData andTimeOut:(int)timeout andDelegate:(id)delegate;
+
 + (APIRequester *)Shared;
 @end

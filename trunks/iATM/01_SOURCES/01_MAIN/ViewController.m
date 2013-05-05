@@ -33,6 +33,7 @@
 //    CLLocation *currentLocation;
     MKPolyline *_polyLine;
     APIRequester                            *_APIRequester;
+    APIRequester                            *_ListBankRequester;
     
     NSMutableDictionary *_bankName2BankID;
     NSMutableArray      *_listBank; // list available bank in current area (city, provice)
@@ -71,7 +72,9 @@
 {
     [super viewDidLoad];
     _APIRequester = [APIRequester new];
+    _ListBankRequester = [APIRequester new];
 //    currentLocation = nil;
+    _selectedRow = 0;
     _selectedBank = nil;
     _selectedType = enumBankType_Num;
     _searchStr = @"";
@@ -135,8 +138,8 @@
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
     
-    // refresh data
-    [self refreshData];
+    // load list Bank
+    [self requestListBanks];
 }
 
 - (void)didReceiveMemoryWarning
@@ -192,14 +195,14 @@
         item.locationName = info.locationname;
         item.phoneNumber = info.phoneNumber;
         item.workingTime = info.workingtime;
-        item.distance = [info.distance floatValue];
-        CGFloat latitude = [info.latitude floatValue];
-        CGFloat longtitude = [info.longtitude floatValue];
+        item.distance = [info.distance doubleValue];
+        double latitude = [info.latitude doubleValue];
+        double longtitude = [info.longtitude doubleValue];
         item.location = CLLocationCoordinate2DMake(latitude, longtitude);
-        
+        NSLog(@"A %d loc = (%f, %f)", i, longtitude, latitude);
         [listAnotation addObject:item];
     }
-    
+
 //    NSLog(@"Number Item = %d", listAnotation.count);
     
     // add anotation to map view
@@ -212,6 +215,57 @@
     [_mapView setRegion:region animated:TRUE];
     [_mapView regionThatFits:region];
     [_mapView reloadInputViews];
+}
+
+-(void)reloadMapWithAdditionItems:(NSArray*)additionItems
+{
+    for (NSMutableDictionary *dict in additionItems) {
+        NSMutableDictionary *dicJson = [SupportFunction normalizeDictionary:dict];
+        NSDictionary *obj = [dicJson objectForKey:@"obj"];
+        NSString *itemID = [obj objectForKey:@"_id"];
+        NSString *bankName = [obj objectForKey:@"bankNameEN"];
+        
+        // check exist
+        BOOL isExisted = NO;
+        for (BankItem *anotation in self.mapView.annotations)
+        {
+            if ([anotation isKindOfClass:[BankItem class]]) {
+                if ([anotation.bankName isEqualToString:bankName] && [anotation.itemID isEqualToString:itemID]) {
+                    isExisted = YES;
+                }
+            }
+        }
+        
+        // if it is NOT existed, insert to Map
+        if (!isExisted) {
+            BankItem *item = [[BankItem alloc] init];
+            item.itemID = itemID;
+            item.address = [obj objectForKey:@"address"];
+            item.bankName = bankName;
+            NSString *bankType = [obj objectForKey:@"banktype"];
+            if([bankType isEqualToString:@"ATM"])
+            {
+                item.type = enumBankType_ATM;
+            }
+            else {
+                item.type = enumBankType_Branch;
+            }
+            item.city = [obj objectForKey:@"city"];
+            item.locationName = [obj objectForKey:@"locationname"];
+            item.phoneNumber = [obj objectForKey:@"phones"];
+            item.workingTime = [obj objectForKey:@"workingtime"];
+            item.distance = [[dicJson objectForKey:@"dis"] doubleValue];
+            double longtitude = [[[obj objectForKey:@"loc"] objectAtIndex:0] doubleValue];
+            double latitude = [[[obj objectForKey:@"loc"] objectAtIndex:1] doubleValue];
+            item.location = CLLocationCoordinate2DMake(latitude, longtitude);
+            
+            NSLog(@"ADDED annotation loc = (%f, %f)", longtitude, latitude);
+            [self.mapView addAnnotation:item];
+        }
+        else {
+            NSLog(@"annotation is existed");
+        }
+    }
 }
 
 -(NSFetchedResultsController *)fetchedResultsController
@@ -270,9 +324,6 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		exit(-1);
     }
-    
-    // reload table
-//    [self reloadInterface];
 }
 
 -(void)updateDirectionWithData:(NSDictionary*)data
@@ -338,7 +389,7 @@
         NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
         NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
         
-        CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
         [array addObject:location];
     }
     
@@ -375,16 +426,19 @@
         
         NSMutableDictionary *dicJson = [SupportFunction normalizeDictionary:dict];
         NSDictionary *obj = [dicJson objectForKey:@"obj"];
+        NSString *_id = [obj objectForKey:@"_id"];
         NSString *bankID = [obj objectForKey:@"bankID"];
         NSString *bankType = [obj objectForKey:@"banktype"];
-        NSNumber *lon = [[obj objectForKey:@"loc"] objectAtIndex:0];
-        NSNumber *lat = [[obj objectForKey:@"loc"] objectAtIndex:1];
+        double lon = [[[obj objectForKey:@"loc"] objectAtIndex:0] doubleValue];
+        double lat = [[[obj objectForKey:@"loc"] objectAtIndex:1] doubleValue];
         // check exist
         BOOL isExisted = NO;
         for (BankInfosModule *item in self.fetchedResultsController.fetchedObjects)
         {
-            if ([item.bankID isEqualToString:bankID] && [item.banktype isEqualToString:bankType] && [item.longtitude isEqualToNumber:lon] && [item.latitude isEqualToNumber:lat]) {
+            if ([item.itemID isEqualToString:_id] || ([item.bankID isEqualToString:bankID] && [item.banktype isEqualToString:bankType] && [item.longtitude doubleValue] ==lon && [item.latitude doubleValue] == lat)) {
                 isExisted = YES;
+                NSLog(@"DB Duplicated loc (%f, %f)", lon, lat);
+                break;
             }
         }
         
@@ -402,8 +456,8 @@
             kardsItem.locationname = [obj objectForKey:@"locationname"];
             kardsItem.phoneNumber = [obj objectForKey:@"phones"];
             kardsItem.workingtime = [obj objectForKey:@"workingtime"];
-            kardsItem.latitude = lat;
-            kardsItem.longtitude = lon;
+            kardsItem.latitude = @(lat);
+            kardsItem.longtitude = @(lon);
         }
         else {
             NSLog(@"item is existed");
@@ -421,13 +475,14 @@
 -(void)updateDistanceForBankItems:(CLLocation*)currentPosition
 {
     // refresh fechtData
-    [self performSearchKardForBankName:@"" withType:enumBankType_Num];
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+    NSLog(@"updateDistanceForBankItems-0 fcount = %d bank = %@ type = %d", self.fetchedResultsController.fetchedObjects.count, _selectedBank, _selectedType);
     for (BankInfosModule *bankItem in self.fetchedResultsController.fetchedObjects)
     {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:[bankItem.latitude doubleValue] longitude:[bankItem.longtitude doubleValue]];
-        NSLog(@"old dis = %@", bankItem.distance);
-        bankItem.distance = @([currentPosition distanceFromLocation:location]);
-        NSLog(@"new dis = %@", bankItem.distance);
+//        NSLog(@"old dis = %@", bankItem.distance);
+        bankItem.distance = [NSNumber numberWithDouble:[currentPosition distanceFromLocation:location]];
+//        NSLog(@"new dis = %@", bankItem.distance);
     }
     // save change to DB
     [[AppViewController Shared] saveContext];
@@ -435,32 +490,16 @@
 
 -(void)refreshData
 {
-    //TODO: condition "largestDis <= MAXIMUM_DISTANCE" may cause of request API many times
-    
     // update distance from Bankitem to current location
     [self updateDistanceForBankItems:self.mapView.userLocation.location];
     
     // fetch data
-    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
-    
-    // testing
-    for (BankInfosModule *bankItem in self.fetchedResultsController.fetchedObjects)
-    {
-        NSLog(@"%@", bankItem.distance);
-    }
-    // end testing
-    
-    int numItemAvailable = MIN(self.fetchedResultsController.fetchedObjects.count, NUMBER_OF_VISIBLE_ITEM);
-    CLLocationDistance largestDis = [[(BankInfosModule*)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:(numItemAvailable - 1) inSection:0]] distance] doubleValue];
-    if (largestDis <= MAXIMUM_DISTANCE) {
-        // no need to load more data from server
-        // reload interface
-        [self loadInterface];
-    }
-    else {
-        // need to load data from server
-        [self requestListATMOfBank:_selectedBank withType:_selectedType];
-    }
+//    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+
+    // reload interface
+    [self loadInterface];
+    // need to load data from server
+    [self requestListATMOfBank:_selectedBank withType:_selectedType];
 }
 
 #pragma mark - Application Delegate
@@ -483,28 +522,13 @@
 - (void)applicationDidBecomeActive
 {
     NSLog(@"applicationDidBecomeActive-0");
-    // refresh data
-    // check distance from last position
-    NSUserDefaults	*defaults = [NSUserDefaults standardUserDefaults];
-    CLLocation *currentLocation = self.mapView.userLocation.location;
-    
-    if ([defaults objectForKey:KEY_USER_LOCATION_LATITUDE]) {
-        // get last locaton
-        CLLocation *lastLocation = [[CLLocation alloc] initWithLatitude:[[defaults objectForKey:KEY_USER_LOCATION_LATITUDE] doubleValue] longitude:[[defaults objectForKey:KEY_USER_LOCATION_LONGTITUDE] doubleValue]];
-        // calculate distance from current location and last location
-        CLLocationDistance distance = [currentLocation distanceFromLocation:lastLocation];
-        // refresh data if it is far enough
-        if (distance > MAXIMUM_DISTANCE) {
-            [self refreshData];
-        }
-    }
 }
 
 #pragma mark - API Call
 
 -(void)requestListBanks
 {
-    [_APIRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_LIST_BANK andRootURL:STRING_REQUEST_URL_GET_LIST_BANK andPostMethodKind:NO andParams:nil andDelegate:self];
+    [_ListBankRequester requestWithType:ENUM_API_REQUEST_TYPE_GET_LIST_BANK andRootURL:STRING_REQUEST_URL_GET_LIST_BANK andPostMethodKind:NO andParams:nil andDelegate:self];
 }
 
 -(void)requestListATMOfBank:(NSString*)bankName  withType:(enumBankType)type
@@ -583,19 +607,14 @@
         
         // update list bank name
         [self updateListBank];
-        
-        // request nearest ATMs
-        [self requestListATMOfBank:_selectedBank withType:_selectedType];
     }
     else if (type == ENUM_API_REQUEST_TYPE_GET_LIST_ATM_OF_BANK)
     {
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
-        
+        NSLog(@"Num server respond = %d", atmList.count);
         // add new bank data
         [self insertKardDataFromServer:atmList];
-        
-        // fetch data
-        [self performSearchKardForBankName:_selectedBank withType:_selectedType];
+
         // reload interface
         [self loadInterface];
     }
@@ -672,7 +691,54 @@
 //    overlayView.fillColor = [[UIColor purpleColor] colorWithAlphaComponent:0.5f];
     return overlayView;
 }
+
+
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
+{
+    NSLog(@"mapViewWillStartLocatingUser-0");
+}
+- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
+{
+    NSLog(@"mapViewDidStopLocatingUser-1");
+}
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    NSLog(@"didUpdateUserLocation-2");
+    // refresh data
+    // check distance from last position
+    NSUserDefaults	*defaults = [NSUserDefaults standardUserDefaults];
+    CLLocation *currentLocation = self.mapView.userLocation.location;
+    
+    if (!self.mapView.annotations || self.mapView.annotations.count == 0) {
+        [self refreshUI];
+    }
+    else if ([defaults objectForKey:KEY_USER_LOCATION_LATITUDE] && [[defaults objectForKey:KEY_USER_LOCATION_LATITUDE] doubleValue] != 0.0) {
+        // get last locaton
+        CLLocation *lastLocation = [[CLLocation alloc] initWithLatitude:[[defaults objectForKey:KEY_USER_LOCATION_LATITUDE] doubleValue] longitude:[[defaults objectForKey:KEY_USER_LOCATION_LONGTITUDE] doubleValue]];
+        // calculate distance from current location and last location
+        CLLocationDistance distance = [currentLocation distanceFromLocation:lastLocation];
+        // refresh data if it is far enough
+        if (distance > MAXIMUM_DISTANCE) {
+            [self refreshUI];
+        }
+    }
+}
+- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
+{
+    NSLog(@"didFailToLocateUserWithError-3");
+}
+
 #pragma mark - Utilities
+-(void)refreshUI
+{
+    // if request is sending, do nothing
+    if (_isRefreshing) {
+        return;
+    }
+    
+    // refresh UI and data
+    [self refreshTouchUpInside:self.refreshBtn];
+}
 
 - (IBAction)refreshTouchUpInside:(id)sender {
     ((UIButton*)sender).selected = !((UIButton*)sender).selected;
@@ -725,17 +791,19 @@
     r.origin.y = HEIGHT_IPHONE;
     [self.bankTableView fadingTransisitonShouldHideWithMask];
     
-    _selectedRow = recognizer.view.tag;
-    NSString *selectedStr = selectedStr = [_activeList objectAtIndex:_selectedRow];
-    _selectedBank = _selectedRow == 0 ? nil : selectedStr;
-    
-    [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-        [self.bankBtn setTitle:selectedStr forState:UIControlStateNormal];
-    } completion:nil];
-    
-    // check in local DB, if data of selected Bank is existed, show it
-    // if it is not existed, load from server
-    [self refreshData];
+    if (recognizer.view.tag != _selectedRow) {
+        _selectedRow = recognizer.view.tag;
+        NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
+        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
+        
+        [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+            [self.bankBtn setTitle:selectedStr forState:UIControlStateNormal];
+        } completion:nil];
+        
+        // check in local DB, if data of selected Bank is existed, show it
+        // if it is not existed, load from server
+        [self refreshData];
+    }
 }
 
 #pragma mark UITableViewDelegate Methods
@@ -913,9 +981,9 @@
     
     // have no deal zoom minimum scale to current location
     if ([categoryArray count] == 0) {
-        _radiusMeters = MAXIMUM_SCALEABLE_RADIUS_METERS/2;
-        _centralPoint.latitude = self.mapView.userLocation.coordinate.latitude;
-        _centralPoint.longitude = self.mapView.userLocation.coordinate.longitude;
+//        _radiusMeters = MAXIMUM_SCALEABLE_RADIUS_METERS/2;
+//        _centralPoint.latitude = self.mapView.userLocation.coordinate.latitude;
+//        _centralPoint.longitude = self.mapView.userLocation.coordinate.longitude;
     }
     else {
         [self calculateCentralPointAndRadiusFromCurrentLocation:categoryArray];

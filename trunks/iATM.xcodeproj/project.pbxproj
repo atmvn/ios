@@ -28,6 +28,9 @@
 		18202BBE16E632710042F0C1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202BBD16E632710042F0C1 /* MapKit.framework */; };
 		18202BC016E6329B0042F0C1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202BBF16E6329B0042F0C1 /* CoreLocation.framework */; };
 		18202BC216E632A20042F0C1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18202BC116E632A20042F0C1 /* QuartzCore.framework */; };
+		183EA42E173668A900BD8702 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 183EA42B173668A900BD8702 /* iRate.bundle */; };
+		183EA42F173668A900BD8702 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 183EA42D173668A900BD8702 /* iRate.m */; };
+		183EA4311736694A00BD8702 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 183EA4301736694A00BD8702 /* StoreKit.framework */; };
 		1859A0F716E63E22001EB8CF /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859A00916E63E22001EB8CF /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1859A0F816E63E22001EB8CF /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859A00C16E63E22001EB8CF /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1859A0F916E63E22001EB8CF /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859A00E16E63E22001EB8CF /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -165,6 +168,10 @@
 		18202BBD16E632710042F0C1 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		18202BBF16E6329B0042F0C1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		18202BC116E632A20042F0C1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		183EA42B173668A900BD8702 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
+		183EA42C173668A900BD8702 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
+		183EA42D173668A900BD8702 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
+		183EA4301736694A00BD8702 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1859A00816E63E22001EB8CF /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		1859A00916E63E22001EB8CF /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		1859A00A16E63E22001EB8CF /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -362,6 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				183EA4311736694A00BD8702 /* StoreKit.framework in Frameworks */,
 				18BFB1DD16F8BE67009ED31E /* CoreData.framework in Frameworks */,
 				1859A17F16E641FB001EB8CF /* MobileCoreServices.framework in Frameworks */,
 				1859A17D16E641E2001EB8CF /* SystemConfiguration.framework in Frameworks */,
@@ -414,6 +422,7 @@
 		18202B9216E6300A0042F0C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				183EA4301736694A00BD8702 /* StoreKit.framework */,
 				18BFB1DC16F8BE67009ED31E /* CoreData.framework */,
 				1859A17E16E641FB001EB8CF /* MobileCoreServices.framework */,
 				1859A17C16E641E2001EB8CF /* SystemConfiguration.framework */,
@@ -456,9 +465,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		183EA42A173668A900BD8702 /* iRate */ = {
+			isa = PBXGroup;
+			children = (
+				183EA42B173668A900BD8702 /* iRate.bundle */,
+				183EA42C173668A900BD8702 /* iRate.h */,
+				183EA42D173668A900BD8702 /* iRate.m */,
+			);
+			path = iRate;
+			sourceTree = "<group>";
+		};
 		1859A00616E63E22001EB8CF /* 02_LIBS */ = {
 			isa = PBXGroup;
 			children = (
+				183EA42A173668A900BD8702 /* iRate */,
 				1804187017212E5C000EAF46 /* GlossyButton */,
 				2CDE0EB8171BE99A00643CB3 /* UIView+Trasition */,
 				2CDAC561170E82D10096A939 /* BBTableView */,
@@ -960,6 +980,7 @@
 				1804186F17212ACD000EAF46 /* refreshBtn@2x.png in Resources */,
 				1804187817214014000EAF46 /* line_space_field_signin.png in Resources */,
 				1804187A17214092000EAF46 /* line_space_field_signin_vertical.png in Resources */,
+				183EA42E173668A900BD8702 /* iRate.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1044,6 +1065,7 @@
 				18AD4C60171F05E4008BD9A7 /* TTAutoCollapseMenu.m in Sources */,
 				1804187517212E5C000EAF46 /* UIGlossyButton.m in Sources */,
 				1804187617212E5C000EAF46 /* UIView+LayerEffects.m in Sources */,
+				183EA42F173668A900BD8702 /* iRate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
