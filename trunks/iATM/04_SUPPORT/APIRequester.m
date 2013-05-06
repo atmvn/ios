@@ -15,16 +15,6 @@
         m_ASIRequest = [ASIHTTPRequest new];
         m_ASIFormRequest = [ASIFormDataRequest new];
         m_AlertFail = [[UIAlertView alloc] initWithTitle:STRING_ALERT_CONNECTION_ERROR_TITLE message:STRING_ALERT_CONNECTION_ERROR delegate:self cancelButtonTitle:STRING_ALERT_RETRY otherButtonTitles:STRING_ALERT_CANCEL, nil];
-        
-        // Stop anything already in the queue before removing it
-        //[m_networkQueue cancelAllOperations];
-        
-        // Creating a new queue each time we use it means we don't have to worry about clearing delegates or resetting progress tracking
-        m_networkQueue = [ASINetworkQueue queue];
-        [m_networkQueue setDelegate:self];
-        [m_networkQueue setRequestDidFinishSelector:@selector(requestFinished:)];
-        [m_networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
-        [m_networkQueue setQueueDidFinishSelector:@selector(queueFinished:)];
     }
     return self;
 }
@@ -59,11 +49,6 @@
 }
 
 - (void)queueFinished:(ASINetworkQueue *)queue {
-//    VKLog(@" Queue finished");
-    // You could release the queue here if you wanted
-//	if ([m_networkQueue requestsCount] == 0) {
-//		m_networkQueue = nil;
-//	}
 
     if ([m_Delegate respondsToSelector:@selector(queueFinished:)]) {
         [m_Delegate queueFinished:queue];
@@ -410,76 +395,6 @@
 		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
         [m_ASIFormRequest startAsynchronous];
     }
-}
-
-// Trong Vu - Request Queue
-- (void)queueWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate
-{
-    if (delegate == nil) {
-        return;
-    }
-    
-    m_RequestType = type;
-    m_Delegate = delegate;
-    m_RequestStep = ENUM_API_REQUESTER_STEP_REQUEST;
-    m_StringURL = STRING_REQUEST_ROOT;
-    
-    NSLog(@"rootURL: %@", rootURL);
-    {
-        m_ASIFormRequest = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:rootURL]];
-        [m_ASIFormRequest setDelegate:self];
-        
-        if (methodKind == YES) {
-            [m_ASIFormRequest setRequestMethod:@"POST"];
-            
-            NSLog(@"POST ");
-        }
-        if (params) {
-            for (int i = 0; i < [params allKeys].count; i++) {
-                [m_ASIFormRequest setPostValue:[[params allValues] objectAtIndex:i]  forKey:[[params allKeys] objectAtIndex:i]];
-                NSLog(@"VALUE: %@; KEY: %@", [[params allValues] objectAtIndex:i], [[params allKeys] objectAtIndex:i]);
-            }
-        }
-        m_ASIFormRequest.tag = type;
-        m_ASIRequest.tag = type; 
-        [m_ASIRequest setValidatesSecureCertificate:NO];
-		[m_ASIFormRequest setTimeOutSeconds:TIMER_REQUEST_TIMEOUT];
-        
-        [m_networkQueue addOperation:m_ASIFormRequest];
-    }
-}
-
--(void) startQueue {
-    [m_networkQueue go];
-    }
-
-// Trong Vu - Upload Object to S3
-- (void)uploadToAS3Job:(ENUM_API_REQUEST_TYPE)type andPathName:(NSString *)pathName andFileName:(NSString *)fileName andData:(NSData *)objectData andTimeOut:(int)timeout andDelegate:(id)delegate
-{
-    [ASIS3Request setSharedSecretAccessKey:S3_SHARED_SECRECT_ACCESS_KEY_TEST];
-    
-    [ASIS3Request setSharedAccessKey:S3_SHARED_ACCESS_KEY_TEST];
-    
-    ASIS3ObjectRequest *request = [ASIS3ObjectRequest PUTRequestForData:objectData withBucket:S3_BUCKET_NAME_TEST key:[NSString stringWithFormat:@"%@/%@",pathName,fileName]];
-    
-    [request setShouldCompressRequestBody:YES]; //gzip compression
-    
-    m_RequestType = type;
-    m_Delegate = delegate;
-    m_RequestStep = ENUM_API_REQUESTER_STEP_REQUEST;
-    
-    request.delegate = self;
-    request.tag = type;
-    request.timeOutSeconds = timeout;
-    [request startAsynchronous];
-    
-//    [request startSynchronous];    
-//    if ([request error]) {
-//        
-//        VKLog(@"%@",[[request error] localizedDescription]);
-//        
-//    }
-
 }
 
 #pragma mark - APIRequester Protocol

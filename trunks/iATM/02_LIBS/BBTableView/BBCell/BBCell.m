@@ -73,7 +73,7 @@
 -(void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    mImageLayer.borderColor = selected ? [UIColor orangeColor].CGColor : [UIColor whiteColor].CGColor;
+    mImageLayer.borderColor = selected ? [UIColor orangeColor].CGColor : [UIColor colorWithRed:221.0/255.0 green:217.0/255.0 blue:211.0/255.0 alpha:1.0].CGColor;
     mCellTtleLabel.textColor = selected ? [UIColor orangeColor] : [UIColor whiteColor];
 }
 

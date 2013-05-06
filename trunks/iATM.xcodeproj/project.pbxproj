@@ -117,6 +117,47 @@
 		2C87029016E98F3700302E17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028B16E98F3700302E17 /* AppDelegate.m */; };
 		2C87029116E98F3700302E17 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028D16E98F3700302E17 /* AppViewController.m */; };
 		2C87029216E98F3700302E17 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028F16E98F3700302E17 /* ViewController.m */; };
+		2CD697901737AE920042E6C5 /* vietinbank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697691737AE920042E6C5 /* vietinbank.png */; };
+		2CD697911737AE920042E6C5 /* vietinbank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976A1737AE920042E6C5 /* vietinbank@2x.png */; };
+		2CD697921737AE920042E6C5 /* nama.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976B1737AE920042E6C5 /* nama.png */; };
+		2CD697931737AE920042E6C5 /* nama@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976C1737AE920042E6C5 /* nama@2x.png */; };
+		2CD697941737AE920042E6C5 /* vib.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976D1737AE920042E6C5 /* vib.png */; };
+		2CD697951737AE920042E6C5 /* vib@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976E1737AE920042E6C5 /* vib@2x.png */; };
+		2CD697961737AE920042E6C5 /* acb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6976F1737AE920042E6C5 /* acb.png */; };
+		2CD697971737AE920042E6C5 /* acb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697701737AE920042E6C5 /* acb@2x.png */; };
+		2CD697981737AE920042E6C5 /* agribank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697711737AE920042E6C5 /* agribank.png */; };
+		2CD697991737AE920042E6C5 /* agribank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697721737AE920042E6C5 /* agribank@2x.png */; };
+		2CD6979A1737AE920042E6C5 /* bidv.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697731737AE920042E6C5 /* bidv.png */; };
+		2CD6979B1737AE920042E6C5 /* bidv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697741737AE920042E6C5 /* bidv@2x.png */; };
+		2CD6979C1737AE920042E6C5 /* citi.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697751737AE920042E6C5 /* citi.png */; };
+		2CD6979D1737AE920042E6C5 /* citi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697761737AE920042E6C5 /* citi@2x.png */; };
+		2CD6979E1737AE920042E6C5 /* indovina.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697771737AE920042E6C5 /* indovina.png */; };
+		2CD6979F1737AE920042E6C5 /* indovina@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697781737AE920042E6C5 /* indovina@2x.png */; };
+		2CD697A01737AE920042E6C5 /* donga.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697791737AE920042E6C5 /* donga.png */; };
+		2CD697A11737AE920042E6C5 /* donga@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977A1737AE920042E6C5 /* donga@2x.png */; };
+		2CD697A21737AE920042E6C5 /* hsbc.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977B1737AE920042E6C5 /* hsbc.png */; };
+		2CD697A31737AE920042E6C5 /* hsbc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977C1737AE920042E6C5 /* hsbc@2x.png */; };
+		2CD697A41737AE920042E6C5 /* eximbank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977D1737AE920042E6C5 /* eximbank.png */; };
+		2CD697A51737AE920042E6C5 /* eximbank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977E1737AE920042E6C5 /* eximbank@2x.png */; };
+		2CD697A61737AE920042E6C5 /* maritime.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6977F1737AE920042E6C5 /* maritime.png */; };
+		2CD697A71737AE920042E6C5 /* maritime@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697801737AE920042E6C5 /* maritime@2x.png */; };
+		2CD697A81737AE920042E6C5 /* lienviet.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697811737AE920042E6C5 /* lienviet.png */; };
+		2CD697A91737AE920042E6C5 /* lienviet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697821737AE920042E6C5 /* lienviet@2x.png */; };
+		2CD697AA1737AE920042E6C5 /* vietcombank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697831737AE920042E6C5 /* vietcombank@2x.png */; };
+		2CD697AB1737AE920042E6C5 /* mb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697841737AE920042E6C5 /* mb.png */; };
+		2CD697AC1737AE920042E6C5 /* mb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697851737AE920042E6C5 /* mb@2x.png */; };
+		2CD697AD1737AE920042E6C5 /* anz.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697861737AE920042E6C5 /* anz.png */; };
+		2CD697AE1737AE920042E6C5 /* anz@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697871737AE920042E6C5 /* anz@2x.png */; };
+		2CD697AF1737AE920042E6C5 /* sacombank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697881737AE920042E6C5 /* sacombank.png */; };
+		2CD697B01737AE920042E6C5 /* sacombank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697891737AE920042E6C5 /* sacombank@2x.png */; };
+		2CD697B11737AE920042E6C5 /* techcombank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978A1737AE920042E6C5 /* techcombank.png */; };
+		2CD697B21737AE920042E6C5 /* techcombank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978B1737AE920042E6C5 /* techcombank@2x.png */; };
+		2CD697B31737AE920042E6C5 /* tienphong.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978C1737AE920042E6C5 /* tienphong.png */; };
+		2CD697B41737AE920042E6C5 /* tienphong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978D1737AE920042E6C5 /* tienphong@2x.png */; };
+		2CD697B51737AE920042E6C5 /* western.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978E1737AE920042E6C5 /* western.png */; };
+		2CD697B61737AE920042E6C5 /* western@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978F1737AE920042E6C5 /* western@2x.png */; };
+		2CD697B91737B1B90042E6C5 /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697B71737B1B90042E6C5 /* blankicon.png */; };
+		2CD697BA1737B1B90042E6C5 /* blankicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697B81737B1B90042E6C5 /* blankicon@2x.png */; };
 		2CDA8D25171E83FD00905DEA /* red_pin_atm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D21171E83FD00905DEA /* red_pin_atm.png */; };
 		2CDA8D26171E83FD00905DEA /* red_pin_bank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D22171E83FD00905DEA /* red_pin_bank.png */; };
 		2CDA8D29171E8C0400905DEA /* red_pin_atm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D27171E8C0400905DEA /* red_pin_atm@2x.png */; };
@@ -335,6 +376,47 @@
 		2C87028D16E98F3700302E17 /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
 		2C87028E16E98F3700302E17 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2C87028F16E98F3700302E17 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2CD697691737AE920042E6C5 /* vietinbank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vietinbank.png; sourceTree = "<group>"; };
+		2CD6976A1737AE920042E6C5 /* vietinbank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vietinbank@2x.png"; sourceTree = "<group>"; };
+		2CD6976B1737AE920042E6C5 /* nama.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nama.png; sourceTree = "<group>"; };
+		2CD6976C1737AE920042E6C5 /* nama@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nama@2x.png"; sourceTree = "<group>"; };
+		2CD6976D1737AE920042E6C5 /* vib.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vib.png; sourceTree = "<group>"; };
+		2CD6976E1737AE920042E6C5 /* vib@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vib@2x.png"; sourceTree = "<group>"; };
+		2CD6976F1737AE920042E6C5 /* acb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = acb.png; sourceTree = "<group>"; };
+		2CD697701737AE920042E6C5 /* acb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "acb@2x.png"; sourceTree = "<group>"; };
+		2CD697711737AE920042E6C5 /* agribank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = agribank.png; sourceTree = "<group>"; };
+		2CD697721737AE920042E6C5 /* agribank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "agribank@2x.png"; sourceTree = "<group>"; };
+		2CD697731737AE920042E6C5 /* bidv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bidv.png; sourceTree = "<group>"; };
+		2CD697741737AE920042E6C5 /* bidv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bidv@2x.png"; sourceTree = "<group>"; };
+		2CD697751737AE920042E6C5 /* citi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = citi.png; sourceTree = "<group>"; };
+		2CD697761737AE920042E6C5 /* citi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "citi@2x.png"; sourceTree = "<group>"; };
+		2CD697771737AE920042E6C5 /* indovina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = indovina.png; sourceTree = "<group>"; };
+		2CD697781737AE920042E6C5 /* indovina@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "indovina@2x.png"; sourceTree = "<group>"; };
+		2CD697791737AE920042E6C5 /* donga.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = donga.png; sourceTree = "<group>"; };
+		2CD6977A1737AE920042E6C5 /* donga@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "donga@2x.png"; sourceTree = "<group>"; };
+		2CD6977B1737AE920042E6C5 /* hsbc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hsbc.png; sourceTree = "<group>"; };
+		2CD6977C1737AE920042E6C5 /* hsbc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hsbc@2x.png"; sourceTree = "<group>"; };
+		2CD6977D1737AE920042E6C5 /* eximbank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eximbank.png; sourceTree = "<group>"; };
+		2CD6977E1737AE920042E6C5 /* eximbank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "eximbank@2x.png"; sourceTree = "<group>"; };
+		2CD6977F1737AE920042E6C5 /* maritime.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maritime.png; sourceTree = "<group>"; };
+		2CD697801737AE920042E6C5 /* maritime@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "maritime@2x.png"; sourceTree = "<group>"; };
+		2CD697811737AE920042E6C5 /* lienviet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lienviet.png; sourceTree = "<group>"; };
+		2CD697821737AE920042E6C5 /* lienviet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lienviet@2x.png"; sourceTree = "<group>"; };
+		2CD697831737AE920042E6C5 /* vietcombank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vietcombank@2x.png"; sourceTree = "<group>"; };
+		2CD697841737AE920042E6C5 /* mb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mb.png; sourceTree = "<group>"; };
+		2CD697851737AE920042E6C5 /* mb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mb@2x.png"; sourceTree = "<group>"; };
+		2CD697861737AE920042E6C5 /* anz.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anz.png; sourceTree = "<group>"; };
+		2CD697871737AE920042E6C5 /* anz@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anz@2x.png"; sourceTree = "<group>"; };
+		2CD697881737AE920042E6C5 /* sacombank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sacombank.png; sourceTree = "<group>"; };
+		2CD697891737AE920042E6C5 /* sacombank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sacombank@2x.png"; sourceTree = "<group>"; };
+		2CD6978A1737AE920042E6C5 /* techcombank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = techcombank.png; sourceTree = "<group>"; };
+		2CD6978B1737AE920042E6C5 /* techcombank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "techcombank@2x.png"; sourceTree = "<group>"; };
+		2CD6978C1737AE920042E6C5 /* tienphong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tienphong.png; sourceTree = "<group>"; };
+		2CD6978D1737AE920042E6C5 /* tienphong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tienphong@2x.png"; sourceTree = "<group>"; };
+		2CD6978E1737AE920042E6C5 /* western.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = western.png; sourceTree = "<group>"; };
+		2CD6978F1737AE920042E6C5 /* western@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "western@2x.png"; sourceTree = "<group>"; };
+		2CD697B71737B1B90042E6C5 /* blankicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankicon.png; sourceTree = "<group>"; };
+		2CD697B81737B1B90042E6C5 /* blankicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blankicon@2x.png"; sourceTree = "<group>"; };
 		2CDA8D21171E83FD00905DEA /* red_pin_atm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_pin_atm.png; sourceTree = "<group>"; };
 		2CDA8D22171E83FD00905DEA /* red_pin_bank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_pin_bank.png; sourceTree = "<group>"; };
 		2CDA8D27171E8C0400905DEA /* red_pin_atm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_pin_atm@2x.png"; sourceTree = "<group>"; };
@@ -828,6 +910,47 @@
 		2CDAC56D170E8BE20096A939 /* bank_icons */ = {
 			isa = PBXGroup;
 			children = (
+				2CD697B71737B1B90042E6C5 /* blankicon.png */,
+				2CD697B81737B1B90042E6C5 /* blankicon@2x.png */,
+				2CD697691737AE920042E6C5 /* vietinbank.png */,
+				2CD6976A1737AE920042E6C5 /* vietinbank@2x.png */,
+				2CD6976B1737AE920042E6C5 /* nama.png */,
+				2CD6976C1737AE920042E6C5 /* nama@2x.png */,
+				2CD6976D1737AE920042E6C5 /* vib.png */,
+				2CD6976E1737AE920042E6C5 /* vib@2x.png */,
+				2CD6976F1737AE920042E6C5 /* acb.png */,
+				2CD697701737AE920042E6C5 /* acb@2x.png */,
+				2CD697711737AE920042E6C5 /* agribank.png */,
+				2CD697721737AE920042E6C5 /* agribank@2x.png */,
+				2CD697731737AE920042E6C5 /* bidv.png */,
+				2CD697741737AE920042E6C5 /* bidv@2x.png */,
+				2CD697751737AE920042E6C5 /* citi.png */,
+				2CD697761737AE920042E6C5 /* citi@2x.png */,
+				2CD697771737AE920042E6C5 /* indovina.png */,
+				2CD697781737AE920042E6C5 /* indovina@2x.png */,
+				2CD697791737AE920042E6C5 /* donga.png */,
+				2CD6977A1737AE920042E6C5 /* donga@2x.png */,
+				2CD6977B1737AE920042E6C5 /* hsbc.png */,
+				2CD6977C1737AE920042E6C5 /* hsbc@2x.png */,
+				2CD6977D1737AE920042E6C5 /* eximbank.png */,
+				2CD6977E1737AE920042E6C5 /* eximbank@2x.png */,
+				2CD6977F1737AE920042E6C5 /* maritime.png */,
+				2CD697801737AE920042E6C5 /* maritime@2x.png */,
+				2CD697811737AE920042E6C5 /* lienviet.png */,
+				2CD697821737AE920042E6C5 /* lienviet@2x.png */,
+				2CD697831737AE920042E6C5 /* vietcombank@2x.png */,
+				2CD697841737AE920042E6C5 /* mb.png */,
+				2CD697851737AE920042E6C5 /* mb@2x.png */,
+				2CD697861737AE920042E6C5 /* anz.png */,
+				2CD697871737AE920042E6C5 /* anz@2x.png */,
+				2CD697881737AE920042E6C5 /* sacombank.png */,
+				2CD697891737AE920042E6C5 /* sacombank@2x.png */,
+				2CD6978A1737AE920042E6C5 /* techcombank.png */,
+				2CD6978B1737AE920042E6C5 /* techcombank@2x.png */,
+				2CD6978C1737AE920042E6C5 /* tienphong.png */,
+				2CD6978D1737AE920042E6C5 /* tienphong@2x.png */,
+				2CD6978E1737AE920042E6C5 /* western.png */,
+				2CD6978F1737AE920042E6C5 /* western@2x.png */,
 				2CDAC56E170E8BE20096A939 /* vietcombank.png */,
 			);
 			path = bank_icons;
@@ -981,6 +1104,47 @@
 				1804187817214014000EAF46 /* line_space_field_signin.png in Resources */,
 				1804187A17214092000EAF46 /* line_space_field_signin_vertical.png in Resources */,
 				183EA42E173668A900BD8702 /* iRate.bundle in Resources */,
+				2CD697901737AE920042E6C5 /* vietinbank.png in Resources */,
+				2CD697911737AE920042E6C5 /* vietinbank@2x.png in Resources */,
+				2CD697921737AE920042E6C5 /* nama.png in Resources */,
+				2CD697931737AE920042E6C5 /* nama@2x.png in Resources */,
+				2CD697941737AE920042E6C5 /* vib.png in Resources */,
+				2CD697951737AE920042E6C5 /* vib@2x.png in Resources */,
+				2CD697961737AE920042E6C5 /* acb.png in Resources */,
+				2CD697971737AE920042E6C5 /* acb@2x.png in Resources */,
+				2CD697981737AE920042E6C5 /* agribank.png in Resources */,
+				2CD697991737AE920042E6C5 /* agribank@2x.png in Resources */,
+				2CD6979A1737AE920042E6C5 /* bidv.png in Resources */,
+				2CD6979B1737AE920042E6C5 /* bidv@2x.png in Resources */,
+				2CD6979C1737AE920042E6C5 /* citi.png in Resources */,
+				2CD6979D1737AE920042E6C5 /* citi@2x.png in Resources */,
+				2CD6979E1737AE920042E6C5 /* indovina.png in Resources */,
+				2CD6979F1737AE920042E6C5 /* indovina@2x.png in Resources */,
+				2CD697A01737AE920042E6C5 /* donga.png in Resources */,
+				2CD697A11737AE920042E6C5 /* donga@2x.png in Resources */,
+				2CD697A21737AE920042E6C5 /* hsbc.png in Resources */,
+				2CD697A31737AE920042E6C5 /* hsbc@2x.png in Resources */,
+				2CD697A41737AE920042E6C5 /* eximbank.png in Resources */,
+				2CD697A51737AE920042E6C5 /* eximbank@2x.png in Resources */,
+				2CD697A61737AE920042E6C5 /* maritime.png in Resources */,
+				2CD697A71737AE920042E6C5 /* maritime@2x.png in Resources */,
+				2CD697A81737AE920042E6C5 /* lienviet.png in Resources */,
+				2CD697A91737AE920042E6C5 /* lienviet@2x.png in Resources */,
+				2CD697AA1737AE920042E6C5 /* vietcombank@2x.png in Resources */,
+				2CD697AB1737AE920042E6C5 /* mb.png in Resources */,
+				2CD697AC1737AE920042E6C5 /* mb@2x.png in Resources */,
+				2CD697AD1737AE920042E6C5 /* anz.png in Resources */,
+				2CD697AE1737AE920042E6C5 /* anz@2x.png in Resources */,
+				2CD697AF1737AE920042E6C5 /* sacombank.png in Resources */,
+				2CD697B01737AE920042E6C5 /* sacombank@2x.png in Resources */,
+				2CD697B11737AE920042E6C5 /* techcombank.png in Resources */,
+				2CD697B21737AE920042E6C5 /* techcombank@2x.png in Resources */,
+				2CD697B31737AE920042E6C5 /* tienphong.png in Resources */,
+				2CD697B41737AE920042E6C5 /* tienphong@2x.png in Resources */,
+				2CD697B51737AE920042E6C5 /* western.png in Resources */,
+				2CD697B61737AE920042E6C5 /* western@2x.png in Resources */,
+				2CD697B91737B1B90042E6C5 /* blankicon.png in Resources */,
+				2CD697BA1737B1B90042E6C5 /* blankicon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

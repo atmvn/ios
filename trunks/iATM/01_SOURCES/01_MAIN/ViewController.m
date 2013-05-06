@@ -26,6 +26,9 @@
 #define NUMBER_OF_VISIBLE_ITEM 10
 #define MAXIMUM_DISTANCE 3000 // 3km
 
+#define KEY_USER_LOCATION_LONGTITUDE @"com.aigo.iatm.userlocation.longtitude"
+#define KEY_USER_LOCATION_LATITUDE @"com.aigo.iatm.userlocation.latitude"
+
 
 @interface ViewController () <NSFetchedResultsControllerDelegate, UIGestureRecognizerDelegate, BankDetailViewDelegate, TTAutoCollapseMenuDelegate>
 {
@@ -58,6 +61,8 @@
     BOOL _isRefreshing;
     
     NSMutableArray *_arrMenuImages;
+    
+    NSMutableDictionary *_bankID2Image;
 }
 
 @property (retain, nonatomic) TTAutoCollapseMenu *actionHeaderView;
@@ -140,6 +145,28 @@
     
     // load list Bank
     [self requestListBanks];
+
+    _bankID2Image = [[NSMutableDictionary alloc ] init];
+    [_bankID2Image setValue:@"agribank" forKey:@"Agribank"];
+    [_bankID2Image setValue:@"hsbc" forKey:@"HSBC"];
+    [_bankID2Image setValue:@"anz" forKey:@"ANZ"];
+    [_bankID2Image setValue:@"eximbank" forKey:@"EIB"];
+    [_bankID2Image setValue:@"indovina" forKey:@"IVB"];
+    [_bankID2Image setValue:@"citi" forKey:@"Citibank"];
+    [_bankID2Image setValue:@"acb" forKey:@"ACB"];
+    [_bankID2Image setValue:@"sacombank" forKey:@"Sacombank"];
+    [_bankID2Image setValue:@"nama" forKey:@"NAM A"];
+    [_bankID2Image setValue:@"lienviet" forKey:@"LienVietPostBank"];
+    [_bankID2Image setValue:@"techcombank" forKey:@"Techcombank"];
+    [_bankID2Image setValue:@"vietinbank" forKey:@"Vietinbank"];
+    [_bankID2Image setValue:@"mb" forKey:@"MB"];
+    [_bankID2Image setValue:@"vietcombank" forKey:@"Vietcombank"];
+    [_bankID2Image setValue:@"western" forKey:@"Western Bank"];
+    [_bankID2Image setValue:@"tienphong" forKey:@"TienPhongBank"];
+    [_bankID2Image setValue:@"maritime" forKey:@"MSB"];
+    [_bankID2Image setValue:@"vib" forKey:@"VIB"];
+    [_bankID2Image setValue:@"donga" forKey:@"DAB"];
+    [_bankID2Image setValue:@"bidv" forKey:@"BIDV"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -503,8 +530,6 @@
 }
 
 #pragma mark - Application Delegate
-#define KEY_USER_LOCATION_LONGTITUDE @"com.aigo.iatm.userlocation.longtitude"
-#define KEY_USER_LOCATION_LATITUDE @"com.aigo.iatm.userlocation.latitude"
 - (void)applicationWillResignActive
 {
     NSLog(@"applicationWillResignActive-0");
@@ -784,15 +809,15 @@
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
--(void)doubleTapOnCell:(UITapGestureRecognizer*)recognizer
+-(void)selectBankAtIndex:(NSInteger)index
 {
     // close table view
     CGRect r = self.bankTableView.frame;
     r.origin.y = HEIGHT_IPHONE;
     [self.bankTableView fadingTransisitonShouldHideWithMask];
     
-    if (recognizer.view.tag != _selectedRow) {
-        _selectedRow = recognizer.view.tag;
+    if (index != _selectedRow) {
+        _selectedRow = index;
         NSString *selectedStr = [_activeList objectAtIndex:_selectedRow];
         _selectedBank = _selectedRow == 0 ? nil : selectedStr;
         
@@ -828,9 +853,6 @@
     if( !cell )
     {
         cell = [[BBCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:test];
-        UITapGestureRecognizer *tapgesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapOnCell:)];
-        tapgesture.numberOfTapsRequired = 1;
-        [cell addGestureRecognizer:tapgesture];
     }
     cell.tag = indexPath.row;
     
@@ -843,22 +865,28 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"did select = %d", indexPath.row);
+    NSLog(@"did select = %d", indexPath.row);
+    [self selectBankAtIndex:indexPath.row];
 }
 
 //read the data from the plist and alos the image will be masked to form a circular shape
 - (void)loadDataSource:(NSMutableArray*)listBanks
 {
     mDataSource = [[NSMutableArray alloc] init];
-    
-    NSString *imageName = @"vietcombank.png";
+
+//    NSLog(@"_bankID2Image-0 = %@", _bankID2Image);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+//        NSLog(@"_bankID2Image-1 = %@", _bankID2Image);
         //generate image clipped in a circle
         for( NSString * bankName in listBanks )
         {
             NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
             [info setValue:bankName forKey:KEY_TITLE];
+//            NSLog(@"bank name = %@", bankName);
+//            NSLog(@"bank ID = %@", [_bankName2BankID valueForKey:bankName]);
+            NSString *imageName = [_bankID2Image valueForKey:[_bankName2BankID valueForKey:bankName]];
+//            NSLog(@"bank Img = %@", imageName);
+            if (!imageName || [imageName isEqualToString:@""]) imageName = @"blankicon.png";
             UIImage *image = [UIImage imageNamed:imageName];
             UIImage *finalImage = nil;
             UIGraphicsBeginImageContext(image.size);

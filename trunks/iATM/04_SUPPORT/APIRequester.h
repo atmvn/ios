@@ -11,8 +11,6 @@
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "ASINetworkQueue.h"
-#import "ASIS3Request.h"
-#import "ASIS3ObjectRequest.h"
 
 #define STRING_REQUEST_ROOT                                                 @"http://atm.rs.af.cm"
 
@@ -119,7 +117,6 @@
     
     ASIFormDataRequest                                  *m_ASIFormRequest;
     NSMutableDictionary                                 *m_ParamsDic;
-    ASINetworkQueue                                     *m_networkQueue;
 }
 - (void)requestWithType:(ENUM_API_REQUEST_TYPE)type andURL:(NSString *)url andDelegate:(id)delegate;
 - (void)requestWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate;
@@ -143,11 +140,6 @@
                      andDelegate:(id)delegate;
 
 - (void)cancelRequest;
-
-//Trong Vu
-- (void)queueWithType:(ENUM_API_REQUEST_TYPE)type andRootURL:(NSString *)rootURL andPostMethodKind:(BOOL)methodKind andParams:(NSMutableDictionary *)params andDelegate:(id)delegate;
-- (void)startQueue;
-- (void)uploadToAS3Job:(ENUM_API_REQUEST_TYPE)type andPathName:(NSString *)pathName andFileName:(NSString *)fileName andData:(NSData *)objectData andTimeOut:(int)timeout andDelegate:(id)delegate;
 
 + (APIRequester *)Shared;
 @end
