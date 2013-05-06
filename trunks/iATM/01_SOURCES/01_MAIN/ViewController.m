@@ -139,6 +139,7 @@
                                                object:nil];
     
     [self.bankTableView setContentInset:UIEdgeInsetsMake(100, 0, 100, 0)];
+    self.bankTableView.contentOffset = CGPointMake(0, 0);
 	// Do any additional setup after loading the view, typically from a nib.
     self.mapView.delegate = self;
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
@@ -181,6 +182,7 @@
     [self setBankTableView:nil];
     [self setCurrentLocationBtn:nil];
     [self setRefreshBtn:nil];
+    [self setBankTableContainer:nil];
     [super viewDidUnload];
 }
 
@@ -239,6 +241,9 @@
     MKCoordinateRegion region = [self createZoomRegionFromCentralPointAndRadius :listAnotation];
     
     // Zoom and scale to central point
+//    if (region.center.latitude + region.span.latitudeDelta >= -90.0) {
+//        <#statements#>
+//    }
     [_mapView setRegion:region animated:TRUE];
     [_mapView regionThatFits:region];
     [_mapView reloadInputViews];
@@ -527,14 +532,8 @@
     [self loadInterface];
     // need to load data from server
     [self requestListATMOfBank:_selectedBank withType:_selectedType];
-}
-
-#pragma mark - Application Delegate
-- (void)applicationWillResignActive
-{
-    NSLog(@"applicationWillResignActive-0");
     
-    // save current position for furthur use
+    // save current position that request load data
     NSUserDefaults	*defaults = [NSUserDefaults standardUserDefaults];
     CLLocation *currentLocation = self.mapView.userLocation.location;
     
@@ -542,6 +541,12 @@
     [defaults setObject:@(currentLocation.coordinate.longitude) forKey:KEY_USER_LOCATION_LONGTITUDE];
     
     [defaults synchronize];
+}
+
+#pragma mark - Application Delegate
+- (void)applicationWillResignActive
+{
+    NSLog(@"applicationWillResignActive-0");
 }
 
 - (void)applicationDidBecomeActive
@@ -718,14 +723,6 @@
 }
 
 
-- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView
-{
-    NSLog(@"mapViewWillStartLocatingUser-0");
-}
-- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView
-{
-    NSLog(@"mapViewDidStopLocatingUser-1");
-}
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     NSLog(@"didUpdateUserLocation-2");
@@ -733,8 +730,10 @@
     // check distance from last position
     NSUserDefaults	*defaults = [NSUserDefaults standardUserDefaults];
     CLLocation *currentLocation = self.mapView.userLocation.location;
-    
-    if (!self.mapView.annotations || self.mapView.annotations.count == 0) {
+    NSLog(@"didUpdateUserLocation-2-0 user loc = (%f, %f)", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
+    NSLog(@"ano = %@", self.mapView.annotations);
+    NSLog(@"save lat = %@, %@", [defaults objectForKey:KEY_USER_LOCATION_LATITUDE], [defaults objectForKey:KEY_USER_LOCATION_LONGTITUDE]);
+    if (self.mapView.annotations && self.mapView.annotations.count == 1 && [[self.mapView.annotations objectAtIndex:0] isKindOfClass:[MKUserLocation class]]) {
         [self refreshUI];
     }
     else if ([defaults objectForKey:KEY_USER_LOCATION_LATITUDE] && [[defaults objectForKey:KEY_USER_LOCATION_LATITUDE] doubleValue] != 0.0) {
@@ -747,10 +746,6 @@
             [self refreshUI];
         }
     }
-}
-- (void)mapView:(MKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
-{
-    NSLog(@"didFailToLocateUserWithError-3");
 }
 
 #pragma mark - Utilities
@@ -790,13 +785,13 @@
 - (IBAction)bankBtnTouchUpInside:(id)sender {
 
     _activeList = _listBank;
-    self.bankTableView.contentOffset = CGPointMake(0, 0);
+    
     // show bank list
-    CGRect r = self.bankTableView.frame;
+    CGRect r = self.bankTableContainer.frame;
     r.origin.y = HEIGHT_IPHONE;
-    self.bankTableView.frame = r;
-    self.bankTableView.hidden = NO;
-    [self.bankTableView fadingTransisitonShowWithMask];
+    self.bankTableContainer.frame = r;
+    self.bankTableContainer.hidden = NO;
+    [self.bankTableContainer fadingTransisitonShowWithMask];
 }
 
 - (IBAction)directionBtnTouchUpInside:(UIButton *)sender {
@@ -805,16 +800,26 @@
     }
 }
 
+- (IBAction)closeBankTableTouchUpInside:(UIButton *)sender {
+    [self closeBankTableView];
+}
+
 - (IBAction)showCurrentLocation:(id)sender {
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+}
+
+-(void)closeBankTableView
+{
+    // close table view
+    CGRect r = self.bankTableContainer.frame;
+    r.origin.y = HEIGHT_IPHONE;
+    [self.bankTableContainer fadingTransisitonShouldHideWithMask];
 }
 
 -(void)selectBankAtIndex:(NSInteger)index
 {
     // close table view
-    CGRect r = self.bankTableView.frame;
-    r.origin.y = HEIGHT_IPHONE;
-    [self.bankTableView fadingTransisitonShouldHideWithMask];
+    [self closeBankTableView];
     
     if (index != _selectedRow) {
         _selectedRow = index;
@@ -986,7 +991,7 @@
     _centralPoint.latitude    = (bigLattitute + smallLattitute)/2;
     _centralPoint.longitude   = (bigLongtitute + smallLongtitute)/2;
     
-//    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
+    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
     
 
     
@@ -996,13 +1001,13 @@
     
     _radiusMeters = ([marklocation distanceFromLocation:centralLocation]);
     
-    if (_radiusMeters == 0) {
+    if (_radiusMeters == 0 || _radiusMeters > 1000) {
         // Default for radius is 1km
         //Too far is when you show the entire USA.  Too close is when you show only a 300 ft/100m radius.
         //I think we can settle on something in the middle.  How about something like a 1Km radius
         _radiusMeters = 1000;
     }
-//    NSLog(@"Distance in meters: %f", _radiusMeters);
+    NSLog(@"Distance in meters: %f", _radiusMeters);
 }
 
 - (MKCoordinateRegion)createZoomRegionFromCentralPointAndRadius:(NSMutableArray*) categoryArray {

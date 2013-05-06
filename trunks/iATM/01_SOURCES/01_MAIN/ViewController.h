@@ -27,12 +27,15 @@ typedef enum {
 @interface ViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, APIRequesterProtocol, UITableViewDataSource, UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet BBTableView *bankTableView;
+@property (weak, nonatomic) IBOutlet UIView *bankTableContainer;
 @property (weak, nonatomic) IBOutlet UIButton *currentLocationBtn;
 
 @property (strong, nonatomic) UIButton *bankBtn;
 @property (retain, nonatomic) UIButton *refreshBtn;
 
 - (IBAction)showCurrentLocation:(id)sender;
+
+- (IBAction)closeBankTableTouchUpInside:(UIButton *)sender;
 
 
 @end

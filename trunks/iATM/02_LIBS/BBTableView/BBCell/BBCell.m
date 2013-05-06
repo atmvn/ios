@@ -23,7 +23,7 @@
         //mImageLayer.backgroundColor = [UIColor greenColor].CGColor;
       //  mImageLayer.contents = (id)[UIImage imageNamed:@"2.png"].CGImage;
         [self.contentView.layer addSublayer:mImageLayer];
-        mImageLayer.borderWidth=4.0;
+        mImageLayer.borderWidth=3.0;
         mImageLayer.borderColor = [UIColor whiteColor].CGColor;
        
         //the title label
@@ -42,7 +42,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    float imageY = 4.0;
+    float imageY = 3.0;
     float heightOfImageLayer  = self.bounds.size.height - imageY*2.0;
     heightOfImageLayer = floorf(heightOfImageLayer);
     mImageLayer.cornerRadius = heightOfImageLayer/2.0f;

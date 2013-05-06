@@ -158,6 +158,7 @@
 		2CD697B61737AE920042E6C5 /* western@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD6978F1737AE920042E6C5 /* western@2x.png */; };
 		2CD697B91737B1B90042E6C5 /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697B71737B1B90042E6C5 /* blankicon.png */; };
 		2CD697BA1737B1B90042E6C5 /* blankicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697B81737B1B90042E6C5 /* blankicon@2x.png */; };
+		2CD697BC1737D3F50042E6C5 /* act_swip_icon_button_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CD697BB1737D3F50042E6C5 /* act_swip_icon_button_delete.png */; };
 		2CDA8D25171E83FD00905DEA /* red_pin_atm.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D21171E83FD00905DEA /* red_pin_atm.png */; };
 		2CDA8D26171E83FD00905DEA /* red_pin_bank.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D22171E83FD00905DEA /* red_pin_bank.png */; };
 		2CDA8D29171E8C0400905DEA /* red_pin_atm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2CDA8D27171E8C0400905DEA /* red_pin_atm@2x.png */; };
@@ -417,6 +418,7 @@
 		2CD6978F1737AE920042E6C5 /* western@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "western@2x.png"; sourceTree = "<group>"; };
 		2CD697B71737B1B90042E6C5 /* blankicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankicon.png; sourceTree = "<group>"; };
 		2CD697B81737B1B90042E6C5 /* blankicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blankicon@2x.png"; sourceTree = "<group>"; };
+		2CD697BB1737D3F50042E6C5 /* act_swip_icon_button_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = act_swip_icon_button_delete.png; sourceTree = "<group>"; };
 		2CDA8D21171E83FD00905DEA /* red_pin_atm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_pin_atm.png; sourceTree = "<group>"; };
 		2CDA8D22171E83FD00905DEA /* red_pin_bank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red_pin_bank.png; sourceTree = "<group>"; };
 		2CDA8D27171E8C0400905DEA /* red_pin_atm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_pin_atm@2x.png"; sourceTree = "<group>"; };
@@ -968,6 +970,7 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				2CD697BB1737D3F50042E6C5 /* act_swip_icon_button_delete.png */,
 				1804187917214092000EAF46 /* line_space_field_signin_vertical.png */,
 				1804187717214014000EAF46 /* line_space_field_signin.png */,
 				1804186817212557000EAF46 /* allBtn@2x.png */,
@@ -1145,6 +1148,7 @@
 				2CD697B61737AE920042E6C5 /* western@2x.png in Resources */,
 				2CD697B91737B1B90042E6C5 /* blankicon.png in Resources */,
 				2CD697BA1737B1B90042E6C5 /* blankicon@2x.png in Resources */,
+				2CD697BC1737D3F50042E6C5 /* act_swip_icon_button_delete.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
