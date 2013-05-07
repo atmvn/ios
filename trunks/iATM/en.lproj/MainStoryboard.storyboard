@@ -80,26 +80,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="act_swip_icon_button_delete.png" width="58" height="58"/>
+        <image name="act_swip_icon_button_delete.png" width="55" height="55"/>
         <image name="nearby_pink.png" width="58" height="58"/>
         <image name="nearby_white.png" width="58" height="58"/>
     </resources>
-    <classes>
-        <class className="BBTableView" superclassName="UITableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BBTableView.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closeBankTableTouchUpInside:" candidateClass="UIButton"/>
-                <relationship kind="action" name="showCurrentLocation:"/>
-                <relationship kind="outlet" name="bankTableContainer" candidateClass="UIView"/>
-                <relationship kind="outlet" name="bankTableView" candidateClass="BBTableView"/>
-                <relationship kind="outlet" name="currentLocationBtn" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

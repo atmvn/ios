@@ -12,7 +12,7 @@
 #import "ASIFormDataRequest.h"
 #import "ASINetworkQueue.h"
 
-#define STRING_REQUEST_ROOT                                                 @"http://atm.rs.af.cm"
+#define STRING_REQUEST_ROOT                                                 @"http://iatm.ap01.aws.af.cm"
 
 #define TIMER_REQUEST_TIMEOUT                                               60
 

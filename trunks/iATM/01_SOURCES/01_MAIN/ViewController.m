@@ -213,7 +213,7 @@
 
     NSMutableArray *listAnotation = [[NSMutableArray alloc] initWithCapacity:self.fetchedResultsController.fetchedObjects.count];
     int numItemAvailable = MIN(self.fetchedResultsController.fetchedObjects.count, NUMBER_OF_VISIBLE_ITEM);
-    
+    NSLog(@"numItemAvailable = %d", numItemAvailable);
     for (NSInteger i =0; i < numItemAvailable; i++) {
         BankInfosModule *info = [self.fetchedResultsController.fetchedObjects objectAtIndex:i];
         BankItem *item = [[BankItem alloc] init];
@@ -237,6 +237,8 @@
         item.location = CLLocationCoordinate2DMake(latitude, longtitude);
         //NSLog(@"A %d loc = (%f, %f)", i, longtitude, latitude);
         [listAnotation addObject:item];
+        
+        NSLog(@"id = %@ distance = %@",info.itemID, info.distance);
     }
 
 //    //NSLog(@"Number Item = %d", listAnotation.count);
@@ -247,10 +249,6 @@
     // zoom to visual region
     MKCoordinateRegion region = [self createZoomRegionFromCentralPointAndRadius :listAnotation];
     
-    // Zoom and scale to central point
-//    if (region.center.latitude + region.span.latitudeDelta >= -90.0) {
-//        <#statements#>
-//    }
     [_mapView setRegion:region animated:TRUE];
     [_mapView regionThatFits:region];
     [_mapView reloadInputViews];
@@ -325,23 +323,32 @@
     if (![_searchStr isEqualToString:@""] && ![_searchType isEqualToString:@""])
     {
         // init predicate to search
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(bankNameEN ==[c] %@) AND (banktype ==[c] %@)", _searchStr, _searchType];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(bankNameEN ==[c] %@) AND (banktype ==[c] %@) AND distance <= %f", _searchStr, _searchType, MAXIMUM_DISTANCE_USER_REACHABLE];
         [fetchRequest setPredicate:pred];
     }
     else if (![_searchStr isEqualToString:@""])
     {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"bankNameEN ==[c] %@", _searchStr];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"bankNameEN ==[c] %@ AND distance <= %f", _searchStr, MAXIMUM_DISTANCE_USER_REACHABLE];
         [fetchRequest setPredicate:pred];
     }
     else if (![_searchType isEqualToString:@""])
     {
         // init predicate to search
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"banktype ==[c] %@", _searchType];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"banktype ==[c] %@ AND distance <= %f", _searchType, MAXIMUM_DISTANCE_USER_REACHABLE];
+        [fetchRequest setPredicate:pred];
+    }
+    else {
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"distance <= %f", MAXIMUM_DISTANCE_USER_REACHABLE];
         [fetchRequest setPredicate:pred];
     }
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[AppViewController Shared] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController.delegate = self;
+    
+    NSError *error;
+    if (![_fetchedResultsController performFetch:&error]) {
+        exit(-1);
+    }
     
     return _fetchedResultsController;
 }
@@ -364,10 +371,12 @@
     _fetchedResultsController_Bank = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[AppViewController Shared] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController_Bank.delegate = self;
     
-    NSError *error;
-    if (![_fetchedResultsController_Bank performFetch:&error]) {
-        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);
+    if (_fetchedResultsController_Bank.fetchedObjects == nil)
+    {
+        NSError *error;
+        if (![_fetchedResultsController_Bank performFetch:&error]) {
+            exit(-1);
+        }
     }
     
     return _fetchedResultsController_Bank;
@@ -383,13 +392,7 @@
     else
         _searchType = @"";
 
-    _fetchedResultsController = nil;
-    
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);
-    }
+    self.fetchedResultsController = nil;
 }
 
 -(void)updateDirectionWithData:(NSDictionary*)data
@@ -532,17 +535,18 @@
     
     [[AppViewController Shared] saveContext];
     
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-		exit(-1);
-    }
+    // re-fetch data
+    [self performSearchKardForBankName:_selectedBank withType:_selectedType];
 }
 
 -(void)insertBanksFromServer:(NSDictionary*)dataDic
 {
-    NSError *error;
-    if (![self.fetchedResultsController_Bank performFetch:&error]) {
-		exit(-1);
+    if (self.fetchedResultsController_Bank.fetchedObjects == nil)
+    {
+        NSError *error;
+        if (![self.fetchedResultsController_Bank performFetch:&error]) {
+            exit(-1);
+        }
     }
     
     NSArray *listBankNameEN = [[dataDic objectForKey:@"_configuration"] objectForKey:@"bankNameENList"];
@@ -577,9 +581,8 @@
     // save
     [[AppViewController Shared] saveContext];
 
-    if (![self.fetchedResultsController_Bank performFetch:&error]) {
-		exit(-1);
-    }
+    // re-fetch data
+    _fetchedResultsController_Bank = nil;
 }
 
 -(void)updateDistanceForBankItems:(CLLocation*)currentPosition
@@ -778,6 +781,7 @@
         _bankDetailView.subTitleLbl.text = _selectedBankItem.address;
         [_bankDetailView setWorkingTime: _selectedBankItem.workingTime];
         [_bankDetailView setPhoneNumber: _selectedBankItem.phoneNumber];
+        [_bankDetailView setDistance:_selectedBankItem.distance];
         [_bankDetailView show];
     }
 }
@@ -909,6 +913,9 @@
         // check in local DB, if data of selected Bank is existed, show it
         // if it is not existed, load from server
         [self refreshData];
+        
+        // remove overlay
+        [_mapView removeOverlay:_polyLine];
     }
 }
 
@@ -1001,38 +1008,6 @@
 - (void)calculateCentralPointAndRadiusFromCurrentLocation:(NSMutableArray*) categoryArray {
     
     CLLocation *userLocation = self.mapView.userLocation.location;
-    // only zoom in 20 nearest ATM
-    if (categoryArray.count > 20) {
-        CLLocation * location;
-        BankItem *item1, *item2;
-        for (NSInteger i = 0; i < categoryArray.count; i ++) {
-            NSInteger tempIdx = i;
-            
-            // calculate distance of i item to user location
-            item1 = [categoryArray objectAtIndex:i];
-            location = [[CLLocation alloc] initWithLatitude:item1.location.latitude longitude:item1.location.longitude];
-            CLLocationDistance dis1 = [location distanceFromLocation:userLocation];
-            for (NSInteger j = i + 1; j < categoryArray.count; j ++) {
-                // calculate distance of j item to user location
-                item2 = [categoryArray objectAtIndex:j];
-                location = [[CLLocation alloc] initWithLatitude:item2.location.latitude longitude:item2.location.longitude];
-                CLLocationDistance dis2 = [location distanceFromLocation:userLocation];
-                
-                // find the nearest item to user location
-                if (dis2 < dis1) {
-                    tempIdx = j;
-                }
-            }
-            
-            // if nearest item is different than i index
-            if (tempIdx != i) {
-                // replace 2 location by another one
-                BankItem *tempItem = item2;
-                [categoryArray replaceObjectAtIndex:tempIdx withObject:item1];
-                [categoryArray replaceObjectAtIndex:i withObject:tempItem];
-            }
-        }
-    }
     
     // Find latitude and longtitude smallest and biggest
     float smallLongtitute   = 0;
@@ -1040,10 +1015,10 @@
     float bigLongtitute     = 0;
     float bigLattitute      = 0;
     
-    smallLongtitute   = self.mapView.userLocation.coordinate.longitude;
-    smallLattitute    = self.mapView.userLocation.coordinate.latitude;
-    bigLongtitute     = self.mapView.userLocation.coordinate.longitude;
-    bigLattitute      = self.mapView.userLocation.coordinate.latitude;
+    smallLongtitute   = userLocation.coordinate.longitude;
+    smallLattitute    = userLocation.coordinate.latitude;
+    bigLongtitute     = userLocation.coordinate.longitude;
+    bigLattitute      = userLocation.coordinate.latitude;
     
     for (NSInteger i = 0; i < 20 && i < categoryArray.count ; i++) {
         BankItem *item = [categoryArray objectAtIndex:i];
@@ -1052,13 +1027,13 @@
         if (lat < smallLattitute || smallLattitute == 0) {
             smallLattitute = lat;
         }
-        if (lat> bigLattitute || bigLattitute == 0) {
+        else if (lat> bigLattitute || bigLattitute == 0) {
             bigLattitute = lat;
         }
         if (lng < smallLongtitute || smallLongtitute == 0) {
             smallLongtitute = lng;
         }
-        if (lng> bigLongtitute || bigLongtitute == 0) {
+        else if (lng > bigLongtitute || bigLongtitute == 0) {
             bigLongtitute = lng;
         }
     }

@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *routeBtn;
 @property (weak, nonatomic) IBOutlet UILabel *workingTimeLbl;
 @property (weak, nonatomic) IBOutlet UITextView *phoneTxtView;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLbl;
 
 - (IBAction)routeTouchUpInside:(id)sender;
 - (IBAction)callTouchUpInside:(UIButton *)sender;
@@ -34,4 +35,5 @@
 -(void)hide;
 -(void)setPhoneNumber:(NSString*)phoneNumber;
 - (void)setWorkingTime:(NSString*)workingTime;
+- (void)setDistance:(double)distance;
 @end

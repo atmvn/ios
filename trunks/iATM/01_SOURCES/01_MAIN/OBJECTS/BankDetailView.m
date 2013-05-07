@@ -79,6 +79,18 @@ typedef enum
     self.phoneTxtView.text = phoneNumber;
 }
 
+- (void)setDistance:(double)distance
+{
+    NSString *disStr = @"";
+    if (distance < 1000) {
+        disStr = [NSString stringWithFormat:@"%.0f m", distance];
+    }
+    else {
+        disStr = [NSString stringWithFormat:@"%.1f km", distance/1000];
+    }
+    self.distanceLbl.text = disStr;
+}
+
 -(void)setMovingView:(UIView *)movingView
 {
     _movingView = movingView;
