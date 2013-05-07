@@ -113,6 +113,11 @@
 		18BFB1D516F8B299009ED31E /* iATM_DB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB1D316F8B299009ED31E /* iATM_DB.xcdatamodeld */; };
 		18BFB1DD16F8BE67009ED31E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BFB1DC16F8BE67009ED31E /* CoreData.framework */; };
 		18BFB1E316F8C717009ED31E /* BankInfosModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BFB1E216F8C717009ED31E /* BankInfosModule.m */; };
+		2C24AF491738AA4C0040BEA3 /* BankModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C24AF481738AA4C0040BEA3 /* BankModule.m */; };
+		2C24AF4C1738AE7B0040BEA3 /* whiteicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C24AF4A1738AE7B0040BEA3 /* whiteicon.png */; };
+		2C24AF4D1738AE7B0040BEA3 /* whiteicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C24AF4B1738AE7B0040BEA3 /* whiteicon@2x.png */; };
+		2C24AF4F1738BFD50040BEA3 /* map-pin-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C24AF4E1738BFD50040BEA3 /* map-pin-blue@2x.png */; };
+		2C24AF511738C04C0040BEA3 /* map-pin-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C24AF501738C04C0040BEA3 /* map-pin-blue.png */; };
 		2C638B3216ED9661009CE242 /* BankItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C638B3116ED9661009CE242 /* BankItem.m */; };
 		2C87029016E98F3700302E17 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028B16E98F3700302E17 /* AppDelegate.m */; };
 		2C87029116E98F3700302E17 /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C87028D16E98F3700302E17 /* AppViewController.m */; };
@@ -369,6 +374,12 @@
 		18BFB1DC16F8BE67009ED31E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		18BFB1E116F8C717009ED31E /* BankInfosModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankInfosModule.h; sourceTree = "<group>"; };
 		18BFB1E216F8C717009ED31E /* BankInfosModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankInfosModule.m; sourceTree = "<group>"; };
+		2C24AF471738AA4C0040BEA3 /* BankModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankModule.h; sourceTree = "<group>"; };
+		2C24AF481738AA4C0040BEA3 /* BankModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankModule.m; sourceTree = "<group>"; };
+		2C24AF4A1738AE7B0040BEA3 /* whiteicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteicon.png; sourceTree = "<group>"; };
+		2C24AF4B1738AE7B0040BEA3 /* whiteicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteicon@2x.png"; sourceTree = "<group>"; };
+		2C24AF4E1738BFD50040BEA3 /* map-pin-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-pin-blue@2x.png"; sourceTree = "<group>"; };
+		2C24AF501738C04C0040BEA3 /* map-pin-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-pin-blue.png"; sourceTree = "<group>"; };
 		2C638B3016ED9661009CE242 /* BankItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankItem.h; sourceTree = "<group>"; };
 		2C638B3116ED9661009CE242 /* BankItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankItem.m; sourceTree = "<group>"; };
 		2C87028A16E98F3700302E17 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -848,6 +859,8 @@
 				18BFB1E116F8C717009ED31E /* BankInfosModule.h */,
 				18BFB1E216F8C717009ED31E /* BankInfosModule.m */,
 				18BFB1D316F8B299009ED31E /* iATM_DB.xcdatamodeld */,
+				2C24AF471738AA4C0040BEA3 /* BankModule.h */,
+				2C24AF481738AA4C0040BEA3 /* BankModule.m */,
 			);
 			path = 02_DATA_MODEL;
 			sourceTree = "<group>";
@@ -912,6 +925,8 @@
 		2CDAC56D170E8BE20096A939 /* bank_icons */ = {
 			isa = PBXGroup;
 			children = (
+				2C24AF4A1738AE7B0040BEA3 /* whiteicon.png */,
+				2C24AF4B1738AE7B0040BEA3 /* whiteicon@2x.png */,
 				2CD697B71737B1B90042E6C5 /* blankicon.png */,
 				2CD697B81737B1B90042E6C5 /* blankicon@2x.png */,
 				2CD697691737AE920042E6C5 /* vietinbank.png */,
@@ -970,6 +985,8 @@
 		2CDB13B116E83AC1005D4598 /* 03_RESOURCES */ = {
 			isa = PBXGroup;
 			children = (
+				2C24AF501738C04C0040BEA3 /* map-pin-blue.png */,
+				2C24AF4E1738BFD50040BEA3 /* map-pin-blue@2x.png */,
 				2CD697BB1737D3F50042E6C5 /* act_swip_icon_button_delete.png */,
 				1804187917214092000EAF46 /* line_space_field_signin_vertical.png */,
 				1804187717214014000EAF46 /* line_space_field_signin.png */,
@@ -1149,6 +1166,10 @@
 				2CD697B91737B1B90042E6C5 /* blankicon.png in Resources */,
 				2CD697BA1737B1B90042E6C5 /* blankicon@2x.png in Resources */,
 				2CD697BC1737D3F50042E6C5 /* act_swip_icon_button_delete.png in Resources */,
+				2C24AF4C1738AE7B0040BEA3 /* whiteicon.png in Resources */,
+				2C24AF4D1738AE7B0040BEA3 /* whiteicon@2x.png in Resources */,
+				2C24AF4F1738BFD50040BEA3 /* map-pin-blue@2x.png in Resources */,
+				2C24AF511738C04C0040BEA3 /* map-pin-blue.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1234,6 +1255,7 @@
 				1804187517212E5C000EAF46 /* UIGlossyButton.m in Sources */,
 				1804187617212E5C000EAF46 /* UIView+LayerEffects.m in Sources */,
 				183EA42F173668A900BD8702 /* iRate.m in Sources */,
+				2C24AF491738AA4C0040BEA3 /* BankModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

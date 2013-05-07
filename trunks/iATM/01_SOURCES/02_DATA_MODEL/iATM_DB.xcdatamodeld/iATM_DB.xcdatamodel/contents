@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BankInfosModule" representedClassName="BankInfosModule" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bankID" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,7 +15,14 @@
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="workingtime" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="BankModule" representedClassName="BankModule" syncable="YES">
+        <attribute name="bankID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bankNameEN" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bankNameVN" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="BankInfosModule" positionX="-63" positionY="9" width="128" height="238"/>
+        <element name="BankInfosModule" positionX="-63" positionY="9" width="128" height="240"/>
+        <element name="BankModule" positionX="196" positionY="99" width="128" height="105"/>
     </elements>
 </model>

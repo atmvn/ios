@@ -14,6 +14,8 @@
 
 #define METERS_PER_MILE 1609.344
 #define NUMBER_OF_REQUEST_ATM 10
+#define NUMBER_OF_VISIBLE_ITEM 20
+#define MAXIMUM_DISTANCE 3000 // 3km
 
 @class UIGlossyButton;
 

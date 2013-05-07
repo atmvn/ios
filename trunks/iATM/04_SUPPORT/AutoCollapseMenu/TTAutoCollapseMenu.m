@@ -109,7 +109,7 @@
         
         // init frame
         itemView.frame = CGRectMake(0.0f, 0.0f, 1.35f*AUTOEXPANDMENU_ITEM_WIDTH, 1.35f*AUTOEXPANDMENU_ITEM_HEIGHT);
-        NSLog(@"loadItem-0 %@", itemView);
+//        NSLog(@"loadItem-0 %@", itemView);
         itemView.center = CGPointMake((AUTOEXPANDMENU_ITEM_WIDTH / 2 + i * AUTOEXPANDMENU_ITEM_WIDTH), AUTOEXPANDMENU_ITEM_RADIUS);
         
         // add to menu view

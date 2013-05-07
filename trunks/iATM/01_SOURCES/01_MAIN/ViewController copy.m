@@ -38,7 +38,6 @@
     APIRequester                            *_ListBankRequester;
     
     NSMutableDictionary *_bankName2BankID;
-    NSMutableArray      *_listBank; // list available bank in current area (city, provice)
     NSMutableArray      *_listBankType; // ATM, Tradding place
     NSArray             *_activeList; // temporaty variable
     NSInteger           _selectedRow;
@@ -165,9 +164,6 @@
     [_bankID2Image setValue:@"vib" forKey:@"VIB"];
     [_bankID2Image setValue:@"donga" forKey:@"DAB"];
     [_bankID2Image setValue:@"bidv" forKey:@"BIDV"];
-    
-    // update bank table
-    [self updateListBank];
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,22 +189,15 @@
     {
         [_bankName2BankID setValue:bank.bankID forKey:bank.bankNameEN];
     }
-    _listBank = [NSMutableArray arrayWithArray: [_bankName2BankID.allKeys sortedArrayUsingSelector:@selector(compare:)]];
-    
-    if (_listBank.count > 0) {
-        [_listBank insertObject:STRING_ALL_BANK atIndex:0];
-    }
-    //NSLog(@"%@", _listBank);
+
     // reload bank table
-    [self loadDataSource:_listBank];
+    [self loadDataSource];
 }
 
 -(void)loadInterface
 {
     for (id<MKAnnotation> annotation in _mapView.annotations) {
-        if ([annotation isKindOfClass:[BankItem class]]) {
-            [_mapView removeAnnotation:annotation];
-        }
+        [_mapView removeAnnotation:annotation];
     }
 
     NSMutableArray *listAnotation = [[NSMutableArray alloc] initWithCapacity:self.fetchedResultsController.fetchedObjects.count];
@@ -235,11 +224,11 @@
         double latitude = [info.latitude doubleValue];
         double longtitude = [info.longtitude doubleValue];
         item.location = CLLocationCoordinate2DMake(latitude, longtitude);
-        //NSLog(@"A %d loc = (%f, %f)", i, longtitude, latitude);
+        NSLog(@"A %d loc = (%f, %f)", i, longtitude, latitude);
         [listAnotation addObject:item];
     }
 
-//    //NSLog(@"Number Item = %d", listAnotation.count);
+//    NSLog(@"Number Item = %d", listAnotation.count);
     
     // add anotation to map view
     [self.mapView addAnnotations:listAnotation];
@@ -298,11 +287,11 @@
             double latitude = [[[obj objectForKey:@"loc"] objectAtIndex:1] doubleValue];
             item.location = CLLocationCoordinate2DMake(latitude, longtitude);
             
-            //NSLog(@"ADDED annotation loc = (%f, %f)", longtitude, latitude);
+            NSLog(@"ADDED annotation loc = (%f, %f)", longtitude, latitude);
             [self.mapView addAnnotation:item];
         }
         else {
-            //NSLog(@"annotation is existed");
+            NSLog(@"annotation is existed");
         }
     }
 }
@@ -364,12 +353,6 @@
     _fetchedResultsController_Bank = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:[[AppViewController Shared] managedObjectContext] sectionNameKeyPath:nil cacheName:nil];
     _fetchedResultsController_Bank.delegate = self;
     
-    NSError *error;
-    if (![_fetchedResultsController_Bank performFetch:&error]) {
-        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		exit(-1);
-    }
-    
     return _fetchedResultsController_Bank;
 }
 
@@ -387,7 +370,7 @@
     
     NSError *error;
     if (![self.fetchedResultsController performFetch:&error]) {
-        //NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		exit(-1);
     }
 }
@@ -503,7 +486,7 @@
         {
             if ([item.itemID isEqualToString:_id] || ([item.bankID isEqualToString:bankID] && [item.banktype isEqualToString:bankType] && [item.longtitude doubleValue] ==lon && [item.latitude doubleValue] == lat)) {
                 isExisted = YES;
-                //NSLog(@"DB Duplicated loc (%f, %f)", lon, lat);
+                NSLog(@"DB Duplicated loc (%f, %f)", lon, lat);
                 break;
             }
         }
@@ -526,7 +509,7 @@
             kardsItem.longtitude = @(lon);
         }
         else {
-            //NSLog(@"item is existed");
+            NSLog(@"item is existed");
         }
     }
     
@@ -567,7 +550,7 @@
             bank.bankNameEN = [listBankNameEN objectAtIndex:i];
             bank.bankNameVN = [listBankNameVN objectAtIndex:i];
             NSString *imageName = [_bankID2Image valueForKey:bankID];
-            //            //NSLog(@"bank Img = %@", imageName);
+            //            NSLog(@"bank Img = %@", imageName);
 //            if (!imageName || [imageName isEqualToString:@""]) imageName = @"blankicon.png";
             if (!imageName || [imageName isEqualToString:@""]) imageName = @"whiteicon.png";
             bank.icon = imageName;
@@ -586,13 +569,13 @@
 {
     // refresh fechtData
     [self performSearchKardForBankName:_selectedBank withType:_selectedType];
-    //NSLog(@"updateDistanceForBankItems-0 fcount = %d bank = %@ type = %d", self.fetchedResultsController.fetchedObjects.count, _selectedBank, _selectedType);
+    NSLog(@"updateDistanceForBankItems-0 fcount = %d bank = %@ type = %d", self.fetchedResultsController.fetchedObjects.count, _selectedBank, _selectedType);
     for (BankInfosModule *bankItem in self.fetchedResultsController.fetchedObjects)
     {
         CLLocation *location = [[CLLocation alloc] initWithLatitude:[bankItem.latitude doubleValue] longitude:[bankItem.longtitude doubleValue]];
-//        //NSLog(@"old dis = %@", bankItem.distance);
+//        NSLog(@"old dis = %@", bankItem.distance);
         bankItem.distance = [NSNumber numberWithDouble:[currentPosition distanceFromLocation:location]];
-//        //NSLog(@"new dis = %@", bankItem.distance);
+//        NSLog(@"new dis = %@", bankItem.distance);
     }
     // save change to DB
     [[AppViewController Shared] saveContext];
@@ -624,12 +607,12 @@
 #pragma mark - Application Delegate
 - (void)applicationWillResignActive
 {
-    //NSLog(@"applicationWillResignActive-0");
+    NSLog(@"applicationWillResignActive-0");
 }
 
 - (void)applicationDidBecomeActive
 {
-    //NSLog(@"applicationDidBecomeActive-0");
+    NSLog(@"applicationDidBecomeActive-0");
 }
 
 #pragma mark - API Call
@@ -701,7 +684,7 @@
     
     if (type == ENUM_API_REQUEST_TYPE_GET_DIRECTION)
     {
-//        //NSLog(@"Direction = %@", dicJson);
+//        NSLog(@"Direction = %@", dicJson);
         [self updateDirectionWithData:dicJson];
     }
     else if (type == ENUM_API_REQUEST_TYPE_GET_LIST_BANK)
@@ -714,7 +697,7 @@
     else if (type == ENUM_API_REQUEST_TYPE_GET_LIST_ATM_OF_BANK)
     {
         NSMutableArray *atmList = [dicJson objectForKey:STRING_RESPONSE_KEY_RESULTS];
-        ////NSLog(@"Num server respond = %d", atmList.count);
+        NSLog(@"Num server respond = %d", atmList.count);
         // add new bank data
         [self insertKardDataFromServer:atmList];
 
@@ -724,12 +707,12 @@
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request andType:(ENUM_API_REQUEST_TYPE)type {
-//    //NSLog(@" requestFailed %@ ", request.responseString);
+//    NSLog(@" requestFailed %@ ", request.responseString);
     
     [[AppViewController Shared] isRequesting:NO andRequestType:type andFrame:CGRectZero];
     
     if (![ASIHTTPRequest isNetworkReachable]) {
-//        ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_CONNECTION_ERROR);
+        ALERT(STRING_ALERT_CONNECTION_ERROR_TITLE, STRING_ALERT_CONNECTION_ERROR);
     }
     
     if (_isRefreshing) {
@@ -744,6 +727,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     static NSString *identifier = @"BankItemID";
     if ([annotation isKindOfClass:[BankItem class]]) {
+        
         // select pin image
         NSString *imageName = ((BankItem*)annotation).type == enumBankType_Branch ? @"red_pin_bank.png" : @"red_pin_atm.png";
         
@@ -759,17 +743,13 @@
         
         return annotationView;
     }
-    else if ([annotation isKindOfClass:[MKUserLocation class]])
-    {
-        NSLog(@"annotation = %@", [[annotation class] description]);
-    }
     
     return nil;
 }
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
-    //NSLog(@"didSelectAnnotationView");
+    NSLog(@"didSelectAnnotationView");
     if ([view.annotation isKindOfClass:[BankItem class]]) {
 //        self.directionBtn.hidden = NO;
         _selectedBankItem = (BankItem*)view.annotation;
@@ -783,7 +763,7 @@
 }
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
 {
-    //NSLog(@"didDeselectAnnotationView");
+    NSLog(@"didDeselectAnnotationView");
     if ([view.annotation isKindOfClass:[BankItem class]]) {
         [_bankDetailView hide];
     }
@@ -801,13 +781,14 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    NSLog(@"didUpdateUserLocation-2");
     // refresh data
     // check distance from last position
     NSUserDefaults	*defaults = [NSUserDefaults standardUserDefaults];
     CLLocation *currentLocation = self.mapView.userLocation.location;
-    //NSLog(@"didUpdateUserLocation-2-0 user loc = (%f, %f)", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
-    //NSLog(@"ano = %@", self.mapView.annotations);
-    //NSLog(@"save lat = %@, %@", [defaults objectForKey:KEY_USER_LOCATION_LATITUDE], [defaults objectForKey:KEY_USER_LOCATION_LONGTITUDE]);
+    NSLog(@"didUpdateUserLocation-2-0 user loc = (%f, %f)", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
+    NSLog(@"ano = %@", self.mapView.annotations);
+    NSLog(@"save lat = %@, %@", [defaults objectForKey:KEY_USER_LOCATION_LATITUDE], [defaults objectForKey:KEY_USER_LOCATION_LONGTITUDE]);
     if (self.mapView.annotations && self.mapView.annotations.count == 1 && [[self.mapView.annotations objectAtIndex:0] isKindOfClass:[MKUserLocation class]]) {
         [self refreshUI];
     }
@@ -899,8 +880,16 @@
     
     if (index != _selectedRow) {
         _selectedRow = index;
-        NSString *selectedStr = [_listBank objectAtIndex:_selectedRow];
-        _selectedBank = _selectedRow == 0 ? nil : selectedStr;
+        NSString *selectedStr;
+        if (_selectedRow == 0) {
+            _selectedBank = nil;
+            selectedStr = STRING_ALL_BANK;
+        }
+        else {
+            BankModule *bank = [self.fetchedResultsController_Bank.fetchedObjects objectAtIndex:(_selectedRow - 1)];
+            _selectedBank = selectedStr = bank.bankNameEN;
+            
+        }
         
         [UIView animateWithDuration:0.5f delay:0.5f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             [self.bankBtn setTitle:selectedStr forState:UIControlStateNormal];
@@ -946,28 +935,36 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"did select = %d", indexPath.row);
+    NSLog(@"did select = %d", indexPath.row);
     [self selectBankAtIndex:indexPath.row];
 }
 
 //read the data from the plist and alos the image will be masked to form a circular shape
-- (void)loadDataSource:(NSMutableArray*)listBanks
+- (void)loadDataSource
 {
     mDataSource = [[NSMutableArray alloc] init];
 
-//    //NSLog(@"_bankID2Image-0 = %@", _bankID2Image);
+//    NSLog(@"_bankID2Image-0 = %@", _bankID2Image);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        //NSLog(@"_bankID2Image-1 = %@", _bankID2Image);
+//        NSLog(@"_bankID2Image-1 = %@", _bankID2Image);
         //generate image clipped in a circle
-        for( NSString * bankName in listBanks )
+        for( NSInteger i = -1; i< self.fetchedResultsController_Bank.fetchedObjects.count ; i++ )
         {
+            NSString *bankName, *imageName;
+            if (i == -1) {
+                bankName = STRING_ALL_BANK;
+                imageName = @"blankicon.png";
+            }
+            else {
+                BankModule *bank = [self.fetchedResultsController_Bank.fetchedObjects objectAtIndex:i];
+                bankName = bank.bankNameEN;
+                imageName = bank.icon;
+            }
+            
             NSMutableDictionary *info = [[NSMutableDictionary alloc] initWithCapacity:2];
             [info setValue:bankName forKey:KEY_TITLE];
-//            //NSLog(@"bank name = %@", bankName);
-//            //NSLog(@"bank ID = %@", [_bankName2BankID valueForKey:bankName]);
-            NSString *imageName = [_bankID2Image valueForKey:[_bankName2BankID valueForKey:bankName]];
-//            //NSLog(@"bank Img = %@", imageName);
-            if (!imageName || [imageName isEqualToString:@""]) imageName = @"blankicon.png";
+
+            // image
             UIImage *image = [UIImage imageNamed:imageName];
             UIImage *finalImage = nil;
             UIGraphicsBeginImageContext(image.size);
@@ -1067,7 +1064,7 @@
     _centralPoint.latitude    = (bigLattitute + smallLattitute)/2;
     _centralPoint.longitude   = (bigLongtitute + smallLongtitute)/2;
     
-    //NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
+    NSLog(@"-caluclateCentralPointWithLocationKards-central point - latitude=%f---longtitude=%f",_centralPoint.latitude, _centralPoint.longitude);
     
 
     
@@ -1083,7 +1080,7 @@
         //I think we can settle on something in the middle.  How about something like a 1Km radius
         _radiusMeters = 1000;
     }
-    //NSLog(@"Distance in meters: %f", _radiusMeters);
+    NSLog(@"Distance in meters: %f", _radiusMeters);
 }
 
 - (MKCoordinateRegion)createZoomRegionFromCentralPointAndRadius:(NSMutableArray*) categoryArray {
@@ -1128,7 +1125,7 @@
 
 -(void)autoCollapseMenu:(TTAutoCollapseMenu *)menu didSelectItemAtIndex:(NSInteger)index
 {
-//    //NSLog(@"didSelectItemAtIndex %d", index);
+//    NSLog(@"didSelectItemAtIndex %d", index);
 
     _selectedType = index == 0 ? enumBankType_Num : (index - 1);
 
