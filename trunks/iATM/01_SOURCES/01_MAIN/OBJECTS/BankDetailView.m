@@ -43,15 +43,15 @@ typedef enum
         self.frame = CGRectMake(0, HEIGHT_IPHONE, WIDTH_IPHONE, HEIGHT_IPHONE);
         
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandle:)];
-        [self addGestureRecognizer:tapGesture];
+        [self.gestureView addGestureRecognizer:tapGesture];
         
         UISwipeGestureRecognizer *swipeUpGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUpHandle:)];
         swipeUpGesture.direction = UISwipeGestureRecognizerDirectionUp;
-        [self addGestureRecognizer:swipeUpGesture];
+        [self.gestureView addGestureRecognizer:swipeUpGesture];
         
         UISwipeGestureRecognizer *swipeDownGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDownHandle:)];
         swipeDownGesture.direction = UISwipeGestureRecognizerDirectionDown;
-        [self addGestureRecognizer:swipeDownGesture];
+        [self.gestureView addGestureRecognizer:swipeDownGesture];
     }
     
     return self;

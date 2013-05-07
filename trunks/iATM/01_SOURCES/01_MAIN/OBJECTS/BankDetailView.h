@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *workingTimeLbl;
 @property (weak, nonatomic) IBOutlet UITextView *phoneTxtView;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLbl;
+@property (weak, nonatomic) IBOutlet UIView *gestureView;
 
 - (IBAction)routeTouchUpInside:(id)sender;
 - (IBAction)callTouchUpInside:(UIButton *)sender;
